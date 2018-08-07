@@ -16,30 +16,55 @@
                     <a href="#">StackOverflow-<span class="brand-span">LITE</span></a>
                 </h1>
             </header>
-            <div class="form-group">
-                    <h2 class="text-center text-white mt-0 mb-0">SIGN UP</h2>
-                        <hr class="form-rule">
-                <form>
-                    <div class="input-area">
-                        <input type="text" placeholder="your name" class="form-input" autocomplete="name" required>
-                    </div>
-                    <div class="input-area">
-                        <input type="email" placeholder="your email" class="form-input" required autocomplete="email" >
-                    </div>
-                    <div class="input-area">
-                        <input type="password" placeholder="your password" class="form-input" required>
-                    </div>
-                    <div class="input-area">
-                        <input type="password" placeholder="confirm your password" class="form-input" required>
-                    </div>
-                    <div class="">
-                        <button type="submit" class="btn btn-success btn-block">Register</button>
-                    </div>
-                </form>
+            <div id="signup">            
+                <div class="form-group">
+                        <h2 class="text-center text-white mt-0 mb-0">SIGN UP</h2>
+                            <hr class="form-rule">
+                    <form>
+                        <div class="input-area">
+                            <input type="text" placeholder="your name" class="form-input" autocomplete="name" required>
+                        </div>
+                        <div class="input-area">
+                            <input type="email" placeholder="your email" class="form-input" required autocomplete="email" >
+                        </div>
+                        <div class="input-area">
+                            <input type="password" placeholder="your password" class="form-input" required>
+                        </div>
+                        <div class="input-area">
+                            <input type="password" placeholder="confirm your password" class="form-input" required>
+                        </div>
+                        <div class="">
+                            <button type="submit" class="btn btn-success btn-block">Register</button>
+                        </div>
+                    </form>
+                </div>
+                <div>
+                    <p class="text-center text-white lead">Already have an account? <a href="#" class="text-success" id="login-toggle">Login</a> .</p>
+                </div>
             </div>
-            <div>
-                <p class="text-center text-white lead">Already have an account? <a href="#" class="text-success">Login</a> .</p>
+            <div id="login" class="hidden">
+                    <div class="form-group">
+                            <h2 class="text-center text-white mt-0 mb-0">LOG IN</h2>
+                                <hr class="form-rule">
+                        <form>
+                           
+                            <div class="input-area">
+                                <input type="email" placeholder="your email" class="form-input" required autocomplete="email" >
+                            </div>
+                            <div class="input-area">
+                                <input type="password" placeholder="your password" class="form-input" required>
+                            </div>
+                           
+                            <div class="">
+                                <button type="submit" class="btn btn-success btn-block">Welcome</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div>
+                        <p class="text-center text-white lead">Don't have an account? <a href="#" class="text-success" id="signup-toggle">Register</a> .</p>
+                    </div>
             </div>
+
     </div>
     </div>
     <script src="../js/main.js"></script>

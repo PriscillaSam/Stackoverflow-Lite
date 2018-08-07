@@ -17,10 +17,19 @@ a{
 
 
 }
+.hidden{
+    display: none;
+}
 .center{
     width: 400px;
     margin: 80px auto;
 
+}
+#signup{
+    opacity: 1;
+}
+#login{
+    opacity: 1;
 }
 .form-group{
     border-radius: 5px;
@@ -77,6 +86,10 @@ a{
     box-sizing: border-box;
 
 }
+.form-input:focus{
+    border: 1px solid rgb(103, 197, 144);
+
+}
 .form-rule{
     border: 0;
     border-bottom: 1px solid #3CB371;
@@ -102,6 +115,14 @@ a{
     min-width: 100%;
 }
 
+/*Animation classes*/
+.fadeOut{
+    animation: fadeOut 2s 0s;
+}
+.fadeIn{
+    animation: fadeIn 2s 0s;
+}
+
 @media (max-width:410px){
     body{
         padding: 0 10px;
@@ -114,5 +135,23 @@ a{
     }
     h2{
         font-size: 1.2em
+    }
+}
+
+/*Key-frames*/
+@keyframes fadeOut{
+    from{
+        opacity: 1;
+    }
+    to{
+        opacity: 0;
+    }
+}
+@keyframes fadeIn{
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
     }
 }
