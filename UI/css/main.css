@@ -1,8 +1,6 @@
 body{
     margin:0;
     padding: 0;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-
 }
 a{
     text-decoration-line: none;
@@ -14,8 +12,9 @@ a{
     background-attachment: fixed;
 }
 .container{
-
-
+width: 80%;
+margin: 0 auto;
+padding-bottom: 20px;
 }
 .hidden{
     display: none;
@@ -46,6 +45,9 @@ a{
 .mt-0{
     margin-top: 0;
 }
+.mt-2{
+    margin-top: 20px;
+}
 .ml-2{
     margin-left: 20px;
 }
@@ -59,17 +61,43 @@ a{
 .text-success{
     color:#3CB371;
 }
+.text-light{
+    color: #87CEFA;
+}
 .text-success:hover{
     color: #2E8B57;
 }
+.display-1,
+.display-2,
+.display-3
+{
+    font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 1;
+}
+.display-1{
+    font-size: 4rem;
+}
+.display-2{
+    font-size: 3rem;
+}
+
 .lead{
     font-size: 18px;
 }
-.brand{
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+.p-large{
+    font-size: 18px;
+}
+.brand,
+h2{
+    font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 1;
 }
 .brand-span{
     color:#2E8B57;
+}
+.bg-light{
+    background-color: #E6E6FA;
+
 }
 /*form control styles*/
 
@@ -88,7 +116,6 @@ a{
 }
 .form-input:focus{
     border: 1px solid rgb(103, 197, 144);
-
 }
 .form-rule{
     border: 0;
@@ -97,7 +124,6 @@ a{
 }
 .btn{
     cursor: pointer;
-    font-size: 1em;
     border-radius: 3px;
     border: none;
     padding: 10px;
@@ -107,14 +133,51 @@ a{
     background-color: #3CB371;
     color: white;
 }
+
+.btn-outline-success{
+    border: 1px solid #2E8B57;
+    color: #2E8B57;
+}
+.btn-outline-success:hover{
+    color: white;
+    background-color: #2E8B57;
+}
+
 .btn-success:hover{
     background-color: #2E8B57;
-
 }
 .btn-block{
     min-width: 100%;
 }
 
+.banner{
+    background-image: url('../img/01.jpg');
+    background-size: cover;
+    height: 350px;   
+    padding: 20px 0 20px 50px; 
+}
+
+.box{
+    border-radius: 5px;
+    background-color: white;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+    width: 70%;
+}
+.box ul{
+    padding-left: 0;
+    margin: 10px 0 0;
+}
+.box li{
+    display: inline-block;
+    margin-left: 0;
+    margin-right: 10px;
+    color: #A9A9A9
+}
+.box li i{
+    color: #3CB371;
+    
+}
 /*Animation classes*/
 .fadeOut{
     animation: fadeOut 2s 0s;
@@ -124,20 +187,71 @@ a{
 }
 
 @media (max-width:410px){
-    body{
-        padding: 0 10px;
-    }
+   #form-back{
+       padding:0 20px
+   }
     .center{
         width: 280px;
     }
+    
     .brand{
         font-size: 1.5em;
     }
     h2{
         font-size: 1.2em
     }
+    .banner{
+        height: 200px;
+        padding-left:20px
+    }
+    .display-1{
+        font-size: 1.7rem;
+    }
+    .display-2{
+        font-size: 1.5rem;
+    }
+    .lead{
+        font-size: 13px
+    }
+    .p-large{
+        font-size: 13px
+    }
+    .box i{
+        font-size: 18px;
+    }
 }
 
+@media (max-width:500px){
+    .display-1{
+        font-size: 2.5rem;
+    }
+ .box li{
+     margin-right: 0px;
+ }
+}
+
+@media(max-width:640px){
+    .banner{
+        height: 250px;
+    }
+    .display-1{
+        font-size: 3rem;
+    }
+    .display-2{
+        font-size: 2rem;
+    }  
+
+}
+
+@media(max-width:852px){
+    .container{
+        width: 90%;
+        padding:0 20px 20px;
+    }
+    .box{
+        width: 90%
+    }
+}
 /*Key-frames*/
 @keyframes fadeOut{
     from{

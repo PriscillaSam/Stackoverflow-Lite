@@ -7,8 +7,12 @@ const container = document.getElementsByClassName('center')[0];
 
 [...inputs].forEach(i  => {
 
-    i.addEventListener('click', (event) => {
-        i.style.padding = '15px 10px 10px';
+    i.addEventListener('focus', (event) => {
+        i.style.padding = '20px 10px 10px';
+    });
+    
+    i.addEventListener('blur', (event) => {
+        i.style.padding = '10px';
     });
 });
 const enlarge = (input) => {
