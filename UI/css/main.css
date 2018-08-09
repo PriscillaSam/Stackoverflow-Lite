@@ -28,6 +28,9 @@ padding-bottom: 20px;
 .display-2{
     font-size: 3rem;
 }
+.display-4{
+    font-size: 1.5rem;
+}
 
 .lead{
     font-size: 18px;
@@ -107,7 +110,7 @@ padding-bottom: 20px;
 }
 
 .box .display-3{
-    font-size: 1.05rem
+    font-size: 1rem
 }
 
 .box li i{
@@ -259,6 +262,10 @@ margin-bottom: 5px;
     }
  .box li{
      margin-right: 0px;
+     font-size: 14px;
+ }
+ .box .display-3{
+     font-size: 0.8rem
  }
  #nav-sm{
     width: 100%;
