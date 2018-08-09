@@ -52,12 +52,20 @@ padding-bottom: 20px;
     border: none;
     padding: 10px;
 }
-
+.btn-sm{
+    font-size: 13px;
+}
 .btn-success{
     background-color: #3CB371;
     color: white;
 }
-
+.btn-danger{
+    background-color:#FF4500;
+    color: white
+}
+.btn-danger:hover{
+    background-color: #FF0000;
+}
 .btn-outline-success{
     border: 1px solid #2E8B57;
     color: #2E8B57;
@@ -178,7 +186,12 @@ margin-bottom: 5px;
 .slideOutLeft{
     animation: slideOutLeft 1.5s ;
 }
-
+.slideInUp{
+    animation: slideInUp 1s;
+}
+.slideOutDown{
+    animation: slideOutDown 1s;
+}
 #nav-sm{
     position: fixed;
     background-color: #fff;
@@ -236,6 +249,12 @@ margin-bottom: 5px;
     .w-50{
         width: 100%;
     }
+    .modal-body{
+        width: 70%;
+        left: 10%;
+    }
+
+  
 }
 @media(max-width:640px){
     .banner{
@@ -364,3 +383,52 @@ margin-bottom: 5px;
         left: -100%;
     }
 }
+
+@keyframes slideInUp {
+    from{
+        bottom: -100%;
+    }
+    to{
+        bottom: 100px;
+    }
+}
+@keyframes slideOutDown{
+    from{
+        bottom: 0;
+    }
+    to{
+        bottom: -100%;
+    }
+}
+@keyframes fadeInDown {
+    from {
+      opacity: 0;
+      -webkit-transform: translate3d(0, -100%, 0);
+      transform: translate3d(0, -100%, 0);
+    }
+  
+    to {
+      opacity: 1;
+      -webkit-transform: translate3d(0, 0, 0);
+      transform: translate3d(0, 0, 0);
+    }
+  }
+  
+  .fadeInDown {
+    -webkit-animation-name: fadeInDown;
+    animation-name: fadeInDown;
+    animation-duration: 1s;
+  }
+
+  @keyframes slide{
+      from{
+          height: 0;
+      }
+      to{
+          height: 50px;
+      }
+  }
+
+  .slide{
+      animation: slide 1s ;
+  }
