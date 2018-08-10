@@ -63,6 +63,7 @@
                         <li>answered 5 mins ago</li>
                         <li><a href="" title="downvote answer"><i class="fa fa-thumbs-o-down fa-fw"></i></a>0</li>
                         <li><a href="" title="upvote answer"><i class="fa fa-thumbs-o-up fa-fw"></i></a>20</li>
+                        <li><a href="" ><i class="fa fa-square-o fa-fw js-accept"></i></a>accept this answer</li>
 
                     </ul>
                 </div>
@@ -71,12 +72,14 @@
                             Cumque obcaecati quo dolores laudantium possimus illum quia ullam laboriosam...</p>
                         <a href="" class="lead">Read more <i class="fa fa-angle-double-right"></i></a>
                         <h3 class="display-3 mb-0"><i class="fa fa-user-o text-success"></i> <span class="mr-1">Kent Baker</span>
-                        <span class="text-primary"><i class="fa fa-envelope-o fa-fw text-success"></i><span class=""><a href="" class="text-primary">kent.baker@gmail.com</a></span></span>
+                        <span class="text-primary"><i class="fa fa-envelope-o fa-fw text-success js-accept"></i><span class=""><a href="" class="text-primary">kent.baker@gmail.com</a></span></span>
                         </h3>
                         <ul>
                             <li>answered 5 mins ago</li>
                             <li><a href="" title="downvote answer"><i class="fa fa-thumbs-o-down fa-fw"></i></a>0</li>
                             <li><a href="" title="upvote answer"><i class="fa fa-thumbs-o-up fa-fw"></i></a>20</li>
+                            <li id="accept-link"><a href="" ><i class="fa fa-square-o fa-fw js-accept"></i></a>accept this answer</li>
+
                         </ul>
                     </div>
             </div>
@@ -119,6 +122,24 @@
             
         </ul>    
 </nav>
+<!-- modal -->
+<div class="modal hidden">
+        <div class="modal-body slideInUp p-2" id="confirmBox">
+                <a href="" class="close cl-modal">
+                    <span class="">&times;</span>
+                </a>
+            <div class="modal-title">
+                <h3 class="display-3"><i class="fa fa-edit mr-1"></i>Mark this answer as your accepted answer.</h3>
+                <hr>
+            </div>
+            <div class="">
+                <p class="d-i-block mr-1"><a class="btn btn-sm btn-success cl-modal" href="">Cancel</a></p>
+                <p class="d-i-block"><a class="btn btn-danger btn-sm" href="" id="confirm">Accept</a></p>
+            </div>
+        </div>      
+    </div>
         <script src="../js/app.js"></script>
+        <script src="../js/accept.js"></script>
+       
 </body>
 </html>
