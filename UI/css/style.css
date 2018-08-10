@@ -31,6 +31,9 @@ list-style-type: none;
 .mt-2{
     margin-top: 20px;
 }
+.mt-4{
+    margin-top: 40px;
+}
 .ml-1{
     margin-left: 10px;
 }
@@ -62,6 +65,9 @@ list-style-type: none;
 }
 .md-100{
     margin-left: 100px;
+}
+.mt-150{
+    margin-top: 150px;
 }
 /*Text styles*/
 .text-danger{
