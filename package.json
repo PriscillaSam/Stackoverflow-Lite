@@ -1,0 +1,22 @@
+{
+  "name": "stackoverflow-lite",
+  "version": "1.0.0",
+  "description": "A platform for users to ask questions and give answers to asked questions.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PriscillaSam/Stackoverflow-Lite.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PriscillaSam/Stackoverflow-Lite/issues"
+  },
+  "homepage": "https://github.com/PriscillaSam/Stackoverflow-Lite#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
