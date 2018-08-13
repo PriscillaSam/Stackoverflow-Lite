@@ -1,0 +1,32 @@
+{    
+  "check-coverage": true,
+  "per-file": true,
+  "lines": 90,
+  "statements": 90,
+  "functions": 90,
+  "branches": 90,
+  "reporter": [
+    "lcov",
+    "text-lcov"
+  ],
+  "require": [
+    "babel-register"
+  ],
+
+  "sourceMap": false,
+  "instrument": false,
+  "cache": true,
+  "report-dir": "./coverage",
+
+  "include": [
+    "server/**/*.js",
+    "server/repository/**/*.js"
+  ],
+  "exclude": [
+    "**/node_modules/**",
+    "**/models/**",
+    "**/test/**",
+    "**/coverage/**",
+    "**/UI/**"
+  ]
+}
