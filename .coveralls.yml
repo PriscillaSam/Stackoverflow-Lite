@@ -1,5 +1,2 @@
 service_name: travis-pro
 repo_token: tAjXhNucD4n7VPXdUbN820xRkg1AnchtY
-
-exclude_patterns:
-- "UI/"
