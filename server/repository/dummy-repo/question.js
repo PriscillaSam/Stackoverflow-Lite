@@ -2,6 +2,8 @@ import questions from '../../models/dummy-models/questions';
 import answers from '../../models/dummy-models/answers';
 
 const repo = {
+  questions,
+
   /**
    * @function getQuestions Gets all questions on the platform
    */
@@ -22,6 +24,18 @@ const repo = {
     const ques = { ...question };
     ques.answers = questionAnswers;
     return ques;
+  },
+
+  postQuestion(question, user) {
+    const ids = questions.map(q => q.id);
+    const quesObject = {
+      id: Math.max(...ids) + 1,
+      user,
+      question,
+    };
+
+    questions.push(quesObject);
+    return quesObject;
   },
 };
 

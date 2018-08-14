@@ -1,3 +1,4 @@
+/* eslint prefer-destructuring: 0 */
 import chai from 'chai';
 import repo from '../../repository/dummy-repo/question';
 import questions from '../../models/dummy-models/questions';
@@ -11,7 +12,7 @@ describe('Get questions fuction', () => {
   });
 
   it('should have 4 questions in it', () => {
-    expect(repo.getQuestions()).to.have.length(4);
+    expect(repo.getQuestions()).to.have.length(questions.length);
   });
 
   it('should contain an array of objects', () => {
@@ -53,5 +54,17 @@ describe('Get question function', () => {
   it('should return null if question does not exist', () => {
     const question = repo.getQuestion(10);
     expect(question).to.be.deep.equals(null);
+  });
+});
+
+describe('Post question function', () => {
+  it('should add a question to the question array', () => {
+    const question = 'What is your name?';
+    const length = questions.length;
+    const user = { id: 4, name: 'Joe Sam' };
+
+    const returnObject = repo.postQuestion(question, user);
+    expect(repo.questions).to.have.lengthOf(length + 1);
+    expect(returnObject).to.be.an('object');
   });
 });

@@ -1,9 +1,9 @@
 import repo from '../repository/dummy-repo/question';
-
+import userRepo from '../repository/dummy-repo/user';
 
 class Question {
   /**
-   * @function getQuestions Fetches all the questions available
+   * @method getQuestions Fetches all the questions available
    * @param {object} req Request object
    * @param {object} res Response object List of questions
    */
@@ -16,7 +16,7 @@ class Question {
   }
 
   /**
-   * @function getQuestion Fetches a particular question by id
+   * @method getQuestion Fetches a particular question by id
    * @param {object} req Request Object containing question id
    * @param {object} res Response object containing question
    */
@@ -35,6 +35,30 @@ class Question {
       status: 'success',
       message: 'question has been successfully gotten',
       question,
+    });
+  }
+
+  /**
+   * @method postQuestion Post a question on the platform
+   * @param {object} req Request object
+   * @param {object} res Response object
+   */
+  static postQuestion(req, res) {
+    const { userId, question } = req.body;
+    const user = userRepo.getUser(userId);
+
+    if (user === null) {
+      res.status(404).json({
+        status: 'error',
+        message: 'this user does not exist',
+      });
+    }
+
+    const ques = repo.postQuestion(question, user);
+    res.status(200).json({
+      status: 'success',
+      message: 'Your question has been posted',
+      ques,
     });
   }
 }

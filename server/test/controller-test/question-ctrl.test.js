@@ -70,3 +70,33 @@ describe('function getQuestion of question controller', () => {
       });
   });
 });
+
+describe('function post question of question controller', () => {
+  it('should return status code 200', (done) => {
+    chai.request(app)
+      .post('/api/v1/questions')
+      .send(
+        {
+          userId: 4,
+          question: 'Who can tell me?',
+        },
+      )
+      .end((err, res) => {
+        if (err) done(err);
+        expect(res).to.have.status(200);
+        expect(res.body).to.have.property('ques');
+        done();
+      });
+  });
+
+  it('should return an error if user does not exist', (done) => {
+    chai.request(app)
+      .post('/api/v1/questions')
+      .send({ userId: 34, question: 'Who can tell me?' })
+      .end((err, res) => {
+        if (err) done(err);
+        expect(res).to.have.status(404);
+        done();
+      });
+  });
+});
