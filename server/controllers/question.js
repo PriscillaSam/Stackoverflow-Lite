@@ -21,7 +21,7 @@ class Question {
    * @param {object} res Response object containing question
    */
   static getQuestion(req, res) {
-    const questionId = parseInt(req.params.questionId, 10);
+    const questionId = parseInt(req.params.id, 10);
 
     const question = repo.getQuestion(questionId);
     if (question === null) {

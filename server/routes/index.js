@@ -5,6 +5,6 @@ import validateId from '../middleware/validator';
 const router = express.Router();
 
 router.get('/questions', Question.getQuestions);
-router.get('/questions/:questionId', validateId, Question.getQuestion);
+router.get('/questions/:id', validateId, Question.getQuestion);
 
 export default router;

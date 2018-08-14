@@ -1,4 +1,5 @@
 /* eslint no-unused-vars: 0 */
+/* eslint consistent-return: 0 */
 
 import validator from 'express-validation';
 
@@ -26,14 +27,14 @@ const errorHandler = (err, req, res, next) => {
     }
   }
 
-  if (process.env.NODE_ENV !== 'production') {
-    return res.status(500).json(err.stack);
-  }
+  // if (process.env.NODE_ENV !== 'production') {
+  //   return res.status(500).json(err.stack);
+  // }
 
-  return res.status(500).json({
-    status: 'error',
-    message: 'something went wrong',
-  });
+  // return res.status(500).json({
+  //   status: 'error',
+  //   message: 'something went wrong',
+  // });
 };
 
 export default errorHandler;
