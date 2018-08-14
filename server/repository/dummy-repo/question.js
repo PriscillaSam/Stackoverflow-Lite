@@ -26,6 +26,11 @@ const repo = {
     return ques;
   },
 
+  /**
+   * Add a new question to the questions array
+   * @param {string} question New question asked
+   * @param {object} user Poster User object
+   */
   postQuestion(question, user) {
     const ids = questions.map(q => q.id);
     const quesObject = {
@@ -37,6 +42,22 @@ const repo = {
     questions.push(quesObject);
     return quesObject;
   },
+  /**
+   * Deletes a question with the specified id
+   * @param {number} questionId id of question to delete
+   * @param {number} userId id of user
+   * @returns string
+   */
+  deleteQuestion(questionId, userId) {
+    const ques = questions.find(q => q.id === questionId);
+    if (ques === null || ques === undefined) return null;
+    if (ques.user.id !== userId) return 'unauthorized';
+
+    const index = questions.indexOf(ques);
+    const removedQues = questions.splice(index, 1);
+    return removedQues[0];
+  },
+
 };
 
 export default repo;
