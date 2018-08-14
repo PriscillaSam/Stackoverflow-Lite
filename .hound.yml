@@ -3,4 +3,4 @@ eslint:
   config_file: .eslintrc
 
 eslint:
-ignore_file: .eslintignore
+  ignore_file: .eslintignore
