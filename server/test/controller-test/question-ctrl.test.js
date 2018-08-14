@@ -57,4 +57,49 @@ describe('function getQuestion of question controller', () => {
         done();
       });
   });
+
+  it('should return a validation error for wrong input', (done) => {
+    chai.request(app)
+      .get('/api/v1/questions/o')
+      .end((err, res) => {
+        if (err) done(err);
+        expect(res).to.have.status(400);
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.property('errors');
+        done();
+      });
+  });
+});
+
+describe('function post question of question controller', () => {
+  it('should return status code 200', (done) => {
+    chai.request(app)
+      .post('/api/v1/questions')
+      .send(
+        {
+          userId: 4,
+          question: 'Who can tell me?',
+        },
+      )
+      .end((err, res) => {
+        if (err) done(err);
+        expect(res).to.have.status(201);
+        expect(res.body).to.have.property('ques');
+        expect(res.body.status).to.deep.equals('success');
+        done();
+      });
+  });
+
+  it('should return an error if user does not exist', (done) => {
+    chai.request(app)
+      .post('/api/v1/questions')
+      .send({ userId: 34, question: 'Who can tell me?' })
+      .end((err, res) => {
+        if (err) done(err);
+        expect(res).to.have.status(404);
+        expect(res.body.status).to.deep.equals('error');
+        expect(res.body.message).to.deep.equals('this user does not exist');
+        done();
+      });
+  });
 });
