@@ -31,6 +31,22 @@ const questions = [
     },
     question: 'What is the maximum height a snake can climb?',
   },
+  {
+    id: 5,
+    user: {
+      id: 6,
+      name: 'Garry Doe',
+    },
+    question: 'Who developed the first software?',
+  },
+  {
+    id: 6,
+    user: {
+      id: 2,
+      name: 'John Doe',
+    },
+    question: 'Does Nigeria practice democracy?',
+  },
 
 ];
 

@@ -103,3 +103,68 @@ describe('function post question of question controller', () => {
       });
   });
 });
+
+describe('delete question function', () => {
+  it('should return status 404 if user does not exist', (done) => {
+    chai.request(app)
+      .del('/api/v1/questions/1')
+      .send({ userId: 34 })
+      .end((err, res) => {
+        if (err) done(err);
+        expect(res).to.have.status(404);
+        done();
+      });
+  });
+
+  it('should return status 403 if unauthorized', (done) => {
+    chai.request(app)
+      .del('/api/v1/questions/4')
+      .send({ userId: 4 })
+      .end((err, res) => {
+        if (err) done(err);
+        expect(res).to.have.status(403);
+        expect(res.body.status).to.deep.equals('error');
+        expect(res.body.message).to.deep.equals('you are not authorized to perform this operation');
+        done();
+      });
+  });
+
+  it('should return status 404 if question does not exist', (done) => {
+    chai.request(app)
+      .del('/api/v1/questions/20')
+      .send({ userId: 4 })
+      .end((err, res) => {
+        if (err) done(err);
+        expect(res).to.have.status(404);
+        expect(res.body.status).to.deep.equals('error');
+        expect(res.body.message).to.deep.equals('this question does not exist');
+        done();
+      });
+  });
+
+  it('should return the deleted question', (done) => {
+    chai.request(app)
+      .del('/api/v1/questions/6')
+      .send({ userId: 2 })
+      .end((err, res) => {
+        if (err) done(err);
+        expect(res).to.have.status(200);
+        expect(res.body.status).to.deep.equals('success');
+        expect(res.body.message).to.deep.equals('your question has been deleted');
+        expect(res.body).to.have.property('question');
+        done();
+      });
+  });
+  it('should return a validation error for wrong input', (done) => {
+    chai.request(app)
+      .del('/api/v1/questions/o')
+      .send({ userId: 2 })
+      .end((err, res) => {
+        if (err) done(err);
+        expect(res).to.have.status(400);
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.property('errors');
+        done();
+      });
+  });
+});

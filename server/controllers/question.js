@@ -1,5 +1,6 @@
 import repo from '../repository/dummy-repo/question';
 import userRepo from '../repository/dummy-repo/user';
+import errors from '../helpers/errorMessages';
 
 class Question {
   /**
@@ -25,10 +26,7 @@ class Question {
 
     const question = repo.getQuestion(questionId);
     if (question === null) {
-      return res.status(404).json({
-        status: 'error',
-        message: 'this question does not exist',
-      });
+      return errors.notFound(res, 'question');
     }
 
     return res.status(200).json({
@@ -48,17 +46,43 @@ class Question {
     const user = userRepo.getUser(userId);
 
     if (user === null) {
-      res.status(404).json({
-        status: 'error',
-        message: 'this user does not exist',
-      });
+      return errors.notFound(res, 'user');
     }
 
     const ques = repo.postQuestion(question, user);
-    res.status(201).json({
+    return res.status(201).json({
       status: 'success',
       message: 'Your question has been posted',
       ques,
+    });
+  }
+
+  /**
+   * Delete's a question with the passed id
+   * @param {object} req Request Object
+   * @param {object} res Response Object
+   */
+  static deleteQuestion(req, res) {
+    const questionId = parseInt(req.params.id, 10);
+    const { userId } = req.body;
+
+    const user = userRepo.getUser(userId);
+    if (user === null) {
+      return errors.notFound(res, 'user');
+    }
+    const question = repo.deleteQuestion(questionId, userId);
+
+    if (question === 'unauthorized') {
+      return errors.unauthorized(res);
+    }
+    if (!question) {
+      return errors.notFound(res, 'question');
+    }
+
+    return res.status(200).json({
+      status: 'success',
+      message: 'your question has been deleted',
+      question,
     });
   }
 }

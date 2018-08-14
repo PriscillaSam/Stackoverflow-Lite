@@ -68,3 +68,25 @@ describe('Post question function', () => {
     expect(returnObject).to.be.an('object');
   });
 });
+
+describe('Delete question function', () => {
+  it('should be a function', () => {
+    expect(repo.deleteQuestion).to.be.a('function');
+  });
+  it('should return null if question does not exist', () => {
+    expect(repo.deleteQuestion(10, 4)).to.deep.equals(null);
+  });
+  it('should return the removed question', () => {
+    const question = questions.find(q => q.id === 3);
+    const delQuestion = repo.deleteQuestion(3, 4);
+
+    expect(delQuestion).to.be.a('object');
+    expect(delQuestion).to.deep.equal(question);
+    expect(delQuestion).to.have.property('user');
+    expect(delQuestion.user.id).to.deep.equal(4);
+  });
+  it('should return unauthorized if question is not user\'s ', () => {
+    expect(repo.deleteQuestion(4, 4)).to.deep.equals('unauthorized');
+    expect(repo.deleteQuestion(4, 4)).to.be.a('string');
+  });
+});
