@@ -83,8 +83,9 @@ describe('function post question of question controller', () => {
       )
       .end((err, res) => {
         if (err) done(err);
-        expect(res).to.have.status(200);
+        expect(res).to.have.status(201);
         expect(res.body).to.have.property('ques');
+        expect(res.body.status).to.deep.equals('success');
         done();
       });
   });
@@ -96,6 +97,8 @@ describe('function post question of question controller', () => {
       .end((err, res) => {
         if (err) done(err);
         expect(res).to.have.status(404);
+        expect(res.body.status).to.deep.equals('error');
+        expect(res.body.message).to.deep.equals('this user does not exist');
         done();
       });
   });

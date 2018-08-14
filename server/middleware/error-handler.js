@@ -13,6 +13,7 @@ const errorHandler = (err, req, res, next) => {
         fields = [...fields, ...error.field];
         messages = [...messages, ...error.messages];
       });
+
       return res.status(400).json({
         errors: {
           status: err.status,
@@ -26,15 +27,6 @@ const errorHandler = (err, req, res, next) => {
       });
     }
   }
-
-  // if (process.env.NODE_ENV !== 'production') {
-  //   return res.status(500).json(err.stack);
-  // }
-
-  // return res.status(500).json({
-  //   status: 'error',
-  //   message: 'something went wrong',
-  // });
 };
 
 export default errorHandler;

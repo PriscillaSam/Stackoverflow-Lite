@@ -55,7 +55,7 @@ class Question {
     }
 
     const ques = repo.postQuestion(question, user);
-    res.status(200).json({
+    res.status(201).json({
       status: 'success',
       message: 'Your question has been posted',
       ques,
