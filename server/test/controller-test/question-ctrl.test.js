@@ -124,7 +124,7 @@ describe('delete question function', () => {
         if (err) done(err);
         expect(res).to.have.status(403);
         expect(res.body.status).to.deep.equals('error');
-        expect(res.body.message).to.deep.equals('you are not authorized to perform this operation');
+        expect(res.body.message).to.deep.equals('you are not allowed to perform this operation');
         done();
       });
   });
