@@ -6,6 +6,7 @@ const questions = [
       name: 'Garry Doe',
     },
     question: 'Why is programming hard?',
+    dateTime: new Date(2018, 8, 1),
   },
   {
     id: 2,
@@ -14,7 +15,10 @@ const questions = [
       name: 'Janet Doe',
     },
     question: 'Cooking is a skill or inborn?',
+    dateTime: new Date(2018, 8, 1),
+
   },
+  // test question
   {
     id: 3,
     user: {
@@ -22,6 +26,8 @@ const questions = [
       name: 'Janet Doe',
     },
     question: 'Why do we have seasons and weather?',
+    dateTime: new Date(2018, 8, 1),
+
   },
   {
     id: 4,
@@ -30,6 +36,8 @@ const questions = [
       name: 'Sam Doe',
     },
     question: 'What is the maximum height a snake can climb?',
+    dateTime: new Date(2018, 8, 1),
+
   },
   {
     id: 5,
@@ -38,6 +46,8 @@ const questions = [
       name: 'Garry Doe',
     },
     question: 'Who developed the first software?',
+    dateTime: new Date(2018, 8, 1),
+
   },
   {
     id: 6,
@@ -46,8 +56,49 @@ const questions = [
       name: 'John Doe',
     },
     question: 'Does Nigeria practice democracy?',
-  },
+    dateTime: new Date(2018, 8, 1),
 
+  },
+  {
+    id: 7,
+    user: {
+      id: 2,
+      name: 'John Doe',
+    },
+    question: 'Does Nigeria practice democracy?',
+    dateTime: new Date(2018, 8, 6),
+
+  },
+  {
+    id: 8,
+    user: {
+      id: 8,
+      name: 'Michael Doe',
+    },
+    question: 'Does Nigeria practice democracy?',
+    dateTime: new Date(2018, 8, 14),
+
+  },
+  {
+    id: 9,
+    user: {
+      id: 8,
+      name: 'Michael Doe',
+    },
+    question: 'Does Nigeria practice democracy?',
+    dateTime: new Date(2018, 8, 14),
+
+  },
+  {
+    id: 10,
+    user: {
+      id: 8,
+      name: 'Michael Doe',
+    },
+    question: 'Does Nigeria practice democracy?',
+    dateTime: new Date(2018, 8, 14),
+
+  },
 ];
 
 export default questions;

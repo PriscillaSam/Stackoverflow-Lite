@@ -32,7 +32,7 @@ describe('function getQuestions of question controller', () => {
 describe('function getQuestion of question controller', () => {
   it('should return status code 404 if question does not exist', (done) => {
     chai.request(app)
-      .get('/api/v1/questions/10')
+      .get('/api/v1/questions/11')
       .end((err, res) => {
         if (err) done(err);
         expect(res).to.have.status(404);

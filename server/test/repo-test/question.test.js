@@ -52,7 +52,7 @@ describe('Get question function', () => {
   });
 
   it('should return null if question does not exist', () => {
-    const question = repo.getQuestion(10);
+    const question = repo.getQuestion(13);
     expect(question).to.be.deep.equals(null);
   });
 });
@@ -74,7 +74,7 @@ describe('Delete question function', () => {
     expect(repo.deleteQuestion).to.be.a('function');
   });
   it('should return null if question does not exist', () => {
-    expect(repo.deleteQuestion(10, 4)).to.deep.equals(null);
+    expect(repo.deleteQuestion(13, 4)).to.deep.equals(null);
   });
   it('should return the removed question', () => {
     const question = questions.find(q => q.id === 3);

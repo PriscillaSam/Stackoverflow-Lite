@@ -73,13 +73,52 @@ const answers = [
     id: 8,
     userId: 3,
     questionId: 3,
-    answer: '',
+    answer: 'This is a test answer',
     upvotes: 22,
     downvotes: 3,
     isAccepted: false,
 
   },
+  {
+    id: 9,
+    userId: 3,
+    questionId: 3,
+    answer: 'This is another test answer',
+    upvotes: 22,
+    downvotes: 3,
+    isAccepted: false,
 
+  },
+  {
+    id: 10,
+    userId: 3,
+    questionId: 3,
+    answer: 'This is a third test answer',
+    upvotes: 22,
+    downvotes: 3,
+    isAccepted: false,
+
+  },
+  {
+    id: 11,
+    userId: 3,
+    questionId: 3,
+    answer: 'Sample answer to question',
+    upvotes: 22,
+    downvotes: 3,
+    isAccepted: false,
+
+  },
+  {
+    id: 12,
+    userId: 3,
+    questionId: 3,
+    answer: 'Sample answer',
+    upvotes: 22,
+    downvotes: 3,
+    isAccepted: false,
+
+  },
 ];
 
 export default answers;
