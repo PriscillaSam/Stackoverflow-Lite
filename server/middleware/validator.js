@@ -1,25 +1,34 @@
 import joi from 'joi';
 import validate from 'express-validation';
 
-const numJoi = joi.number().integer();
+const numJoi = joi.number().integer().required();
 const validator = {
   validateId: validate({
     params: {
-      id: numJoi.required(),
+      id: numJoi,
     },
   }),
   validateQuestion: validate({
     body: {
       question: joi.string().required(),
-      userId: numJoi.required(),
+      userId: numJoi,
     },
   }),
   validateDelete: validate({
     params: {
-      id: numJoi.required(),
+      id: numJoi,
     },
     body: {
-      userId: numJoi.required(),
+      userId: numJoi,
+    },
+  }),
+  validatePostAnswer: validate({
+    params: {
+      id: numJoi,
+    },
+    body: {
+      userId: numJoi,
+      answer: joi.string().required(),
     },
   }),
 };

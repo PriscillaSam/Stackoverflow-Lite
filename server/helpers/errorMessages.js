@@ -12,7 +12,7 @@ const errors = {
   unauthorized(res) {
     return res.status(403).json({
       status: 'error',
-      message: 'you are not authorized to perform this operation',
+      message: 'you are not allowed to perform this operation',
     });
   },
 };
