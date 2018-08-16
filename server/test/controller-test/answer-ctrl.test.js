@@ -145,7 +145,7 @@ describe('POST api/v1/questions/:questionId/answers/:answerId', () => {
       .end((err, res) => {
         if (err) done(err);
         expect(res).to.have.status(200);
-        expect(res.body.message).to.deep.equals('your answer has been updated');
+        expect(res.body.message).to.deep.equals('your have accepted this answer');
         expect(res.body).to.have.keys('status', 'message', 'acceptedAnswer');
         done();
       });

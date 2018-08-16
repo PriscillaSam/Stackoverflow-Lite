@@ -73,7 +73,7 @@ class Answer {
     acceptedAnswer = answerRepo.acceptAnswer(answerId);
     return res.status(200).json({
       status: 'success',
-      message: 'your answer has been updated',
+      message: 'your have accepted this answer',
       acceptedAnswer,
     });
   }
