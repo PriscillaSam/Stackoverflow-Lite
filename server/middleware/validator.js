@@ -31,6 +31,15 @@ const validator = {
       answer: joi.string().required(),
     },
   }),
+  validateAcceptAnswer: validate({
+    params: {
+      answerId: numJoi,
+      questionId: numJoi
+    },
+    body: {
+      userId: numJoi
+    },
+  }),
 };
 
 

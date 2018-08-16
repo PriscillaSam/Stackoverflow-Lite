@@ -76,7 +76,7 @@ const answers = [
     answer: 'This is a test answer',
     upvotes: 22,
     downvotes: 3,
-    isAccepted: false,
+    isAccepted: true,
 
   },
   {

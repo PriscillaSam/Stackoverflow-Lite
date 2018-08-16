@@ -12,4 +12,5 @@ router.post('/questions/', validator.validateQuestion, Question.postQuestion);
 router.delete('/questions/:id', validator.validateDelete, Question.deleteQuestion);
 
 router.post('/questions/:id/answers/', validator.validatePostAnswer, Answer.postAnswer);
+router.post('/questions/:questionId/answers/:answerId', validator.validateAcceptAnswer, Answer.acceptAnswer);
 export default router;

@@ -90,3 +90,19 @@ describe('Delete question function', () => {
     expect(repo.deleteQuestion(4, 4)).to.be.a('string');
   });
 });
+
+describe('Get questions by user function', () => {
+  it('should be a function', () => {
+    expect(repo.getQuestionByUser).to.be.a('function');
+  });
+  it('should return an array', () => {
+    expect(repo.getQuestionByUser(1)).to.be.an('array');
+  });
+  it('should return an empty array if user doesnt have questions', () => {
+    expect(repo.getQuestionByUser(1)).to.deep.equals([]);
+  });
+  it('should return an array of the user\'s questions', () => {
+    const len = repo.questions.filter(q => q.user.id === 3).length;
+    expect(repo.getQuestionByUser(3)).to.have.length(len);
+  });
+});

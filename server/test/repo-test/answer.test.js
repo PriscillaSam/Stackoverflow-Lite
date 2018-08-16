@@ -4,8 +4,7 @@ import answers from '../../models/dummy-models/answers';
 
 const { expect } = chai;
 
-const refreshAnswers = [...answers];
-describe('Post answer function of answer repository', () => {
+describe('Post answer function', () => {
   it('should be a function', () => {
     expect(repo.postAnswer).to.be.a('function');
   });
@@ -45,5 +44,22 @@ describe('Post answer function of answer repository', () => {
       isAccepted: false,
     };
     expect(repo.postAnswer(ansObject)).to.be.deep.equals(answer);
+  });
+});
+
+describe('Get answer function', () => {
+  it('should return null if answer does not exist', () => {
+    expect(repo.getAnswer(20)).to.be.deep.equals(null);
+  });
+  it('should return the answer if answer exists', () => {
+    expect(repo.getAnswer(1)).to.deep.equals(answers[0]);
+  });
+});
+
+describe('Accept answer function', () => {
+  it('should return an object', () => {
+    const acceptedAnswer = repo.acceptAnswer(12);
+    expect(acceptedAnswer).to.be.an('object');
+    expect(acceptedAnswer.isAccepted).to.deep.equals(true);
   });
 });

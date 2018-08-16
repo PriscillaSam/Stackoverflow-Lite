@@ -57,6 +57,14 @@ const repo = {
     const removedQues = questions.splice(index, 1);
     return removedQues[0];
   },
+  /**
+   * Gets all questions asked by user
+   * @param {number} id UserId to get questions for
+   */
+  getQuestionByUser(id) {
+    const userQuestions = this.questions.filter(q => q.user.id === id);
+    return [...userQuestions];
+  },
 
 };
 
