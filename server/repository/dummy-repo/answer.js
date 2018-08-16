@@ -37,6 +37,17 @@ const answerRepo = {
     if (!answer) return null;
     return answer;
   },
+  /**
+   * Marks an answer as accepted
+   * @param {number} id AnswerId of answer to accept
+   */
+  acceptAnswer(id) {
+    const answer = this.answers.find(a => a.id);
+    const index = this.answers.indexOf(answer);
+    answer.isAccepted = true;
+    const acceptedAnswer = this.answers.splice(index, 1, answer);
+    return acceptedAnswer[0];
+  },
 };
 
 export default answerRepo;

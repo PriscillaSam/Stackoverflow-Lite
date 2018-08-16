@@ -55,3 +55,11 @@ describe('Get answer function', () => {
     expect(repo.getAnswer(1)).to.deep.equals(answers[0]);
   });
 });
+
+describe('Accept answer function', () => {
+  it('should return an object', () => {
+    const acceptedAnswer = repo.acceptAnswer(12);
+    expect(acceptedAnswer).to.be.an('object');
+    expect(acceptedAnswer.isAccepted).to.deep.equals(true);
+  });
+});

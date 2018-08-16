@@ -110,4 +110,44 @@ describe('POST api/v1/questions/:questionId/answers/:answerId', () => {
         done();
       });
   });
+  it('should return an authorized error if user is not the owner of the question', (done) => {
+    chai.request(app)
+      .post('/api/v1/questions/3/answers/3')
+      .send({
+        userId: 5,
+      })
+      .end((err, res) => {
+        if (err) done(err);
+        expect(res).to.have.status(403);
+        expect(res.body.message).to.deep.equals('you are not allowed to perform this operation');
+        done();
+      });
+  });
+  it('should return an authorized error if question already has an accepted answer', (done) => {
+    chai.request(app)
+      .post('/api/v1/questions/3/answers/3')
+      .send({
+        userId: 4,
+      })
+      .end((err, res) => {
+        if (err) done(err);
+        expect(res).to.have.status(403);
+        expect(res.body.message).to.deep.equals('you are not allowed to perform this operation');
+        done();
+      });
+  });
+  it('should return a status code 200 if the operation is successful', (done) => {
+    chai.request(app)
+      .post('/api/v1/questions/1/answers/2')
+      .send({
+        userId: 6,
+      })
+      .end((err, res) => {
+        if (err) done(err);
+        expect(res).to.have.status(200);
+        expect(res.body.message).to.deep.equals('your answer has been updated');
+        expect(res.body).to.have.keys('status', 'message', 'acceptedAnswer');
+        done();
+      });
+  });
 });
