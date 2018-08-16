@@ -4,8 +4,7 @@ import answers from '../../models/dummy-models/answers';
 
 const { expect } = chai;
 
-const refreshAnswers = [...answers];
-describe('Post answer function of answer repository', () => {
+describe('Post answer function', () => {
   it('should be a function', () => {
     expect(repo.postAnswer).to.be.a('function');
   });

@@ -6,7 +6,7 @@ import errors from '../helpers/errorMessages';
 
 class Answer {
   /**
-   * Post Answer
+   * Post an Answer
    * @param {object} req Request Object
    * @param {object} res Response Object
    */
@@ -38,6 +38,22 @@ class Answer {
       message: 'Your answer has been posted',
       newAnswer,
     });
+  }
+
+  /**
+   * Accepts an answer
+   * @param {object} req Request
+   * @param {object} res Response
+   */
+  static acceptAnswer(req, res) {
+    const { questionId, id } = req.params;
+    const { userId } = req.body;
+    // process
+    // check that user, question and answer exists
+    // check that user asked d question
+    // proceed
+
+    
   }
 }
 

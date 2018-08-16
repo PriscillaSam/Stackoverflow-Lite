@@ -5,7 +5,7 @@ import app from '../../../app';
 chai.use(chaiHttp);
 const { expect } = chai;
 
-describe('Post answer method of answer controller', () => {
+describe('POST api/v1/questions/:questionId/answers', () => {
   it('should return a status code 404 if user does not exist', (done) => {
     chai.request(app)
       .post('/api/v1/questions/1/answers')
@@ -15,7 +15,6 @@ describe('Post answer method of answer controller', () => {
       })
       .end((err, res) => {
         if (err) done(err);
-        console.log(res.body);
         expect(res).to.have.status(404);
         expect(res).to.be.an('object');
         expect(res.body.status).to.deep.equals('error');
@@ -65,6 +64,7 @@ describe('Post answer method of answer controller', () => {
         expect(res).to.have.status(201);
         expect(res.body.status).to.deep.equals('success');
         expect(res.body.message).to.deep.equals('Your answer has been posted');
+        expect(res.body).to.have.keys('status', 'newAnswer', 'message');
         done();
       });
   });

@@ -5,7 +5,7 @@ import app from '../../../app';
 chai.use(chaiHttp);
 const { expect } = chai;
 
-describe('function getQuestions of question controller', () => {
+describe('GET api/v1/questions', () => {
   it('should return response status 200', (done) => {
     chai.request(app)
       .get('/api/v1/questions')
@@ -29,7 +29,7 @@ describe('function getQuestions of question controller', () => {
 });
 
 
-describe('function getQuestion of question controller', () => {
+describe('GET api/v1/questions/:id', () => {
   it('should return status code 404 if question does not exist', (done) => {
     chai.request(app)
       .get('/api/v1/questions/11')
@@ -66,12 +66,13 @@ describe('function getQuestion of question controller', () => {
         expect(res).to.have.status(400);
         expect(res.body).to.be.an('object');
         expect(res.body).to.have.property('errors');
+        expect(res.body.errors).to.have.keys('status', 'statusText', 'errors');
         done();
       });
   });
 });
 
-describe('function post question of question controller', () => {
+describe('POST api/v1/questions', () => {
   it('should return status code 200', (done) => {
     chai.request(app)
       .post('/api/v1/questions')
@@ -104,7 +105,7 @@ describe('function post question of question controller', () => {
   });
 });
 
-describe('delete question function', () => {
+describe('DELETE api/v1/question/:id', () => {
   it('should return status 404 if user does not exist', (done) => {
     chai.request(app)
       .del('/api/v1/questions/1')
@@ -112,6 +113,8 @@ describe('delete question function', () => {
       .end((err, res) => {
         if (err) done(err);
         expect(res).to.have.status(404);
+        expect(res.body).to.have.keys('status', 'message');
+        expect(res.body.message).to.deep.equals('this user does not exist');
         done();
       });
   });
