@@ -4,7 +4,8 @@
   "description": "A platform for users to ask questions and give answers to asked questions.",
   "main": "app.js",
   "scripts": {
-    "start": "node_modules/.bin/nodemon app.js --exec babel-node -- ",
+    "start": "babel-node app.js",
+    "start:dev": "node_modules/.bin/nodemon app.js --exec babel-node -- ",
     "lint": "eslint *.js --fix",
     "test": "nyc mocha server/test/**/*.test.js",
     "coverage": "cross-env NODE_ENV=test nyc --reporter=lcov --reporter=text --cache mocha server/**/*.test.js --exit",
