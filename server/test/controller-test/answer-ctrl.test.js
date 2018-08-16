@@ -69,3 +69,45 @@ describe('POST api/v1/questions/:questionId/answers', () => {
       });
   });
 });
+
+describe('POST api/v1/questions/:questionId/answers/:answerId', () => {
+  it('should return 404 error status if user is not found', (done) => {
+    chai.request(app)
+      .post('/api/v1/questions/3/answers/8')
+      .send({
+        userId: 16,
+      })
+      .end((err, res) => {
+        if (err) done(err);
+        expect(res).to.have.status(404);
+        expect(res.body.message).to.deep.equals('this user does not exist');
+        done();
+      });
+  });
+  it('should return 404 error status if question is not found', (done) => {
+    chai.request(app)
+      .post('/api/v1/questions/20/answers/8')
+      .send({
+        userId: 1,
+      })
+      .end((err, res) => {
+        if (err) done(err);
+        expect(res).to.have.status(404);
+        expect(res.body.message).to.deep.equals('this question does not exist');
+        done();
+      });
+  });
+  it('should return 404 error status if answer is not found', (done) => {
+    chai.request(app)
+      .post('/api/v1/questions/3/answers/20')
+      .send({
+        userId: 1,
+      })
+      .end((err, res) => {
+        if (err) done(err);
+        expect(res).to.have.status(404);
+        expect(res.body.message).to.deep.equals('this answer does not exist');
+        done();
+      });
+  });
+});

@@ -46,14 +46,25 @@ class Answer {
    * @param {object} res Response
    */
   static acceptAnswer(req, res) {
-    const { questionId, id } = req.params;
+    const { questionId, answerId } = req.params;
     const { userId } = req.body;
     // process
     // check that user, question and answer exists
     // check that user asked d question
     // proceed
 
-    
+    const user = userRepo.getUser(userId);
+    if (!user) {
+      return errors.notFound(res, 'user');      
+    }
+    const question = repo.getQuestion(questionId);
+    if (!question) {
+      return errors.notFound(res, 'question');
+    }
+    const answer = answerRepo.getAnswer(answerId);
+    if (!answer) {
+      return errors.notFound(res, 'answer');
+    }
   }
 }
 

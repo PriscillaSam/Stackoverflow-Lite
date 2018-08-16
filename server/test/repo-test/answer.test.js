@@ -46,3 +46,12 @@ describe('Post answer function', () => {
     expect(repo.postAnswer(ansObject)).to.be.deep.equals(answer);
   });
 });
+
+describe('Get answer function', () => {
+  it('should return null if answer does not exist', () => {
+    expect(repo.getAnswer(20)).to.be.deep.equals(null);
+  });
+  it('should return the answer if answer exists', () => {
+    expect(repo.getAnswer(1)).to.deep.equals(answers[0]);
+  });
+});
