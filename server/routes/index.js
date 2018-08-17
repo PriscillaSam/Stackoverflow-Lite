@@ -3,6 +3,8 @@ import Question from '../controllers/question';
 import Answer from '../controllers/answer';
 
 import validator from '../middleware/validator';
+import checkStatus from '../middleware/checkVoteStatus';
+
 
 const router = express.Router();
 
@@ -13,4 +15,6 @@ router.delete('/questions/:id', validator.validateDelete, Question.deleteQuestio
 
 router.post('/questions/:id/answers/', validator.validatePostAnswer, Answer.postAnswer);
 router.post('/questions/:questionId/answers/:answerId', validator.validateAcceptAnswer, Answer.acceptAnswer);
+router.use(checkStatus);
+router.post('/answers/:id', validator.validateDelete, Answer.voteAnswer);
 export default router;

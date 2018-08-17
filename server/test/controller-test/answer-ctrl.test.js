@@ -151,3 +151,179 @@ describe('POST api/v1/questions/:questionId/answers/:answerId', () => {
       });
   });
 });
+
+describe('POST api/v1/answers/:answerId (Vote answer)', () => {
+  it('should return 400 error if status is not supplied', (done) => {
+    chai.request(app)
+      .post('/api/v1/answers/1')
+      .send({
+        userId: 2,
+      })
+      .end((err, res) => {
+        if (err) done(err);
+        expect(res).to.have.status(400);
+        expect(res).to.be.an('object');
+        expect(res.body.status).to.deep.equals('error');
+        expect(res.body.message).to.deep.equals('voteStatus field is required');
+        done();
+      });
+  });
+  it('should return 400 error if status is not 0 0r 1', (done) => {
+    chai.request(app)
+      .post('/api/v1/answers/1')
+      .send({
+        userId: 2,
+        voteStatus: 3,
+      })
+      .end((err, res) => {
+        if (err) done(err);
+        expect(res).to.have.status(400);
+        expect(res).to.be.an('object');
+        expect(res.body.status).to.deep.equals('error');
+        expect(res.body.message).to.deep.equals('voteStatus field can only be 0 or 1');
+        done();
+      });
+  });
+  it('should return 404 error status if user is not found', (done) => {
+    chai.request(app)
+      .post('/api/v1/answers/1')
+      .send({
+        userId: 16,
+        voteStatus: 1,
+      })
+      .end((err, res) => {
+        if (err) done(err);
+        expect(res).to.have.status(404);
+        expect(res.body.status).to.deep.equals('error');
+        expect(res.body.message).to.deep.equals('this user does not exist');
+        done();
+      });
+  });
+  it('should return 404 error status if answer is not found', (done) => {
+    chai.request(app)
+      .post('/api/v1/answers/30')
+      .send({
+        userId: 1,
+        voteStatus: 1,
+      })
+      .end((err, res) => {
+        if (err) done(err);
+        expect(res).to.have.status(404);
+        expect(res.body.status).to.deep.equals('error');
+        expect(res.body.message).to.deep.equals('this answer does not exist');
+        done();
+      });
+  });
+  it('should return 404 error status if answer is not found', (done) => {
+    chai.request(app)
+      .post('/api/v1/answers/19')
+      .send({
+        userId: 3,
+        voteStatus: 1,
+      })
+      .end((err, res) => {
+        if (err) done(err);
+        expect(res).to.have.status(403);
+        expect(res.body.status).to.deep.equals('error');
+        expect(res.body.message).to.deep.equals('you cannot vote your answer');
+        done();
+      });
+  });
+  it('should return 400 error if user has upvoted before', (done) => {
+    chai.request(app)
+      .post('/api/v1/answers/8')
+      .send({
+        userId: 2,
+        voteStatus: 1,
+      })
+      .end((err, res) => {
+        if (err) done(err);
+        expect(res).to.have.status(400);
+        expect(res).to.be.an('object');
+        expect(res.body.status).to.be.deep.equals('error');
+        expect(res.body.message).to.be.deep.equals('this answer has been previously upvoted by you');
+
+        done();
+      });
+  });
+  it('should return 400 error if user has downvoted before', (done) => {
+    chai.request(app)
+      .post('/api/v1/answers/8')
+      .send({
+        userId: 1,
+        voteStatus: 0,
+      })
+      .end((err, res) => {
+        if (err) done(err);
+        expect(res).to.have.status(400);
+        expect(res).to.be.an('object');
+        expect(res.body.status).to.be.deep.equals('error');
+        expect(res.body.message).to.be.deep.equals('this answer has been previously downvoted by you');
+        done();
+      });
+  });
+  it('should return a status 200 if upvote is successful', (done) => {
+    chai.request(app)
+      .post('/api/v1/answers/8')
+      .send({
+        userId: 9,
+        voteStatus: 1,
+      })
+      .end((err, res) => {
+        if (err) done(err);
+        expect(res).to.have.status(200);
+        expect(res).to.be.an('object');
+        expect(res.body).to.have.keys('status', 'message', 'votedAnswer');
+        expect(res.body.message).to.deep.equals('you have upvoted this answer');
+        done();
+      });
+  });
+  it('should return a status 200 if downvote is successful', (done) => {
+    chai.request(app)
+      .post('/api/v1/answers/8')
+      .send({
+        userId: 8,
+        voteStatus: 0,
+      })
+      .end((err, res) => {
+        if (err) done(err);
+        expect(res).to.have.status(200);
+        expect(res).to.be.an('object');
+        expect(res.body).to.have.keys('status', 'message', 'votedAnswer');
+        expect(res.body.message).to.deep.equals('you have downvoted this answer');
+        done();
+      });
+  });
+  it('should return a status 201 if new upvote is successful', (done) => {
+    chai.request(app)
+      .post('/api/v1/answers/17')
+      .send({
+        userId: 5,
+        voteStatus: 1,
+      })
+      .end((err, res) => {
+        if (err) done(err);
+        expect(res).to.have.status(201);
+        expect(res).to.be.an('object');
+        expect(res.body).to.have.keys('status', 'message', 'votedAnswer');
+        expect(res.body.message).to.deep.equals('you have upvoted this answer');
+        done();
+      });
+  });
+  it('should return a status 201 if new downvote is successful', (done) => {
+    chai.request(app)
+      .post('/api/v1/answers/16')
+      .send({
+        userId: 5,
+        voteStatus: 0,
+      })
+      .end((err, res) => {
+        if (err) done(err);
+        expect(res).to.have.status(201);
+        expect(res).to.be.an('object');
+        expect(res.body).to.have.keys('status', 'message', 'votedAnswer');
+        expect(res.body.message).to.deep.equals('you have downvoted this answer');
+        done();
+      });
+  });
+});
