@@ -55,7 +55,7 @@ const questions = [
       id: 2,
       name: 'John Doe',
     },
-    question: 'Does Nigeria practice democracy?',
+    question: 'How do I delete a git branch?',
     dateTime: new Date(2018, 8, 1),
 
   },
@@ -65,7 +65,7 @@ const questions = [
       id: 2,
       name: 'John Doe',
     },
-    question: 'Does Nigeria practice democracy?',
+    question: 'Where can I get the best software developers in Nigeria?',
     dateTime: new Date(2018, 8, 6),
 
   },
@@ -75,7 +75,7 @@ const questions = [
       id: 8,
       name: 'Michael Doe',
     },
-    question: 'Does Nigeria practice democracy?',
+    question: 'What is the largest continent on the planet Jupiter?',
     dateTime: new Date(2018, 8, 14),
 
   },
@@ -85,8 +85,8 @@ const questions = [
       id: 8,
       name: 'Michael Doe',
     },
-    question: 'Does Nigeria practice democracy?',
-    dateTime: new Date(2018, 8, 14),
+    question: 'Javascript. Best for server side or the browser.',
+    dateTime: new Date(2018, 8, 13),
 
   },
   {
@@ -95,8 +95,38 @@ const questions = [
       id: 8,
       name: 'Michael Doe',
     },
-    question: 'Does Nigeria practice democracy?',
-    dateTime: new Date(2018, 8, 14),
+    question: 'How do you know a person has a crush on you?',
+    dateTime: new Date(2018, 8, 12),
+
+  },
+  {
+    id: 11,
+    user: {
+      id: 8,
+      name: 'Michael Doe',
+    },
+    question: 'Test question by micheal doe?',
+    dateTime: new Date(2018, 8, 12),
+
+  },
+  {
+    id: 12,
+    user: {
+      id: 8,
+      name: 'Michael Doe',
+    },
+    question: 'Another test question by micheal doe?',
+    dateTime: new Date(2018, 8, 4),
+
+  },
+  {
+    id: 13,
+    user: {
+      id: 8,
+      name: 'Michael Doe',
+    },
+    question: 'What does TIA mean?',
+    dateTime: new Date(2018, 8, 1),
 
   },
 ];
