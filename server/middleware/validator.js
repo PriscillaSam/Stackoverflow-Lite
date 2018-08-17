@@ -10,7 +10,7 @@ const validator = {
   }),
   validateQuestion: validate({
     body: {
-      question: joi.string().required(),
+      question: joi.string().min(10).max(100).required(),
       userId: numJoi,
     },
   }),
@@ -28,19 +28,18 @@ const validator = {
     },
     body: {
       userId: numJoi,
-      answer: joi.string().required(),
+      answer: joi.string().min(10).max(100).required(),
     },
   }),
   validateAcceptAnswer: validate({
     params: {
       answerId: numJoi,
-      questionId: numJoi
+      questionId: numJoi,
     },
     body: {
-      userId: numJoi
+      userId: numJoi,
     },
   }),
 };
-
 
 export default validator;

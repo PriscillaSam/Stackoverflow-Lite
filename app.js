@@ -12,10 +12,16 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cleanStrings);
-
+app.get('/api/v1', (req, res) => {
+  res.status(200).json({
+    status: 'success',
+    message: 'Welcome to stackoverflow-LITE'
+  });
+});
 app.use('/api/v1', router);
 
 app.use(errorHandler);
+
 
 const port = process.env.PORT || 3000;
 app.listen(port);

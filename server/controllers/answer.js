@@ -1,6 +1,7 @@
 import answerRepo from '../repository/dummy-repo/answer';
 import repo from '../repository/dummy-repo/question';
 import userRepo from '../repository/dummy-repo/user';
+import voteRepo from '../repository/dummy-repo/vote';
 import errors from '../helpers/errorMessages';
 
 
@@ -76,6 +77,75 @@ class Answer {
       message: 'your have accepted this answer',
       acceptedAnswer,
     });
+  }
+
+  /**
+   * Upvote or Downvote an answer
+   * @param {object} req Request Object
+   * @param {object} res Response Object
+   */
+  static voteAnswer(req, res) {
+    const answerId = req.params.id;
+    const { userId, voteStatus } = req.body;
+
+    const user = userRepo.getUser(userId);
+    if (!user) {
+      return errors.notFound(res, 'user');
+    }
+    const answer = answerRepo.getAnswer(answerId);
+    if (!answer) {
+      return errors.notFound(res, 'answer');
+    }
+    if (answer.userId === user.id) {
+      return res.status(403).json({
+        status: 'error',
+        message: 'you cannot vote your answer',
+      });
+    }
+
+    const response = voteRepo.createVote(userId, answerId, voteStatus);
+    const votedAnswer = answerRepo.getAnswer(answerId);
+    switch (response) {
+      case 'downvote error':
+        return res.status(400).json({
+          status: 'error',
+          message: 'this answer has been previously downvoted by you',
+        });
+      case 'upvote error':
+        return res.status(400).json({
+          status: 'error',
+          message: 'this answer has been previously upvoted by you',
+        });
+      case 'downvote success':
+        return res.status(200).json({
+          status: 'success',
+          message: 'you have downvoted this answer',
+          votedAnswer,
+        });
+      case 'upvote success':
+        return res.status(200).json({
+          status: 'success',
+          message: 'you have upvoted this answer',
+          votedAnswer,
+        });
+      case 0:
+        return res.status(201).json({
+          status: 'success',
+          message: 'you have downvoted this answer',
+          votedAnswer,
+        });
+      case 1:
+        return res.status(201).json({
+          status: 'success',
+          message: 'you have upvoted this answer',
+          votedAnswer,
+        });
+      default:
+        return res.status(400).json({
+          status: 'error',
+          message: 'i am hoping we never get here',
+        });
+    }
   }
 }
 

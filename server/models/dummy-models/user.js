@@ -39,6 +39,11 @@ const users = [
     name: 'Michael Doe',
     email: 'micheal.doe@gmailcom',
   },
+  {
+    id: 9,
+    name: 'Jack Doe',
+    email: 'jack.doe@gmailcom',
+  },
 ];
 
 export default users;

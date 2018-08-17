@@ -18,7 +18,6 @@ const votes = [
     userId: 9,
     answerId: 8,
     voteStatus: 0,
-
   },
   {
     id: 4,
