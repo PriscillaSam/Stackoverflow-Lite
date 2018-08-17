@@ -99,7 +99,7 @@ describe('POST api/v1/questions/:questionId/answers/:answerId', () => {
   });
   it('should return 404 error status if answer is not found', (done) => {
     chai.request(app)
-      .post('/api/v1/questions/3/answers/20')
+      .post('/api/v1/questions/3/answers/30')
       .send({
         userId: 1,
       })
