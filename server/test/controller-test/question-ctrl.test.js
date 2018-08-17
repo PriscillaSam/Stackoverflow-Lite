@@ -32,7 +32,7 @@ describe('GET api/v1/questions', () => {
 describe('GET api/v1/questions/:id', () => {
   it('should return status code 404 if question does not exist', (done) => {
     chai.request(app)
-      .get('/api/v1/questions/11')
+      .get('/api/v1/questions/20')
       .end((err, res) => {
         if (err) done(err);
         expect(res).to.have.status(404);
