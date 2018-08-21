@@ -25,7 +25,7 @@ signupToggle.addEventListener('click', (event) => {
     setTimeout(() => {
         loginSection.classList.add('hidden','fadeOut');
         signupSection.classList.remove('hidden','fadeOut');
-        container.style.margin = '80px auto';
+        container.style.margin = '90px auto';
         signupSection.classList.add('fadeIn');
 
     });
