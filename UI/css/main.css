@@ -138,7 +138,7 @@ padding-bottom: 20px;
       display: inline;
 
 }
-
+ 
 /*flex box*/
 .content-container{
     display: flex;
@@ -235,6 +235,18 @@ margin-bottom: 5px;
 .close:hover{
     color: #2E8B57
 }
+@media(min-width:1850px){
+    .foot{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+.modal-body{
+    bottom: 500px;
+    animation: slideInUpLarge  1.5s ;
+}
+}
 @media(max-width:1102px){
     .w-40{
         width: 35%
@@ -265,6 +277,7 @@ margin-top: 10px;
      font-size: 1.5rem
     }
 }
+
 @media(min-width:723px){
     #nav-sm{
         display: none;
@@ -468,6 +481,14 @@ margin-top: 10px;
     }
     to{
         bottom: -100%;
+    }
+}
+@keyframes slideInUpLarge {
+    from{
+        bottom: -500%;
+    }
+    to{
+        bottom: 500px;
     }
 }
 @keyframes fadeInDown {
