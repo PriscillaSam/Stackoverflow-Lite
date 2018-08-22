@@ -6,9 +6,9 @@ const repo = {
    * @param {number} id Answer Id to get votes for
    */
   getVotes(id) {
-    const answerVotes = votes.filter(v => v.answerId === id);
-    const upvotes = answerVotes.filter(v => v.voteStatus === 1).length;
-    const downvotes = answerVotes.filter(v => v.voteStatus === 0).length;
+    const answerVotes = votes.filter(vote => vote.answerId === id);
+    const upvotes = answerVotes.filter(vote => vote.voteStatus === 1).length;
+    const downvotes = answerVotes.filter(vote => vote.voteStatus === 0).length;
     return {
       upvotes,
       downvotes,
@@ -20,7 +20,7 @@ const repo = {
    * @param {number} answerId Answer id
    */
   createVote(userId, answerId, voteStatus) {
-    const userVote = votes.find(v => v.answerId === answerId && v.userId === userId);
+    const userVote = votes.find(vote => vote.answerId === answerId && vote.userId === userId);
     if (userVote) {
       // if user has voted before
       if (userVote.voteStatus === voteStatus) {
@@ -44,7 +44,7 @@ const repo = {
           return 0;
       }
     }
-    const ids = votes.map(v => v.id);
+    const ids = votes.map(vote => vote.id);
     const newVote = {
       id: Math.max(...ids) + 1,
       userId,

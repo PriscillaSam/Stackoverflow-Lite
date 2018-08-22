@@ -6,10 +6,10 @@ const repo = {
    * @param {number} id user id to check for
    */
   getUser(id) {
-    const user = users.find(u => u.id === id);
-    if (user === null || user === undefined) return null;
+    const existingUser = users.find(user => user.id === id);
+    if (existingUser === null || existingUser === undefined) return null;
 
-    return user;
+    return existingUser;
   },
 };
 

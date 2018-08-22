@@ -7,7 +7,7 @@
     "start": "babel-node app.js",
     "start:dev": "node_modules/.bin/nodemon app.js --exec babel-node -- ",
     "lint": "eslint *.js --fix",
-    "test": "nyc mocha server/test/**/*.test.js",
+    "test": "nyc mocha server/test/**/*.test.js --exit",
     "coverage": "cross-env NODE_ENV=test nyc --reporter=lcov --reporter=text --cache mocha server/**/*.test.js --exit",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
@@ -22,7 +22,6 @@
   },
   "homepage": "https://github.com/PriscillaSam/Stackoverflow-Lite#readme",
   "dependencies": {
-    "body-parser": "^1.18.3",
     "cross-env": "^5.2.0",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",

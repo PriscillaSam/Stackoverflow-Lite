@@ -1,5 +1,4 @@
 import express from 'express';
-import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import router from './server/routes/index';
 import cleanStrings from './server/middleware/cleanStrings';
@@ -9,13 +8,14 @@ import errorHandler from './server/middleware/error-handler';
 dotenv.config();
 const app = express();
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cleanStrings);
+
 app.get('/api/v1', (req, res) => {
   res.status(200).json({
     status: 'success',
-    message: 'Welcome to stackoverflow-LITE'
+    message: 'Welcome to stackoverflow-LITE',
   });
 });
 app.use('/api/v1', router);

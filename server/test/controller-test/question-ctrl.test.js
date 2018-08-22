@@ -65,8 +65,8 @@ describe('GET api/v1/questions/:id', () => {
         if (err) done(err);
         expect(res).to.have.status(400);
         expect(res.body).to.be.an('object');
-        expect(res.body).to.have.property('errors');
-        expect(res.body.errors).to.have.keys('status', 'statusText', 'errors');
+        expect(res.body).to.have.keys('status', 'errors');
+        expect(res.body.errors).to.have.keys('fields', 'messages');
         done();
       });
   });

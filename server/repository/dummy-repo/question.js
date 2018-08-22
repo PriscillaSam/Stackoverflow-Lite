@@ -16,14 +16,14 @@ const repo = {
    * @param {Int} id Question Id
    */
   getQuestion(id) {
-    const question = questions.find(q => q.id === id);
-    if (question === null || question === undefined) return null;
+    const existingQuestion = questions.find(question => question.id === id);
+    if (existingQuestion === null || existingQuestion === undefined) return null;
 
     const questionAnswers = answers.filter(a => a.questionId === id);
 
-    const ques = { ...question };
-    ques.answers = questionAnswers;
-    return ques;
+    const question = { ...existingQuestion };
+    question.answers = questionAnswers;
+    return question;
   },
 
   /**
@@ -32,15 +32,15 @@ const repo = {
    * @param {object} user Poster User object
    */
   postQuestion(question, user) {
-    const ids = questions.map(q => q.id);
-    const quesObject = {
+    const ids = questions.map(questn => questn.id);
+    const questionObject = {
       id: Math.max(...ids) + 1,
       user,
       question,
     };
 
-    questions.push(quesObject);
-    return quesObject;
+    questions.push(questionObject);
+    return questionObject;
   },
   /**
    * Deletes a question with the specified id
@@ -49,20 +49,20 @@ const repo = {
    * @returns string
    */
   deleteQuestion(questionId, userId) {
-    const ques = questions.find(q => q.id === questionId);
-    if (ques === null || ques === undefined) return null;
-    if (ques.user.id !== userId) return 'unauthorized';
+    const existingQuestion = questions.find(question => question.id === questionId);
+    if (existingQuestion === null || existingQuestion === undefined) return null;
+    if (existingQuestion.user.id !== userId) return 'unauthorized';
 
-    const index = questions.indexOf(ques);
-    const removedQues = questions.splice(index, 1);
-    return removedQues[0];
+    const index = questions.indexOf(existingQuestion);
+    const removedQuestions = questions.splice(index, 1);
+    return removedQuestions[0];
   },
   /**
    * Gets all questions asked by user
    * @param {number} id UserId to get questions for
    */
   getQuestionByUser(id) {
-    const userQuestions = this.questions.filter(q => q.user.id === id);
+    const userQuestions = this.questions.filter(question => question.user.id === id);
     return [...userQuestions];
   },
 

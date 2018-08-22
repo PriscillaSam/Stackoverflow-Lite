@@ -13,7 +13,7 @@ const checkvoteStatus = (req, res, next) => {
       message: 'voteStatus field can only be 0 or 1',
     });
   }
-
+  req.body.voteStatus = voteStatus;
   return next();
 };
 

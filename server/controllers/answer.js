@@ -54,10 +54,12 @@ class Answer {
     if (!user) {
       return errors.notFound(res, 'user');
     }
+
     const answer = answerRepo.getAnswer(answerId, questionId);
     if (!answer) {
       return errors.notFound(res, 'answer');
     }
+
     const question = repo.getQuestion(questionId);
     if (!question) {
       return errors.notFound(res, 'question');
@@ -67,10 +69,11 @@ class Answer {
       return errors.unauthorized(res);
     }
 
-    let acceptedAnswer = question.answers.find(a => a.isAccepted);
+    let acceptedAnswer = question.answers.find(ans => ans.isAccepted);
     if (acceptedAnswer) {
       return errors.unauthorized(res);
     }
+
     acceptedAnswer = answerRepo.acceptAnswer(answerId);
     return res.status(200).json({
       status: 'success',
@@ -92,10 +95,12 @@ class Answer {
     if (!user) {
       return errors.notFound(res, 'user');
     }
+
     const answer = answerRepo.getAnswer(answerId);
     if (!answer) {
       return errors.notFound(res, 'answer');
     }
+
     if (answer.userId === user.id) {
       return res.status(403).json({
         status: 'error',
@@ -105,46 +110,50 @@ class Answer {
 
     const response = voteRepo.createVote(userId, answerId, voteStatus);
     const votedAnswer = answerRepo.getAnswer(answerId);
-    switch (response) {
-      case 'downvote error':
-        return res.status(400).json({
-          status: 'error',
-          message: 'this answer has been previously downvoted by you',
-        });
-      case 'upvote error':
-        return res.status(400).json({
-          status: 'error',
-          message: 'this answer has been previously upvoted by you',
-        });
-      case 'downvote success':
-        return res.status(200).json({
-          status: 'success',
-          message: 'you have downvoted this answer',
-          votedAnswer,
-        });
-      case 'upvote success':
-        return res.status(200).json({
-          status: 'success',
-          message: 'you have upvoted this answer',
-          votedAnswer,
-        });
-      case 0:
-        return res.status(201).json({
-          status: 'success',
-          message: 'you have downvoted this answer',
-          votedAnswer,
-        });
-      case 1:
-        return res.status(201).json({
-          status: 'success',
-          message: 'you have upvoted this answer',
-          votedAnswer,
-        });
-      default:
-        return res.status(400).json({
-          status: 'error',
-          message: 'i am hoping we never get here',
-        });
+    if (response === 'downvote error') {
+      return res.status(400).json({
+        status: 'error',
+        message: 'this answer has been previously downvoted by you',
+      });
+    }
+
+    if (response === 'upvote error') {
+      return res.status(400).json({
+        status: 'error',
+        message: 'this answer has been previously upvoted by you',
+      });
+    }
+
+    if (response === 'downvote success') {
+      return res.status(200).json({
+        status: 'success',
+        message: 'you have downvoted this answer',
+        votedAnswer,
+      });
+    }
+
+    if (response === 'upvote success') {
+      return res.status(200).json({
+        status: 'success',
+        message: 'you have upvoted this answer',
+        votedAnswer,
+      });
+    }
+
+    if (response === 0) {
+      return res.status(201).json({
+        status: 'success',
+        message: 'you have downvoted this answer',
+        votedAnswer,
+      });
+    }
+
+    if (response === 1) {
+      return res.status(201).json({
+        status: 'success',
+        message: 'you have upvoted this answer',
+        votedAnswer,
+      });
     }
   }
 }
