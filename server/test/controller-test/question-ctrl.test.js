@@ -64,9 +64,8 @@ describe('GET api/v1/questions/:id', () => {
       .end((err, res) => {
         if (err) done(err);
         expect(res).to.have.status(400);
-        expect(res.body).to.be.an('object');
-        expect(res.body).to.have.keys('status', 'errors');
-        expect(res.body.errors).to.have.keys('fields', 'messages');
+        expect(res.body.errorData).to.have.keys('status', 'errorMessages');
+        expect(res.body.errorData.errorMessages).to.have.keys('id');
         done();
       });
   });
@@ -166,7 +165,9 @@ describe('DELETE api/v1/question/:id', () => {
         if (err) done(err);
         expect(res).to.have.status(400);
         expect(res.body).to.be.an('object');
-        expect(res.body).to.have.property('errors');
+        expect(res.body).to.have.property('errorData');
+        expect(res.body.errorData.errorMessages).to.have.property('id').to.equal('id must be a number');
+
         done();
       });
   });

@@ -27,10 +27,10 @@ const errorHandler = (err, req, res, next) => {
       });
 
       return res.status(400).json({
-        status: err.statusText,
-        errors: {
-          fields,
-          messages: errorMessages,
+        errorData: {
+          status: err.statusText,
+          errorMessages,
+
         },
       });
     }

@@ -12,8 +12,8 @@ describe('error handler function', () => {
         if (err) done(err);
         expect(res).to.have.status(400);
         expect(res.body).to.be.an('object');
-        expect(res.body).to.have.property('status').to.be.equal('Bad Request');
-        expect(res.body.errors.fields).to.be.an('array');
+        expect(res.body.errorData).to.have.property('status').to.be.equal('Bad Request');
+        expect(res.body.errorData).to.have.property('errorMessages');
         done();
       });
   });
