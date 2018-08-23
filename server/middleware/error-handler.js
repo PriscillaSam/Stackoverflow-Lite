@@ -8,6 +8,7 @@ import validator from 'express-validation';
  * @param {object} req Request object
  * @param {object} res Response object
  * @param {Function} next Next middleware in the chain
+ * @returns {object} Error object
  */
 const errorHandler = (err, req, res, next) => {
   if (err instanceof validator.ValidationError) {
@@ -35,6 +36,7 @@ const errorHandler = (err, req, res, next) => {
       });
     }
   }
+
 };
 
 export default errorHandler;

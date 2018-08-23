@@ -1,3 +1,4 @@
+/* eslint consistent-return: 0 */
 import answerRepo from '../repository/dummy-repo/answer';
 import repo from '../repository/dummy-repo/question';
 import userRepo from '../repository/dummy-repo/user';
@@ -10,6 +11,7 @@ class Answer {
    * Post an Answer
    * @param {object} req Request Object
    * @param {object} res Response Object
+   * @returns {object} Answer object or error object if question or answer does not exist
    */
   static postAnswer(req, res) {
     const questionId = parseInt(req.params.id, 10);
@@ -45,6 +47,7 @@ class Answer {
    * Marks an answer as accepted
    * @param {object} req Request
    * @param {object} res Response
+   * @returns {object} Accepted answer object or error object if answer is not found
    */
   static acceptAnswer(req, res) {
     const { questionId, answerId } = req.params;
@@ -86,6 +89,7 @@ class Answer {
    * Upvote or Downvote an answer
    * @param {object} req Request Object
    * @param {object} res Response Object
+   * @returns {object} Object with status, message and optionally voted answer field for a new vote
    */
   static voteAnswer(req, res) {
     const answerId = req.params.id;
@@ -110,32 +114,22 @@ class Answer {
 
     const response = voteRepo.createVote(userId, answerId, voteStatus);
     const votedAnswer = answerRepo.getAnswer(answerId);
-    if (response === 'downvote error') {
-      return res.status(400).json({
-        status: 'error',
-        message: 'this answer has been previously downvoted by you',
-      });
-    }
 
-    if (response === 'upvote error') {
-      return res.status(400).json({
-        status: 'error',
-        message: 'this answer has been previously upvoted by you',
-      });
-    }
+    if (typeof response === 'string') {
+      const responseArray = response.split(' ');
+      const responseType = responseArray[1];
+      const voteType = responseArray[0];
 
-    if (response === 'downvote success') {
+      if (responseType === 'error') {
+        return res.status(400).json({
+          status: responseType,
+          message: `this answer has been previously ${voteType}d by you`,
+        });
+      }
+
       return res.status(200).json({
-        status: 'success',
-        message: 'you have downvoted this answer',
-        votedAnswer,
-      });
-    }
-
-    if (response === 'upvote success') {
-      return res.status(200).json({
-        status: 'success',
-        message: 'you have upvoted this answer',
+        status: responseType,
+        message: `you have ${voteType}d this answer`,
         votedAnswer,
       });
     }
@@ -148,13 +142,11 @@ class Answer {
       });
     }
 
-    if (response === 1) {
-      return res.status(201).json({
-        status: 'success',
-        message: 'you have upvoted this answer',
-        votedAnswer,
-      });
-    }
+    return res.status(201).json({
+      status: 'success',
+      message: 'you have upvoted this answer',
+      votedAnswer,
+    });
   }
 }
 

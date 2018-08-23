@@ -5,6 +5,7 @@ const answerRepo = {
   /**
    * Adds a new answer to the answers array
    * @param {object} answerObj Answer object
+   * @returns {object} Posted answer
    */
   postAnswer(answerObj) {
     const { userId, questionId, answer } = answerObj;
@@ -30,7 +31,7 @@ const answerRepo = {
   /**
    * Gets an answer by id
    * @param {number} id Answer Id to check for
-   * @returns Answer object if answer exists or null
+   * @returns {object} Answer object if answer exists or null
    */
   getAnswer(id) {
     const existingAnswer = this.answers.find(answer => answer.id === id);
@@ -40,6 +41,7 @@ const answerRepo = {
   /**
    * Marks an answer as accepted
    * @param {number} id AnswerId of answer to accept
+   * @returns {object} Accepted answer
    */
   acceptAnswer(id) {
     const existingAnswer = this.answers.find(answer => answer.id);
