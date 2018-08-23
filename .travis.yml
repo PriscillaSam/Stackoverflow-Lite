@@ -6,6 +6,8 @@ node_js:
   - "stable"
 
 before_script:
+ - cp config/database.yml.travis config/database.yml
+ - psql -c 'create database stackoverflow_lite_test;' -U postgres
  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
  - chmod +x ./cc-test-reporter
  - ./cc-test-reporter before-build
