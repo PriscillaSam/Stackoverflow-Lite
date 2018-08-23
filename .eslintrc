@@ -1,0 +1,19 @@
+{
+    "env": {
+		"es6": true,
+		"node": true,
+		"mocha": true
+    },
+    
+    "extends": "airbnb",
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module"
+    },
+    "rules": {
+        "no-console": 0,
+        "no-unused-vars": 0,
+        "max-len": [2, 80, 4, {"ignoreComments": true}],
+        "valid-jsdoc": "error"
+    }
+}
