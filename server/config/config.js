@@ -19,6 +19,7 @@ const config = {
   },
   production: {
   },
+  secret: process.env.JWT_SECRET,
 };
 
 export default config;
