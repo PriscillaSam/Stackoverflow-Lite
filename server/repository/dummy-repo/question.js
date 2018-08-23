@@ -5,64 +5,74 @@ const repo = {
   questions,
 
   /**
-   * @function getQuestions Gets all questions on the platform
+   * Gets all questions on the platform
+   * @returns {Array} All Questions
    */
   getQuestions() {
     return questions;
   },
 
   /**
-   * @function getQuestion Gets a particular question and it's answers
+   * Gets a particular question and it's answers
    * @param {Int} id Question Id
+   * @returns {object} Question with id
    */
   getQuestion(id) {
-    const question = questions.find(q => q.id === id);
-    if (question === null || question === undefined) return null;
-
+    const existingQuestion = questions.find(question => question.id === id);
+    if (existingQuestion === null || existingQuestion === undefined) {
+      return null;
+    }
     const questionAnswers = answers.filter(a => a.questionId === id);
 
-    const ques = { ...question };
-    ques.answers = questionAnswers;
-    return ques;
+    const question = { ...existingQuestion };
+    question.answers = questionAnswers;
+    return question;
   },
 
   /**
    * Add a new question to the questions array
-   * @param {string} question New question asked
+   * @param {string} questionBody New question asked
    * @param {object} user Poster User object
+   * @returns {object} Posted question
    */
-  postQuestion(question, user) {
-    const ids = questions.map(q => q.id);
-    const quesObject = {
+  postQuestion(questionBody, user) {
+    const ids = questions.map(question => question.id);
+    const questionObject = {
       id: Math.max(...ids) + 1,
       user,
-      question,
+      questionBody,
     };
 
-    questions.push(quesObject);
-    return quesObject;
+    questions.push(questionObject);
+    return questionObject;
   },
   /**
    * Deletes a question with the specified id
    * @param {number} questionId id of question to delete
    * @param {number} userId id of user
-   * @returns string
+   * @returns {object} Deleted question
    */
   deleteQuestion(questionId, userId) {
-    const ques = questions.find(q => q.id === questionId);
-    if (ques === null || ques === undefined) return null;
-    if (ques.user.id !== userId) return 'unauthorized';
+    const existingQuestion = questions
+      .find(question => question.id === questionId);
 
-    const index = questions.indexOf(ques);
-    const removedQues = questions.splice(index, 1);
-    return removedQues[0];
+    if (existingQuestion === null || existingQuestion === undefined) {
+      return null;
+    }
+    if (existingQuestion.user.id !== userId) return 'unauthorized';
+
+    const index = questions.indexOf(existingQuestion);
+    const removedQuestions = questions.splice(index, 1);
+    return removedQuestions[0];
   },
   /**
    * Gets all questions asked by user
    * @param {number} id UserId to get questions for
+   * @returns {Array} Questions belonging to the user
    */
   getQuestionByUser(id) {
-    const userQuestions = this.questions.filter(q => q.user.id === id);
+    const userQuestions = this
+      .questions.filter(question => question.user.id === id);
     return [...userQuestions];
   },
 

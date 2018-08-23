@@ -4,11 +4,12 @@ const repo = {
   /**
    * Get all votes for an answer
    * @param {number} id Answer Id to get votes for
+   * @returns {object} Answer Votes
    */
   getVotes(id) {
-    const answerVotes = votes.filter(v => v.answerId === id);
-    const upvotes = answerVotes.filter(v => v.voteStatus === 1).length;
-    const downvotes = answerVotes.filter(v => v.voteStatus === 0).length;
+    const answerVotes = votes.filter(vote => vote.answerId === id);
+    const upvotes = answerVotes.filter(vote => vote.voteStatus === 1).length;
+    const downvotes = answerVotes.filter(vote => vote.voteStatus === 0).length;
     return {
       upvotes,
       downvotes,
@@ -18,19 +19,19 @@ const repo = {
    * Creates a vote on an answer
    * @param {number} userId Voting User id
    * @param {number} answerId Answer id
+   * @param {number} voteStatus Vote Status 0-downvote 1-upvote
+   * @returns {string} Vote message
    */
   createVote(userId, answerId, voteStatus) {
-    const userVote = votes.find(v => v.answerId === answerId && v.userId === userId);
+    const userVote = votes
+      .find(vote => vote.answerId === answerId && vote.userId === userId);
     if (userVote) {
-      // if user has voted before
       if (userVote.voteStatus === voteStatus) {
         if (voteStatus === 0) {
           return 'downvote error';
         }
         return 'upvote error';
       }
-
-      // else get the vote and update it
 
       const index = votes.indexOf(userVote);
       userVote.voteStatus = voteStatus;
@@ -44,7 +45,7 @@ const repo = {
           return 0;
       }
     }
-    const ids = votes.map(v => v.id);
+    const ids = votes.map(vote => vote.id);
     const newVote = {
       id: Math.max(...ids) + 1,
       userId,

@@ -1,6 +1,5 @@
 /**
  * Error messages
- * @object
  */
 const errors = {
   notFound(res, prop) {

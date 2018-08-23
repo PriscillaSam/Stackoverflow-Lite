@@ -1,10 +1,8 @@
 /**
  * Removes whitespaces from incoming strings
- *
- *@middleware
  * @param {object} req Request Object
  * @param {object} res Response Objects
- * @param {Function} next Calls the next middleware
+ * @return {Function} Next Calls the next middleware
  */
 
 const cleanStrings = (req, res, next) => {

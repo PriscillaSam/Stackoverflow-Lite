@@ -1,3 +1,5 @@
+/* eslint max-len: 0 */
+
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../../../app';
@@ -64,9 +66,8 @@ describe('GET api/v1/questions/:id', () => {
       .end((err, res) => {
         if (err) done(err);
         expect(res).to.have.status(400);
-        expect(res.body).to.be.an('object');
-        expect(res.body).to.have.property('errors');
-        expect(res.body.errors).to.have.keys('status', 'statusText', 'errors');
+        expect(res.body.errorData).to.have.keys('status', 'errorMessages');
+        expect(res.body.errorData.errorMessages).to.have.keys('id');
         done();
       });
   });
@@ -85,7 +86,7 @@ describe('POST api/v1/questions', () => {
       .end((err, res) => {
         if (err) done(err);
         expect(res).to.have.status(201);
-        expect(res.body).to.have.property('ques');
+        expect(res.body).to.have.property('postedQuestion');
         expect(res.body.status).to.deep.equals('success');
         done();
       });
@@ -166,7 +167,8 @@ describe('DELETE api/v1/question/:id', () => {
         if (err) done(err);
         expect(res).to.have.status(400);
         expect(res.body).to.be.an('object');
-        expect(res.body).to.have.property('errors');
+        expect(res.body).to.have.property('errorData');
+        expect(res.body.errorData.errorMessages).to.have.property('id').to.equal('id must be a number');
         done();
       });
   });

@@ -1,3 +1,5 @@
+/* eslint max-len: 0 */
+
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../../../app';
@@ -242,7 +244,6 @@ describe('POST api/v1/answers/:answerId (Vote answer)', () => {
         expect(res).to.be.an('object');
         expect(res.body.status).to.be.deep.equals('error');
         expect(res.body.message).to.be.deep.equals('this answer has been previously upvoted by you');
-
         done();
       });
   });

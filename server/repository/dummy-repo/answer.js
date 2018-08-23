@@ -5,15 +5,16 @@ const answerRepo = {
   /**
    * Adds a new answer to the answers array
    * @param {object} answerObj Answer object
+   * @returns {object} Posted answer
    */
   postAnswer(answerObj) {
     const { userId, questionId, answer } = answerObj;
 
-    const userAnswer = this.answers.find(a => a.userId === userId && a.questionId === questionId);
+    const userAnswer = this.answers.find(ans => ans.userId === userId && ans.questionId === questionId);
     if (userAnswer) {
       return 'not allowed';
     }
-    const ids = this.answers.map(q => q.id);
+    const ids = this.answers.map(ans => ans.id);
     const newAnswer = {
       id: Math.max(...ids) + 1,
       userId,
@@ -30,22 +31,23 @@ const answerRepo = {
   /**
    * Gets an answer by id
    * @param {number} id Answer Id to check for
-   * @returns Answer object if answer exists or null
+   * @returns {object} Answer object if answer exists or null
    */
   getAnswer(id) {
-    const answer = this.answers.find(a => a.id === id);
-    if (!answer) return null;
-    return answer;
+    const existingAnswer = this.answers.find(answer => answer.id === id);
+    if (!existingAnswer) return null;
+    return existingAnswer;
   },
   /**
    * Marks an answer as accepted
    * @param {number} id AnswerId of answer to accept
+   * @returns {object} Accepted answer
    */
   acceptAnswer(id) {
-    const answer = this.answers.find(a => a.id);
-    const index = this.answers.indexOf(answer);
-    answer.isAccepted = true;
-    const acceptedAnswer = this.answers.splice(index, 1, answer);
+    const existingAnswer = this.answers.find(answer => answer.id);
+    const index = this.answers.indexOf(existingAnswer);
+    existingAnswer.isAccepted = true;
+    const acceptedAnswer = this.answers.splice(index, 1, existingAnswer);
     return acceptedAnswer[0];
   },
 };

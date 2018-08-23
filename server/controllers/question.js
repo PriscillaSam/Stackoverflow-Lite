@@ -4,9 +4,10 @@ import errors from '../helpers/errorMessages';
 
 class Question {
   /**
-   * @method getQuestions Fetches all the questions available
+   * Fetches all the questions available
    * @param {object} req Request object
-   * @param {object} res Response object List of questions
+   * @param {object} res Response object
+   * @returns {object} List of questions
    */
   static getQuestions(req, res) {
     res.status(200).json({
@@ -17,9 +18,10 @@ class Question {
   }
 
   /**
-   * @method getQuestion Fetches a particular question by id
+   * Fetches a particular question by id
    * @param {object} req Request Object containing question id
-   * @param {object} res Response object containing question
+   * @param {object} res Response object
+   * @returns {object} Question object or error object if question is not found
    */
   static getQuestion(req, res) {
     const questionId = parseInt(req.params.id, 10);
@@ -37,9 +39,10 @@ class Question {
   }
 
   /**
-   * @method postQuestion Post a question on the platform
-   * @param {object} req Request object
-   * @param {object} res Response object
+   * Posts a question on the platform
+   * @param {object} req - Request object
+   * @param {object} res - Response object
+   * @returns {object} Posted question or error object if user is not found
    */
   static postQuestion(req, res) {
     const { userId, question } = req.body;
@@ -49,11 +52,11 @@ class Question {
       return errors.notFound(res, 'user');
     }
 
-    const ques = repo.postQuestion(question, user);
+    const postedQuestion = repo.postQuestion(question, user);
     return res.status(201).json({
       status: 'success',
       message: 'Your question has been posted',
-      ques,
+      postedQuestion,
     });
   }
 
@@ -61,6 +64,7 @@ class Question {
    * Delete's a question with the passed id
    * @param {object} req Request Object
    * @param {object} res Response Object
+   * @returns {object} Deleted question or error object if question is not found
    */
   static deleteQuestion(req, res) {
     const questionId = parseInt(req.params.id, 10);

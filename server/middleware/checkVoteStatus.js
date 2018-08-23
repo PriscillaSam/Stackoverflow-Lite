@@ -1,3 +1,10 @@
+/**
+ * Checks the vote status type and value
+ * @param {object} req Request Object
+ * @param {object} res Response Object
+ * @param {Function} next Next middleware
+ * @returns {Function} Error object if field is empty or wrong data type is passed
+ */
 const checkvoteStatus = (req, res, next) => {
   let { voteStatus } = req.body;
   if (voteStatus === null || voteStatus === undefined) {
@@ -13,7 +20,7 @@ const checkvoteStatus = (req, res, next) => {
       message: 'voteStatus field can only be 0 or 1',
     });
   }
-
+  req.body.voteStatus = voteStatus;
   return next();
 };
 
