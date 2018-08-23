@@ -11,6 +11,7 @@ const user = {
   name: 'Sam-Iduh Priscilla',
   email: 'priscillasam@gmail.com',
   password: 'password',
+  confirmPassword: 'password',
 };
 
 
@@ -43,6 +44,7 @@ describe('POST api/v1/auth/signup', () => {
         name: 'Sam-Iduh Priscilla',
         email: 'priscillaiduh@gmail.com',
         password: 'password',
+        confirmPassword: 'password',
       })
       .end((err, res) => {
         if (err) done(err);
