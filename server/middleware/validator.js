@@ -55,6 +55,12 @@ const validator = {
         }),
     },
   }),
+  validateLogin: validate({
+    body: {
+      email: joi.string().email().required(),
+      password: joi.string().required(),
+    },
+  }),
 };
 
 export default validator;

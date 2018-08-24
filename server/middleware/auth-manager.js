@@ -5,15 +5,17 @@ const auth = {
   /**
    *Generates a token based on a user's id
    * @param {number} id User id
+   * @param {number} name User name
+   * @param {number} email User email
    * @returns {string} Token
    */
-  generateToken(id) {
+  generateToken(id, name, email) {
     const secretKet = config.secret;
     const jwtData = {
       expiresIn: 86400,
     };
 
-    const token = jwt.sign({ id }, secretKet, jwtData);
+    const token = jwt.sign({ id, name, email }, secretKet, jwtData);
     return token;
   },
 };

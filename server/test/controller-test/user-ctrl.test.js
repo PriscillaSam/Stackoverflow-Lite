@@ -57,3 +57,55 @@ describe('POST api/v1/auth/signup', () => {
       });
   });
 });
+
+describe('POST api/v1/auth/login', () => {
+  it('should login user if user exists', (done) => {
+    chai.request(app)
+      .post('/api/v1/auth/login')
+      .send({
+        email: 'priscillasam@gmail.com',
+        password: 'password',
+      })
+      .end((err, res) => {
+        if (err) done(err);
+        expect(res).to.have.status(200);
+        expect(res).to.be.an('object');
+        expect(res.body).to.have.keys('status', 'message', 'token');
+        expect(res.body.status).to.deep.equals('success');
+        expect(res.body.message).to.deep.equals('Welcome back Sam-Iduh Priscilla. Login successful');
+        done();
+      });
+  });
+  it('should return an error if user email is not found', (done) => {
+    chai.request(app)
+      .post('/api/v1/auth/login')
+      .send({
+        email: 'priscillasa@gmail.com',
+        password: 'password',
+      })
+      .end((err, res) => {
+        if (err) done(err);
+        expect(res).to.have.status(404);
+        expect(res).to.be.an('object');
+        expect(res.body).to.have.keys('status', 'message');
+        expect(res.body.status).to.deep.equals('error');
+        done();
+      });
+  });
+  it('should return an error if password does not match', (done) => {
+    chai.request(app)
+      .post('/api/v1/auth/login')
+      .send({
+        email: 'priscillasam@gmail.com',
+        password: 'pass',
+      })
+      .end((err, res) => {
+        if (err) done(err);
+        expect(res).to.have.status(404);
+        expect(res).to.be.an('object');
+        expect(res.body).to.have.keys('status', 'message');
+        expect(res.body.status).to.deep.equals('error');
+        done();
+      });
+  });
+});

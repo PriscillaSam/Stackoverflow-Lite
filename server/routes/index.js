@@ -10,6 +10,7 @@ import checkStatus from '../middleware/checkVoteStatus';
 const router = express.Router();
 
 router.post('/auth/signup', validator.validateSignUp, User.register);
+router.post('/auth/login', validator.validateLogin, User.login);
 
 router.get('/questions', Question.getQuestions);
 router.get('/questions/:id', validator.validateId, Question.getQuestion);
