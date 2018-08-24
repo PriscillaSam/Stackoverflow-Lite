@@ -1,12 +1,15 @@
 import express from 'express';
 import Question from '../controllers/question';
 import Answer from '../controllers/answer';
+import User from '../controllers/user';
 
 import validator from '../middleware/validator';
 import checkStatus from '../middleware/checkVoteStatus';
 
 
 const router = express.Router();
+
+router.post('/auth/signup', validator.validateSignUp, User.register);
 
 router.get('/questions', Question.getQuestions);
 router.get('/questions/:id', validator.validateId, Question.getQuestion);

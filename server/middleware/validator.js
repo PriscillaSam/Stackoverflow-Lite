@@ -40,6 +40,21 @@ const validator = {
       userId: numJoi,
     },
   }),
+  validateSignUp: validate({
+    body: {
+      name: joi.string().required(),
+      email: joi.string().email().required(),
+      password: joi.string().required(),
+      confirmPassword: joi.string()
+        .valid(joi.ref('password')).required().options({
+          language: {
+            any: {
+              allowOnly: 'must match password',
+            },
+          },
+        }),
+    },
+  }),
 };
 
 export default validator;
