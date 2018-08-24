@@ -14,6 +14,12 @@ const errors = {
       message: 'you are not allowed to perform this operation',
     });
   },
+  authError(res) {
+    return res.status(404).json({
+      status: 'error',
+      message: 'failed to authenticate user. invalid email or password',
+    });
+  },
 };
 
 export default errors;

@@ -9,7 +9,7 @@ const userQueries = {
   },
   getUser(email) {
     return {
-      text: 'SELECT email FROM users WHERE email = $1',
+      text: 'SELECT id, name, email, passHash FROM users WHERE email = $1',
       values: [email],
     };
   },

@@ -11,6 +11,10 @@ const encrypt = {
     const stringHash = bcrypt.hashSync(string, saltRounds);
     return stringHash;
   },
+
+  matchString(string, hash) {
+    return bcrypt.compareSync(string, hash);
+  },
 };
 
 export default encrypt;
