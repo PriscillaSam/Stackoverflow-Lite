@@ -1,63 +1,55 @@
 //get modal
-const modal = document.getElementsByClassName('modal')[0];
-const confirmBox = document.getElementById('confirmBox');
-const delBtn = document.getElementsByClassName('js-accept');
+// const modal = document.getElementsByClassName('modal');
+const confirmBox = document.getElementById('accept-box');
+const acceptBtns = document.getElementsByClassName('js-accept');
 const closeModal = document.getElementsByClassName('cl-modal');
-const accept = document.getElementById('accept-link');
-
 const confirmBtn = document.getElementById('confirm');
 
-[...delBtn].forEach(btn => {
+const questionModalToggle = document.getElementsByClassName('js-question');
+const questionModal = document.getElementById('question-modal');
+
+const acceptModal = document.getElementById('accept-modal');
+const accept = document.getElementById('accept-link');
+
+
+[...questionModalToggle].forEach(btn => {
+    btn.addEventListener('click', (event) => {
+    event.preventDefault();
+    questionModal.classList.remove('hidden'); 
+});
+});
+
+[...acceptBtns].forEach(btn => {
     btn.addEventListener('click', (event) => {
         event.preventDefault();
-        modal.classList.remove('hidden');
+        acceptModal.classList.remove('hidden');
     });
 });
 
-const toggleModal = () => {
-  
-    if(modal.classList.contains('hidden')){
-        modal.classList.remove('hidden');
-        setTimeout(() => {
-            confirmBox.classList.add('slideOutDown');
-        });
-
-        confirmBox.classList.remove('slideInUp');            
-    }
-
-    if(!modal.classList.contains('hidden')){
-        confirmBox.classList.add('slideOutDown');
-
-        setTimeout(() => {
-            modal.classList.add('hidden');
-            confirmBox.classList.remove('slideOutDown');
-
-        },500);
-
-    }
-
-};
-
 [...closeModal].forEach(btn => {
     btn.addEventListener('click', (event) => {
+        const parent = btn.closest('.confirmBox');
         event.preventDefault();
-        toggleModal();
+        setTimeout(() => {
+            parent.classList.add('slideOutDown');
+        }, 50);
+       
+        parent.classList.remove('slideInUp');
+        setTimeout(() => {
+            btn.closest('.modal').classList.add('hidden');
+            parent.classList.replace('slideOutDown', 'slideInUp');
+        }, 400);
     });
 });
 
 confirmBtn.addEventListener('click', (event) => {        
     event.preventDefault();
-
     confirmBox.classList.add('slideOutDown');
 
     setTimeout(() => {
-        confirmBox.classList.add('hidden');
-
         setTimeout(() => {
-            modal.classList.add('hidden');
-            confirmBox.classList.remove('hidden');
+            confirmBox.closest('.modal').classList.add('hidden');
             confirmBox.classList.remove('slideOutDown');
-
         },500);
         accept.innerHTML = '<li><span class="badge badge-dark text-success">accepted answer</span></li>';
 

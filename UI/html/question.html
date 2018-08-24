@@ -11,8 +11,7 @@
 
 </head>
 <body class="bg-light">
-
-        <nav class="bg-dark shadow fadeInDown">
+                <nav class="bg-dark shadow fadeInDown">
                 <div class="d-i-block">
                         <ul>
                            <li class="hidden nav-toggle">
@@ -29,13 +28,13 @@
             </div>
           
             <div class="d-i-block collapse">
-                <ul class="nav-collapse">       
+                <ul class="nav-collapse"> 
                     <li class="d-inline mr-3">
-                        <a href="account.html" class="text-success p-large">Ask a question</a>
-                    </li>
-                    <li class="d-inline">
-                        <a class="btn btn-success" href="account.html">Log in</a>
-                    </li>            
+                        <a href="profile.html" class=""> <i class="fa fa-user-o mr-1"></i>Hi Priscilla</a>
+                    </li>        
+                    <li class="d-inline mr-3">
+                        <a href="" id="" class="text-success p-large js-question">Ask a question</a>
+                    </li>           
                    
                 </ul>
             </div>     
@@ -52,10 +51,10 @@
             
             
             <div class="answers mt-2">                
-                <div class="box d-i-block">
+                <div class="box">
                     <p class="lead mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, aut. 
                         Cumque obcaecati quo dolores laudantium possimus illum quia ullam laboriosam...</p>
-                    <a href="" class="lead">Read more <i class="fa fa-angle-double-right"></i></a>
+                    <a href="" class="text-success">Read more <i class="fa fa-angle-double-right"></i></a>
                     <h3 class="display-3 mb-0"><i class="fa fa-user-o text-success"></i> <span class="mr-1">Kent Baker</span>
                     <span class="text-primary"><i class="fa fa-envelope-o fa-fw text-success"></i><span class=""><a href="" class="text-primary">kent.baker@gmail.com</a></span></span>
                     </h3>
@@ -70,7 +69,7 @@
                 <div class="box">
                         <p class="lead mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, aut. 
                             Cumque obcaecati quo dolores laudantium possimus illum quia ullam laboriosam...</p>
-                        <a href="" class="lead">Read more <i class="fa fa-angle-double-right"></i></a>
+                        <a href="" class="text-success">Read more <i class="fa fa-angle-double-right"></i></a>
                         <h3 class="display-3 mb-0"><i class="fa fa-user-o text-success"></i> <span class="mr-1">Kent Baker</span>
                         <span class="text-primary"><i class="fa fa-envelope-o fa-fw text-success js-accept"></i><span class=""><a href="" class="text-primary">kent.baker@gmail.com</a></span></span>
                         </h3>
@@ -87,7 +86,7 @@
             <div class="">
                 <form>
                     <textarea name="" id="" cols="20" class="form-input" rows="7" placeholder="enter your response"></textarea>
-                    <button class="btn btn-default mt-1 w-20"> Submit</button>
+                    <button class="btn btn-success mt-1 w-20"> Submit</button>
                     <p><a href="account.html" class="text-success"> <i class="fa fa-sign-in fa-fw"></i>Log in</a> to post your answer.</p>
 
                 </form>
@@ -98,33 +97,26 @@
         <section>
         </section>
     </div>    
-</div>
 
-<footer class="bg-dark">
-    <div class="p-2">
-        <p class="text-center text-success mb-0 mt-0 display-3">&copy;Stackoverflow-Lite 2018</p>
-    </div>
-</footer>
+
 <!-- side navigation. Show on small screens -->
 <nav class="hidden" id="nav-sm">
         <a href="" class="close nav-toggle">
             <span class="">&times;</span>
         </a>
-        <ul>
-           
+        <ul>              
             <li class="mt-2">
-                <a href="account.html" class="text-primary"><i class="fa fa-power-off fa-lg text-success mr-1"></i>
-                    Log in</a>
+                <a href="profile.html" class="text-primary"> <i class="fa fa-user-o fa-lg text-success mr-1 "></i>Hi Priscilla</a>
             </li>       
             <li class="mt-2">
-                <a href="" class="text-primary"><i class="fa fa-edit fa-lg text-success mr-1"></i>Ask a question</a>
+                <a href="" class="text-primary js-question" ><i class="fa fa-edit fa-lg text-success mr-1"></i>Ask a question</a>
             </li>
             
         </ul>    
 </nav>
 <!-- modal -->
-<div class="modal hidden">
-        <div class="modal-body slideInUp p-2" id="confirmBox">
+<div class="modal hidden" id="accept-modal">
+        <div class="modal-body confirmBox slideInUp p-2" id="accept-box">
                 <a href="" class="close cl-modal">
                     <span class="">&times;</span>
                 </a>
@@ -138,8 +130,39 @@
             </div>
         </div>      
     </div>
-        <script src="../js/app.js"></script>
-        <script src="../js/accept.js"></script>
-       
+<!-- question modal -->
+<div class="modal hidden" id="question-modal">    
+    <div class="modal-body slideInUp confirmBox p-2" >
+            <a href="" class="close cl-modal">
+                <span class="">&times;</span>
+            </a>     
+        
+        <section class="" >
+                <h4 class="display-4 text-primary mb-0 fadeIn"> <i class="fa fa-edit fa-fw"></i><strong>Ask a question</strong></h4>
+                <h3 class="display-3 mt-0 ml-3">Be descriptive. Be concise. Be clear.</h3>      
+                <div >
+                    <form>
+                        <div class="input-area">
+                            <textarea name="" id="" cols="30" rows="10" class="form-input" placeholder="type your question here..."></textarea>
+
+                        </div>
+                        <div class="input-area right">
+                            <button class="btn btn-success" type="submit"><i class="fa fa-share fa-fw"></i>Post Question</button>
+                        </div>
+                    </form>
+                </div>         
+            </section>
+        </div>
+
+</div>
+</div>
+
+<script src="../js/app.js"></script>
+<script src="../js/accept.js"></script>
+<footer class="bg-dark foot" >
+    <div class="p-2">
+        <p class="text-center text-success mb-0 mt-0 display-3">&copy;Stackoverflow-Lite 2018</p>
+    </div>
+</footer>  
 </body>
 </html>
