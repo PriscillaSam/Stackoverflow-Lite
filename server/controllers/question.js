@@ -4,6 +4,11 @@ import errors from '../helpers/errorMessages';
 import pool from '../config/db.config';
 import queries from '../helpers/queries';
 
+const { questionQueries } = queries;
+
+/**
+ * Question controller
+ */
 class Question {
   /**
    * Fetches all the questions available
@@ -14,7 +19,7 @@ class Question {
   static getQuestions(req, res) {
     pool.connect()
       .then((client) => {
-        client.query(queries.questionQueries.getQuestions())
+        client.query(questionQueries.getQuestions())
           .then((response) => {
             client.release();
             res.status(200).json({
@@ -55,18 +60,20 @@ class Question {
    */
   static postQuestion(req, res) {
     const { userId, question } = req.body;
-    const user = userRepo.getUser(userId);
 
-    if (user === null) {
-      return errors.notFound(res, 'user');
-    }
-
-    const postedQuestion = repo.postQuestion(question, user);
-    return res.status(201).json({
-      status: 'success',
-      message: 'Your question has been posted',
-      postedQuestion,
-    });
+    pool.connect()
+      .then((client) => {
+        client.query(questionQueries.postQuestion(question, userId))
+          .then((response) => {
+            client.release();
+            const [postedQuestion] = response.rows;
+            return res.status(201).json({
+              status: 'success',
+              message: 'Your question has been posted',
+              newQuestion: postedQuestion,
+            });
+          });
+      });
   }
 
   /**
