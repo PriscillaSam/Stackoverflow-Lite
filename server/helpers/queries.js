@@ -34,7 +34,7 @@ const questionQueries = {
   getQuestions() {
     const query = `
     SELECT 
-     q.id, 
+     q.id,
      question, 
      q.createdat, 
      u.id as userid,
@@ -44,6 +44,27 @@ const questionQueries = {
     JOIN users u ON u.id = q.userid
     `;
     return query;
+  },
+  /**
+   * Get question query method
+   * @param {number} id Question id
+   * @returns {string} Get question query
+   */
+  getQuestion(id) {
+    return {
+      text: `
+    SELECT
+      q.id,
+      question,
+      u.id as userId,
+      name
+    FROM questions q
+    JOIN users u ON u.id = q.userid
+    WHERE q.id = $1
+    ;
+    `,
+      values: [id],
+    };
   },
   /**
    * Post question query function
@@ -57,7 +78,42 @@ const questionQueries = {
       values: [question, userId],
     };
   },
+  /**
+   * Delete question query function
+   * @param {number} id Question id
+   * @returns {object} Delete Question query object
+   */
+  deleteQuestion(id) {
+    return {
+      text: 'DELETE FROM questions WHERE id = $1 RETURNING question;',
+      values: [id],
+    };
+  },
+};
+
+const answerQueries = {
+  /**
+   * Get a question's answers query function
+   * @param {number} id Question id
+   * @returns {object} Get answers query object
+   */
+  getAnswersByQId(id) {
+    return {
+      text: `
+        SELECT 
+        a.id, 
+        answer,
+        u.id as userid,
+        u.name,
+        COALESCE((SELECT COUNT (v.id) FROM votes v WHERE v.answerid = a.id AND v.votestatus = 1 GROUP BY a.id),0) as upvotes,
+        COALESCE((SELECT COUNT (v.id) FROM votes v WHERE v.answerid = a.id AND v.votestatus = 0 GROUP BY a.id),0) as downvotes
+        FROM answers a 
+        JOIN users u ON u.id = a.userid
+        WHERE a.questionid = $1 `,
+      values: [id],
+    };
+  },
 };
 
 
-export default { userQueries, questionQueries };
+export default { userQueries, questionQueries, answerQueries };

@@ -7,6 +7,8 @@ import app from '../../../app';
 chai.use(chaiHttp);
 const { expect } = chai;
 
+let userToken;
+
 describe('GET api/v1/questions', () => {
   it('should return response status 200', (done) => {
     chai.request(app)
@@ -52,9 +54,10 @@ describe('GET api/v1/questions/:id', () => {
       .end((err, res) => {
         if (err) done(err);
         expect(res).to.have.status(200);
-        expect(res.body).to.have.property('question');
+        expect(res.body).to.have.property('questionObj');
         expect(res.body.status).to.deep.equals('success');
-        expect(res.body.question.question).to.deep.equals('Why is programming hard?');
+        expect(res.body.questionObj).to.haveOwnProperty('answers').to.be.an('array');
+        expect(res.body.questionObj.question).to.deep.equals('Why is programming hard?');
         expect(res.body.message).to.deep.equal('question has been successfully gotten');
         done();
       });
@@ -74,7 +77,6 @@ describe('GET api/v1/questions/:id', () => {
 });
 
 describe('POST api/v1/questions', () => {
-  let userToken;
   before((done) => {
     chai.request(app)
       .post('/api/v1/auth/login')
@@ -110,23 +112,24 @@ describe('POST api/v1/questions', () => {
 });
 
 describe('DELETE api/v1/question/:id', () => {
-  it('should return status 404 if user does not exist', (done) => {
+  before((done) => {
     chai.request(app)
-      .del('/api/v1/questions/1')
-      .send({ userId: 34 })
+      .post('/api/v1/auth/login')
+      .send({
+        email: 'garry.doe@gmailcom',
+        password: 'password',
+      })
       .end((err, res) => {
         if (err) done(err);
-        expect(res).to.have.status(404);
-        expect(res.body).to.have.keys('status', 'message');
-        expect(res.body.message).to.deep.equals('this user does not exist');
+        userToken = res.body.token;
         done();
       });
   });
 
   it('should return status 403 if unauthorized', (done) => {
     chai.request(app)
-      .del('/api/v1/questions/4')
-      .send({ userId: 4 })
+      .del('/api/v1/questions/3')
+      .set('Authorization', userToken)
       .end((err, res) => {
         if (err) done(err);
         expect(res).to.have.status(403);
@@ -139,7 +142,7 @@ describe('DELETE api/v1/question/:id', () => {
   it('should return status 404 if question does not exist', (done) => {
     chai.request(app)
       .del('/api/v1/questions/20')
-      .send({ userId: 4 })
+      .set('Authorization', userToken)
       .end((err, res) => {
         if (err) done(err);
         expect(res).to.have.status(404);
@@ -151,21 +154,21 @@ describe('DELETE api/v1/question/:id', () => {
 
   it('should return the deleted question', (done) => {
     chai.request(app)
-      .del('/api/v1/questions/6')
-      .send({ userId: 2 })
+      .del('/api/v1/questions/5')
+      .set('Authorization', userToken)
       .end((err, res) => {
         if (err) done(err);
         expect(res).to.have.status(200);
         expect(res.body.status).to.deep.equals('success');
         expect(res.body.message).to.deep.equals('your question has been deleted');
-        expect(res.body).to.have.property('question');
+        expect(res.body).to.have.property('deletedQuestion');
         done();
       });
   });
   it('should return a validation error for wrong input', (done) => {
     chai.request(app)
       .del('/api/v1/questions/o')
-      .send({ userId: 2 })
+      .set('Authorization', userToken)
       .end((err, res) => {
         if (err) done(err);
         expect(res).to.have.status(400);
