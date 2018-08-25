@@ -17,10 +17,18 @@ const userQueries = {
 
 const questionQueries = {
   getQuestions() {
-    return {
-      text: 'SELECT id, question, ',
-    };
+    const query = `
+    SELECT 
+     q.id, 
+     question, 
+     q.createdat, 
+     u.id as userid, 
+     name 
+    FROM questions q 
+    JOIN users u ON u.id = q.userid;
+    `;
+    return query;
   },
 };
 
-export default userQueries;
+export default { userQueries, questionQueries };
