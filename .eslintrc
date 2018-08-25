@@ -15,6 +15,7 @@
         "no-unused-vars": 0,
         "max-len": [2, 80, 4, {"ignoreComments": true}],
         "valid-jsdoc": "error",
-        "linebreak-style":"off"
+        "linebreak-style":"off",
+        "consistent-return":"off"
     }
 }
