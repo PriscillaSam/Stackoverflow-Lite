@@ -17,9 +17,6 @@ const validator = {
     params: {
       id: numJoi,
     },
-    body: {
-      userId: numJoi,
-    },
   }),
   validatePostAnswer: validate({
     params: {
