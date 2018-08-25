@@ -11,7 +11,6 @@ const validator = {
   validateQuestion: validate({
     body: {
       question: joi.string().min(10).max(100).required(),
-      userId: numJoi,
     },
   }),
   validateDelete: validate({

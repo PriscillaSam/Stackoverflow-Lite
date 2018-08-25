@@ -74,9 +74,25 @@ describe('GET api/v1/questions/:id', () => {
 });
 
 describe('POST api/v1/questions', () => {
+  let userToken;
+  before((done) => {
+    chai.request(app)
+      .post('/api/v1/auth/login')
+      .send({
+        email: 'priscilla@gmail.com',
+        password: 'password',
+      })
+      .end((err, res) => {
+        if (err) done(err);
+        userToken = res.body.token;
+        console.log(userToken);
+        done();
+      });
+  });
   it('should return status code 200', (done) => {
     chai.request(app)
       .post('/api/v1/questions')
+      .set('Authorization', userToken)
       .send(
         {
           userId: 4,
@@ -86,21 +102,8 @@ describe('POST api/v1/questions', () => {
       .end((err, res) => {
         if (err) done(err);
         expect(res).to.have.status(201);
-        expect(res.body).to.have.property('postedQuestion');
+        expect(res.body).to.have.property('newQuestion');
         expect(res.body.status).to.deep.equals('success');
-        done();
-      });
-  });
-
-  it('should return an error if user does not exist', (done) => {
-    chai.request(app)
-      .post('/api/v1/questions')
-      .send({ userId: 34, question: 'Who can tell me?' })
-      .end((err, res) => {
-        if (err) done(err);
-        expect(res).to.have.status(404);
-        expect(res.body.status).to.deep.equals('error');
-        expect(res.body.message).to.deep.equals('this user does not exist');
         done();
       });
   });
