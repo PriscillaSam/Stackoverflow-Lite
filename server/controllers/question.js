@@ -97,24 +97,29 @@ class Question {
     const questionId = parseInt(req.params.id, 10);
     const { userId } = req.body;
 
-    const user = userRepo.getUser(userId);
-    if (user === null) {
-      return errors.notFound(res, 'user');
-    }
-    const question = repo.deleteQuestion(questionId, userId);
-
-    if (question === 'unauthorized') {
-      return errors.unauthorized(res);
-    }
-    if (!question) {
-      return errors.notFound(res, 'question');
-    }
-
-    return res.status(200).json({
-      status: 'success',
-      message: 'your question has been deleted',
-      question,
-    });
+    pool.connect()
+      .then((client) => {
+        client.query(questionQueries.getQuestion(questionId))
+          .then((response) => {
+            const [questionObj] = response.rows;
+            if (!questionObj) {
+              return errors.notFound(res, 'question');
+            }
+            if (userId !== questionObj.userid) {
+              return errors.unauthorized(res);
+            }
+            client.query(questionQueries.deleteQuestion(questionId))
+              .then((deleted) => {
+                client.release();
+                const [question] = deleted.rows;
+                return res.status(200).json({
+                  status: 'success',
+                  message: 'your question has been deleted',
+                  deletedQuestion: question.question,
+                });
+              });
+          });
+      });
   }
 }
 

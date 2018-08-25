@@ -78,6 +78,17 @@ const questionQueries = {
       values: [question, userId],
     };
   },
+  /**
+   * Delete question query function
+   * @param {number} id Question id
+   * @returns {object} Delete Question query object
+   */
+  deleteQuestion(id) {
+    return {
+      text: 'DELETE FROM questions WHERE id = $1 RETURNING question;',
+      values: [id],
+    };
+  },
 };
 
 const answerQueries = {
