@@ -1,8 +1,9 @@
 import pool from '../../config/db.config';
 import seedUser from './user';
 import seedQuestion from './question';
+import seedAnswer from './answer';
 
-const seedQuery = `${seedUser}; ${seedQuestion} `;
+const seedQuery = `${seedUser}; ${seedQuestion}; ${seedAnswer} `;
 
 
 (async () => {

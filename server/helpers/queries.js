@@ -22,13 +22,22 @@ const questionQueries = {
      q.id, 
      question, 
      q.createdat, 
-     u.id as userid, 
-     name 
+     u.id as userid,
+     name,
+     COALESCE((SELECT COUNT (a.id) FROM answers a WHERE a.questionid = q.id GROUP BY q.id),0) as answers
     FROM questions q 
-    JOIN users u ON u.id = q.userid;
+    JOIN users u ON u.id = q.userid
     `;
     return query;
   },
 };
+const answerQueries = {
+  getAnswersByQid(id) {
+    return {
+      text: 'SELECT id, answer, questionid, userid FROM answers WHERE questionId = $1',
+      values: [id],
+    };
+  },
+};
 
-export default { userQueries, questionQueries };
+export default { userQueries, questionQueries, answerQueries };
