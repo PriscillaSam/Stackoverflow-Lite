@@ -52,9 +52,10 @@ describe('GET api/v1/questions/:id', () => {
       .end((err, res) => {
         if (err) done(err);
         expect(res).to.have.status(200);
-        expect(res.body).to.have.property('question');
+        expect(res.body).to.have.property('questionObj');
         expect(res.body.status).to.deep.equals('success');
-        expect(res.body.question.question).to.deep.equals('Why is programming hard?');
+        expect(res.body.questionObj).to.haveOwnProperty('answers').to.be.an('array');
+        expect(res.body.questionObj.question).to.deep.equals('Why is programming hard?');
         expect(res.body.message).to.deep.equal('question has been successfully gotten');
         done();
       });

@@ -20,7 +20,7 @@ userId INTEGER REFERENCES users(id) ON DELETE CASCADE);
 `;
 
 const answerQUery = `
-DROP TABLE IF EXISTS answers; 
+DROP TABLE IF EXISTS answers CASCADE; 
 CREATE TABLE answers(id SERIAL PRIMARY KEY, 
 answer TEXT NOT NULL, 
 isaccepted BOOLEAN NOT NULL, 
@@ -30,7 +30,17 @@ questionId INTEGER REFERENCES questions(id) ON DELETE CASCADE,
 userId INTEGER REFERENCES users(id) ON DELETE CASCADE);
 `;
 
-const query = `${userQuery} ${questionQuery} ${answerQUery}`;
+const voteQuery = `
+DROP TABLE IF EXISTS votes; 
+CREATE TABLE votes(id SERIAL PRIMARY KEY, 
+voteStatus INTEGER NOT NULL, 
+createdat TIMESTAMP NOT NULL DEFAULT NOW(), 
+updatedat TIMESTAMP NOT NULL DEFAULT NOW(), 
+userId INTEGER REFERENCES users(id) ON DELETE CASCADE, 
+answerId INTEGER REFERENCES answers(id) ON DELETE CASCADE);
+`;
+
+const query = `${userQuery} ${questionQuery} ${answerQUery} ${voteQuery}`;
 
 (async () => {
   const client = await pool.connect();
