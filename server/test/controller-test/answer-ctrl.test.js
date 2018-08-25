@@ -6,29 +6,27 @@ import app from '../../../app';
 
 chai.use(chaiHttp);
 const { expect } = chai;
+let userToken;
 
 describe('POST api/v1/questions/:questionId/answers', () => {
-  it('should return a status code 404 if user does not exist', (done) => {
+  before((done) => {
     chai.request(app)
-      .post('/api/v1/questions/1/answers')
+      .post('/api/v1/auth/login')
       .send({
-        userId: 20,
-        answer: 'This is a test answer',
+        email: 'garry.doe@gmailcom',
+        password: 'password',
       })
       .end((err, res) => {
         if (err) done(err);
-        expect(res).to.have.status(404);
-        expect(res).to.be.an('object');
-        expect(res.body.status).to.deep.equals('error');
-        expect(res.body.message).to.deep.equals('this user does not exist');
+        userToken = res.body.token;
         done();
       });
   });
   it('should return status 404 if question does not exist', (done) => {
     chai.request(app)
       .post('/api/v1/questions/20/answers')
+      .set('Authorization', userToken)
       .send({
-        userId: 2,
         answer: 'This is a test answer',
       })
       .end((err, res) => {
@@ -42,8 +40,8 @@ describe('POST api/v1/questions/:questionId/answers', () => {
   it('should return an authorized response if user has previously posted an answer', (done) => {
     chai.request(app)
       .post('/api/v1/questions/2/answers')
+      .set('Authorization', userToken)
       .send({
-        userId: 6,
         answer: 'This is a test answer',
       })
       .end((err, res) => {
@@ -57,8 +55,8 @@ describe('POST api/v1/questions/:questionId/answers', () => {
   it('should return status code 201 if post is successful', (done) => {
     chai.request(app)
       .post('/api/v1/questions/3/answers')
+      .set('Authorization', userToken)
       .send({
-        userId: 6,
         answer: 'This is a test answer',
       })
       .end((err, res) => {

@@ -113,6 +113,19 @@ const answerQueries = {
       values: [id],
     };
   },
+  /**
+   *  Post answer query function
+   * @param {number} userId User id
+   * @param {number} questionId Question id
+   * @param {string} answer Answer
+   * @returns {object} Post answer query object
+   */
+  postAnswer(userId, questionId, answer) {
+    return {
+      text: 'INSERT into answers(userid, questionid, answer, isaccepted) VALUES($1, $2, $3, $4) RETURNING id, answer, userid, isaccepted, updatedat',
+      values: [userId, questionId, answer, false],
+    };
+  },
 };
 
 
