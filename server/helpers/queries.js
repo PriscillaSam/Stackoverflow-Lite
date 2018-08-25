@@ -31,13 +31,6 @@ const questionQueries = {
     return query;
   },
 };
-const answerQueries = {
-  getAnswersByQid(id) {
-    return {
-      text: 'SELECT id, answer, questionid, userid FROM answers WHERE questionId = $1',
-      values: [id],
-    };
-  },
-};
 
-export default { userQueries, questionQueries, answerQueries };
+
+export default { userQueries, questionQueries };
