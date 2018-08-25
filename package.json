@@ -7,10 +7,12 @@
     "start": "babel-node app.js",
     "start:dev": "node_modules/.bin/nodemon app.js --exec babel-node -- ",
     "lint": "eslint *.js --fix",
-    "pretest": "export NODE_ENV=test || SET \"NODE_ENV=test\" && npm run db:migrate",
+    "db:setup": "npm run db:migrate && npm run db:seed",
+    "pretest": "export NODE_ENV=test || SET \"NODE_ENV=test\" && npm run db:setup",
     "test": "cross-env NODE_ENV=test nyc --reporter=lcov --reporter=text --cache mocha server/**/*.test.js --exit",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "db:migrate": "babel-node server/models/database-models/model.js"
+    "db:migrate": "babel-node server/models/database-models/model.js",
+    "db:seed": "babel-node server/models/database-models/seed.db.js"
   },
   "repository": {
     "type": "git",

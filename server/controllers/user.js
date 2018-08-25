@@ -1,7 +1,7 @@
 import pool from '../config/db.config';
 import encrypt from '../helpers/passwordHasher';
 import auth from '../middleware/auth-manager';
-import userQueries from '../helpers/queries';
+import queries from '../helpers/queries';
 import errors from '../helpers/errorMessages';
 
 /**
@@ -19,7 +19,7 @@ class User {
 
     pool.connect()
       .then((client) => {
-        client.query(userQueries.getUser(email))
+        client.query(queries.userQueries.getUser(email))
           .then((response) => {
             const [existingEmail] = response.rows;
             if (existingEmail) {
@@ -33,7 +33,7 @@ class User {
             const passHash = encrypt.hashString(password);
 
 
-            client.query(userQueries.createUser(name, email, passHash))
+            client.query(queries.userQueries.createUser(name, email, passHash))
               .then((user) => {
                 const [newUser] = user.rows;
                 client.release();
@@ -61,7 +61,7 @@ class User {
 
     pool.connect()
       .then((client) => {
-        client.query(userQueries.getUser(email))
+        client.query(queries.userQueries.getUser(email))
           .then((response) => {
             if (response.rows.length > 0) {
               client.release();

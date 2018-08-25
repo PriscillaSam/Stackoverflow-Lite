@@ -15,4 +15,22 @@ const userQueries = {
   },
 };
 
-export default userQueries;
+const questionQueries = {
+  getQuestions() {
+    const query = `
+    SELECT 
+     q.id, 
+     question, 
+     q.createdat, 
+     u.id as userid,
+     name,
+     COALESCE((SELECT COUNT (a.id) FROM answers a WHERE a.questionid = q.id GROUP BY q.id),0) as answers
+    FROM questions q 
+    JOIN users u ON u.id = q.userid
+    `;
+    return query;
+  },
+};
+
+
+export default { userQueries, questionQueries };

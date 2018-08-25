@@ -1,6 +1,8 @@
 import repo from '../repository/dummy-repo/question';
 import userRepo from '../repository/dummy-repo/user';
 import errors from '../helpers/errorMessages';
+import pool from '../config/db.config';
+import queries from '../helpers/queries';
 
 class Question {
   /**
@@ -10,11 +12,18 @@ class Question {
    * @returns {object} List of questions
    */
   static getQuestions(req, res) {
-    res.status(200).json({
-      status: 'success',
-      message: 'questions successfully gotten',
-      questions: repo.getQuestions(),
-    });
+    pool.connect()
+      .then((client) => {
+        client.query(queries.questionQueries.getQuestions())
+          .then((response) => {
+            client.release();
+            res.status(200).json({
+              status: 'success',
+              message: 'questions successfully gotten',
+              questions: response.rows,
+            });
+          });
+      });
   }
 
   /**
