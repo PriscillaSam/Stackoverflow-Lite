@@ -1,3 +1,5 @@
+/* eslint max-len: 0 */
+
 import express from 'express';
 import Question from '../controllers/question';
 import Answer from '../controllers/answer';

@@ -15,4 +15,12 @@ const userQueries = {
   },
 };
 
+const questionQueries = {
+  getQuestions() {
+    return {
+      text: 'SELECT id, question, ',
+    };
+  },
+};
+
 export default userQueries;
