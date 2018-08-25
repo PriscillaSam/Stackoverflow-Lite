@@ -4,7 +4,10 @@ import repo from '../repository/dummy-repo/question';
 import userRepo from '../repository/dummy-repo/user';
 import voteRepo from '../repository/dummy-repo/vote';
 import errors from '../helpers/errorMessages';
+import pool from '../config/db.config';
+import queries from '../helpers/queries';
 
+const { questionQueries, answerQueries } = queries;
 
 class Answer {
   /**
@@ -17,30 +20,35 @@ class Answer {
     const questionId = parseInt(req.params.id, 10);
     const { userId, answer } = req.body;
 
-
-    const user = userRepo.getUser(userId);
-    const question = repo.getQuestion(questionId);
-    if (!user) {
-      return errors.notFound(res, 'user');
-    }
-    if (!question) {
-      return errors.notFound(res, 'question');
-    }
-    const newAnswer = answerRepo.postAnswer({
-      userId,
-      questionId,
-      answer,
-    });
-
-    if (newAnswer === 'not allowed') {
-      return errors.unauthorized(res);
-    }
-
-    return res.status(201).json({
-      status: 'success',
-      message: 'Your answer has been posted',
-      newAnswer,
-    });
+    pool.connect()
+      .then((client) => {
+        client.query(questionQueries.getQuestion(questionId))
+          .then((response) => {
+            const [questionObj] = response.rows;
+            if (!questionObj) {
+              return errors.notFound(res, 'question');
+            }
+            client.query(answerQueries.getAnswersByQId(questionId))
+              .then((answerResponse) => {
+                const answers = answerResponse.rows;
+                if (answers.find(ans => ans.userid === userId)) {
+                  return errors.unauthorized(res);
+                }
+                client.query(answerQueries.postAnswer(userId, questionId, answer))
+                  .then((postResponse) => {
+                    client.release();
+                    const [newAnswer] = postResponse.rows;
+                    newAnswer.upvotes = 0;
+                    newAnswer.downvotes = 0;
+                    return res.status(201).json({
+                      status: 'success',
+                      message: 'Your answer has been posted',
+                      newAnswer,
+                    });
+                  });
+              });
+          });
+      });
   }
 
   /**

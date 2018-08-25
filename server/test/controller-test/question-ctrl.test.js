@@ -87,7 +87,6 @@ describe('POST api/v1/questions', () => {
       .end((err, res) => {
         if (err) done(err);
         userToken = res.body.token;
-        console.log(userToken);
         done();
       });
   });

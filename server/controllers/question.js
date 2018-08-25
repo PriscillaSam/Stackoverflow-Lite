@@ -1,5 +1,3 @@
-import repo from '../repository/dummy-repo/question';
-import userRepo from '../repository/dummy-repo/user';
 import errors from '../helpers/errorMessages';
 import pool from '../config/db.config';
 import queries from '../helpers/queries';
