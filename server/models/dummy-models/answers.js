@@ -5,7 +5,7 @@ const answers = [
     id: 1,
     userId: 2,
     questionId: 1,
-    answer: 'It\'s not hard, just difficult',
+    answer: 'Its not hard, just difficult',
     isAccepted: false,
     ...repo.getVotes(1),
   },
@@ -69,7 +69,7 @@ const answers = [
     id: 8,
     userId: 3,
     questionId: 3,
-    answer: 'I don\'t know the answer to this question but i just wanted to say i love the question',
+    answer: 'I dont know the answer to this question but i just wanted to say i love the question',
     isAccepted: false,
     ...repo.getVotes(8),
 
@@ -114,7 +114,7 @@ const answers = [
     id: 13,
     userId: 5,
     questionId: 4,
-    answer: 'They can\'t climb at all.',
+    answer: 'They cant climb at all.',
     isAccepted: false,
     ...repo.getVotes(13),
 
@@ -132,7 +132,7 @@ const answers = [
     id: 15,
     userId: 1,
     questionId: 9,
-    answer: 'I think it\'s still better for the browser.',
+    answer: 'I think its still better for the browser.',
     isAccepted: false,
     ...repo.getVotes(15),
 

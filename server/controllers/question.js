@@ -1,7 +1,14 @@
 import repo from '../repository/dummy-repo/question';
 import userRepo from '../repository/dummy-repo/user';
 import errors from '../helpers/errorMessages';
+import pool from '../config/db.config';
+import queries from '../helpers/queries';
 
+const { questionQueries } = queries;
+
+/**
+ * Question controller
+ */
 class Question {
   /**
    * Fetches all the questions available
@@ -10,11 +17,18 @@ class Question {
    * @returns {object} List of questions
    */
   static getQuestions(req, res) {
-    res.status(200).json({
-      status: 'success',
-      message: 'questions successfully gotten',
-      questions: repo.getQuestions(),
-    });
+    pool.connect()
+      .then((client) => {
+        client.query(questionQueries.getQuestions())
+          .then((response) => {
+            client.release();
+            res.status(200).json({
+              status: 'success',
+              message: 'questions successfully gotten',
+              questions: response.rows,
+            });
+          });
+      });
   }
 
   /**
@@ -46,18 +60,20 @@ class Question {
    */
   static postQuestion(req, res) {
     const { userId, question } = req.body;
-    const user = userRepo.getUser(userId);
 
-    if (user === null) {
-      return errors.notFound(res, 'user');
-    }
-
-    const postedQuestion = repo.postQuestion(question, user);
-    return res.status(201).json({
-      status: 'success',
-      message: 'Your question has been posted',
-      postedQuestion,
-    });
+    pool.connect()
+      .then((client) => {
+        client.query(questionQueries.postQuestion(question, userId))
+          .then((response) => {
+            client.release();
+            const [postedQuestion] = response.rows;
+            return res.status(201).json({
+              status: 'success',
+              message: 'Your question has been posted',
+              newQuestion: postedQuestion,
+            });
+          });
+      });
   }
 
   /**
