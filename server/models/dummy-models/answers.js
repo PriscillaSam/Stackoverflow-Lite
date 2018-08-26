@@ -210,6 +210,24 @@ const answers = [
     ...repo.getVotes(23),
 
   },
+  {
+    id: 24,
+    userId: 5,
+    questionId: 5,
+    answer: 'I think it was a woman',
+    isAccepted: false,
+    ...repo.getVotes(24),
+
+  },
+  {
+    id: 25,
+    userId: 6,
+    questionId: 5,
+    answer: 'Garrys test answer',
+    isAccepted: false,
+    ...repo.getVotes(24),
+
+  },
 ];
 
 export default answers;

@@ -9,6 +9,9 @@ import queries from '../helpers/queries';
 
 const { questionQueries, answerQueries } = queries;
 
+/**
+ * Answer controller
+ */
 class Answer {
   /**
    * Post an Answer
@@ -40,6 +43,7 @@ class Answer {
                     const [newAnswer] = postResponse.rows;
                     newAnswer.upvotes = 0;
                     newAnswer.downvotes = 0;
+
                     return res.status(201).json({
                       status: 'success',
                       message: 'Your answer has been posted',
@@ -52,45 +56,72 @@ class Answer {
   }
 
   /**
-   * Marks an answer as accepted
+   * Updates an answer
    * @param {object} req Request
    * @param {object} res Response
-   * @returns {object} Accepted answer object or error object if answer is not found
+   * @returns {object} Updated answer object or error object if answer is not found
    */
-  static acceptAnswer(req, res) {
+  static updateAnswer(req, res) {
     const { questionId, answerId } = req.params;
-    const { userId } = req.body;
+    const { userId, answer } = req.body;
 
-    const user = userRepo.getUser(userId);
-    if (!user) {
-      return errors.notFound(res, 'user');
-    }
+    pool.connect()
+      .then((client) => {
+        client.release();
+        client.query(questionQueries.getQuestion(questionId))
+          .then((response) => {
+            const [questionObj] = response.rows;
+            if (!questionObj) {
+              return errors.notFound(res, 'question');
+            }
+            client.query(answerQueries.getAnswer(answerId))
+              .then((ansResponse) => {
+                const [existingAnswer] = ansResponse.rows;
+                if (!existingAnswer) {
+                  return errors.notFound(res, 'answer');
+                }
+                if (existingAnswer.questionid !== questionId) {
+                  return res.status(404).json({
+                    status: 'error',
+                    message: 'Bad request. This answer belongs to another question.',
+                  });
+                }
+                if (userId !== existingAnswer.userid && userId !== questionObj.userid) {
+                  return errors.unauthorized(res);
+                }
+                if (existingAnswer.userid === userId) {
+                  if (answer) {
+                    client.query(answerQueries.updateAnswer(answerId, 'answer', answer))
+                      .then((updateRes) => {
+                        const [updatedAnswer] = updateRes.rows;
+                        return res.status(200).json({
+                          status: 'success',
+                          message: 'you have updated your answer',
+                          updatedAnswer,
+                        });
+                      });
+                  } else if (questionObj.userid !== userId) {
+                    return res.status(400).json({
+                      status: 'error',
+                      message: 'the answer field is required',
+                    });
+                  }
+                }
 
-    const answer = answerRepo.getAnswer(answerId, questionId);
-    if (!answer) {
-      return errors.notFound(res, 'answer');
-    }
-
-    const question = repo.getQuestion(questionId);
-    if (!question) {
-      return errors.notFound(res, 'question');
-    }
-
-    if (question.user.id !== userId) {
-      return errors.unauthorized(res);
-    }
-
-    let acceptedAnswer = question.answers.find(ans => ans.isAccepted);
-    if (acceptedAnswer) {
-      return errors.unauthorized(res);
-    }
-
-    acceptedAnswer = answerRepo.acceptAnswer(answerId);
-    return res.status(200).json({
-      status: 'success',
-      message: 'your have accepted this answer',
-      acceptedAnswer,
-    });
+                if (questionObj.userid === userId && !answer) {
+                  client.query(answerQueries.updateAnswer(answerId, 'isaccepted', true))
+                    .then((acceptRes) => {
+                      const [acceptedAnswer] = acceptRes.rows;
+                      return res.status(200).json({
+                        status: 'success',
+                        message: 'your have accepted this answer',
+                        acceptedAnswer,
+                      });
+                    });
+                }
+              });
+          });
+      });
   }
 
   /**

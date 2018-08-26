@@ -115,7 +115,7 @@ describe('DELETE api/v1/question/:id', () => {
     chai.request(app)
       .post('/api/v1/auth/login')
       .send({
-        email: 'garry.doe@gmailcom',
+        email: 'garry.doe@gmail.com',
         password: 'password',
       })
       .end((err, res) => {

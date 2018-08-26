@@ -27,13 +27,10 @@ const validator = {
       answer: stringJoi,
     },
   }),
-  validateAcceptAnswer: validate({
+  validateUpdateAnswer: validate({
     params: {
       answerId: numJoi,
       questionId: numJoi,
-    },
-    body: {
-      userId: numJoi,
     },
   }),
   validateSignUp: validate({
