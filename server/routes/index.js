@@ -21,7 +21,8 @@ router.post('/questions/', auth.verifyToken, validator.validateQuestion, Questio
 router.delete('/questions/:id', auth.verifyToken, validator.validateDelete, Question.deleteQuestion);
 
 router.post('/questions/:id/answers/', auth.verifyToken, validator.validatePostAnswer, Answer.postAnswer);
-router.post('/questions/:questionId/answers/:answerId', validator.validateAcceptAnswer, Answer.acceptAnswer);
+router.put('/questions/:questionId/answers/:answerId', auth.verifyToken, validator.validateUpdateAnswer, Answer.updateAnswer);
+
 router.use(checkStatus);
 router.post('/answers/:id', validator.validateDelete, Answer.voteAnswer);
 export default router;

@@ -114,7 +114,7 @@ const answerQueries = {
     };
   },
   /**
-   *  Post answer query function
+   * Post answer query function
    * @param {number} userId User id
    * @param {number} questionId Question id
    * @param {string} answer Answer
@@ -122,8 +122,40 @@ const answerQueries = {
    */
   postAnswer(userId, questionId, answer) {
     return {
-      text: 'INSERT into answers(userid, questionid, answer, isaccepted) VALUES($1, $2, $3, $4) RETURNING id, answer, userid, isaccepted, updatedat',
+      text: `
+      INSERT into answers(userid, questionid, answer, isaccepted) 
+      VALUES($1, $2, $3, $4) 
+      RETURNING id, answer, userid, isaccepted, updatedat
+      `,
       values: [userId, questionId, answer, false],
+    };
+  },
+  /**
+   * Get answer query function
+   * @param {number} id Answer id
+   * @returns {object} Get answer query object
+   */
+  getAnswer(id) {
+    return {
+      text: 'SELECT id, answer, questionid, userid FROM answers a WHERE a.id = $1',
+      values: [id],
+    };
+  },
+  /**
+   * Update answer query function
+   * @param {number} answerId Answer id to update
+   * @param {string} field Field to update
+   * @param {value} value Value of update field
+   * @returns {object} Update answer query object
+   */
+  updateAnswer(answerId, field, value) {
+    return {
+      text: `
+      UPDATE answers a
+      SET ${field} = $2
+      WHERE a.id = $1
+      RETURNING *`,
+      values: [answerId, value],
     };
   },
 };

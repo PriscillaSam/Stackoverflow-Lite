@@ -9,21 +9,13 @@ const { expect } = chai;
 
 const user = {
   name: 'Sam-Iduh Priscilla',
-  email: 'priscillasam@gmail.com',
+  email: 'priscilla@gmail.com',
   password: 'password',
   confirmPassword: 'password',
 };
 
 
 describe('POST api/v1/auth/signup', () => {
-  before((done) => {
-    chai.request(app)
-      .post('/api/v1/auth/signup')
-      .send(user)
-      .end((err, res) => {
-        done();
-      });
-  });
   it('should return an error if user already exists', (done) => {
     chai.request(app)
       .post('/api/v1/auth/signup')
@@ -63,7 +55,7 @@ describe('POST api/v1/auth/login', () => {
     chai.request(app)
       .post('/api/v1/auth/login')
       .send({
-        email: 'priscillasam@gmail.com',
+        email: 'priscilla@gmail.com',
         password: 'password',
       })
       .end((err, res) => {
@@ -72,7 +64,7 @@ describe('POST api/v1/auth/login', () => {
         expect(res).to.be.an('object');
         expect(res.body).to.have.keys('status', 'message', 'token');
         expect(res.body.status).to.deep.equals('success');
-        expect(res.body.message).to.deep.equals('Welcome back Sam-Iduh Priscilla. Login successful');
+        expect(res.body.message).to.deep.equals('Welcome back Priscilla Doe. Login successful');
         done();
       });
   });
@@ -96,8 +88,8 @@ describe('POST api/v1/auth/login', () => {
     chai.request(app)
       .post('/api/v1/auth/login')
       .send({
-        email: 'priscillasam@gmail.com',
-        password: 'pass',
+        email: 'sami@gmail.com',
+        password: 'passwortd',
       })
       .end((err, res) => {
         if (err) done(err);
