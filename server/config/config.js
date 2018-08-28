@@ -17,8 +17,6 @@ const config = {
     password: process.env.DATABASE_PWD,
     port: process.env.DATABASE_PORT,
   },
-  production: {
-  },
   secret: process.env.JWT_SECRET,
 };
 

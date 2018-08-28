@@ -32,6 +32,7 @@
     "express-validation": "^1.0.2",
     "joi": "^13.6.0",
     "jsonwebtoken": "^8.3.0",
+    "parse-database-url": "^0.3.0",
     "pg": "^7.4.3"
   },
   "devDependencies": {
