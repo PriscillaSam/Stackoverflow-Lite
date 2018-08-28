@@ -1,8 +1,7 @@
-/* eslint max-len: 0 */
-
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../../../app';
+import users from '../testData';
 
 chai.use(chaiHttp);
 const { expect } = chai;
@@ -12,10 +11,7 @@ let askerToken;
 before((done) => {
   chai.request(app)
     .post('/api/v1/auth/login')
-    .send({
-      email: 'garry.doe@gmail.com',
-      password: 'password',
-    })
+    .send(users.garry)
     .end((err, res) => {
       if (err) done(err);
       userToken = res.body.token;
@@ -38,7 +34,8 @@ describe('POST api/v1/questions/:questionId/answers', () => {
         done();
       });
   });
-  it('should return an authorized response if user has previously posted an answer', (done) => {
+  it(`should return an authorized response
+    if user has previously posted an answer`, (done) => {
     chai.request(app)
       .post('/api/v1/questions/2/answers')
       .set('Authorization', userToken)
@@ -49,7 +46,8 @@ describe('POST api/v1/questions/:questionId/answers', () => {
         if (err) done(err);
         expect(res).to.have.status(403);
         expect(res.body.status).to.deep.equals('error');
-        expect(res.body.message).to.deep.equals('you are not allowed to perform this operation');
+        expect(res.body.message)
+          .to.deep.equals('you are not allowed to perform this operation');
         done();
       });
   });
@@ -75,10 +73,7 @@ describe('PUT api/v1/questions/:questionId/answers/:answerId', () => {
   before((done) => {
     chai.request(app)
       .post('/api/v1/auth/login')
-      .send({
-        email: 'priscilla@gmail.com',
-        password: 'password',
-      })
+      .send(users.priscilla)
       .end((err, res) => {
         if (err) done(err);
         askerToken = res.body.token;
@@ -110,19 +105,22 @@ describe('PUT api/v1/questions/:questionId/answers/:answerId', () => {
       });
   });
 
-  it('should return an unauthorized error if user is not the owner of the question or the answer', (done) => {
+  it(`should return an unauthorized error 
+    if user is not the owner of the question or the answer`, (done) => {
     chai.request(app)
       .put('/api/v1/questions/3/answers/8')
       .set('Authorization', userToken)
       .end((err, res) => {
         if (err) done(err);
         expect(res).to.have.status(403);
-        expect(res.body.message).to.deep.equals('you are not allowed to perform this operation');
+        expect(res.body.message).to.deep
+          .equals('you are not allowed to perform this operation');
         done();
       });
   });
 
-  it('should return a status code 404 if the answer is not for the question', (done) => {
+  it(`should return a status code 404
+    if the answer is not for the question`, (done) => {
     chai.request(app)
       .put('/api/v1/questions/5/answers/23')
       .set('Authorization', userToken)
@@ -132,7 +130,8 @@ describe('PUT api/v1/questions/:questionId/answers/:answerId', () => {
       .end((err, res) => {
         if (err) done(err);
         expect(res).to.have.status(404);
-        expect(res.body.message).to.deep.equals('Bad request. This answer belongs to another question.');
+        expect(res.body.message).to.deep
+          .equals('Bad request. This answer belongs to another question.');
         expect(res.body).to.have.keys('status', 'message');
         done();
       });
@@ -154,14 +153,17 @@ describe('PUT api/v1/questions/:questionId/answers/:answerId', () => {
       });
   });
 
-  it('should accept answer if user owns the question and owns the answer without providing an answer field', (done) => {
+  it(`should accept answer if user owns the question 
+    and owns the answer without providing an answer field`, (done) => {
     chai.request(app)
       .put('/api/v1/questions/5/answers/25')
       .set('Authorization', userToken)
       .end((err, res) => {
         if (err) done(err);
         expect(res).to.have.status(200);
-        expect(res.body.message).to.deep.equals('your have accepted this answer');
+        expect(res.body.message).to.deep
+          .equals('your have accepted this answer');
+
         expect(res.body).to.have.keys('status', 'message', 'acceptedAnswer');
         done();
       });
@@ -226,7 +228,8 @@ describe('POST api/v1/answers/:answerId (Vote answer)', () => {
         expect(res).to.have.status(400);
         expect(res).to.be.an('object');
         expect(res.body.status).to.deep.equals('error');
-        expect(res.body.message).to.deep.equals('voteStatus field can only be 0 or 1');
+        expect(res.body.message).to.deep
+          .equals('voteStatus field can only be 0 or 1');
         done();
       });
   });
@@ -287,7 +290,8 @@ describe('POST api/v1/answers/:answerId (Vote answer)', () => {
         expect(res).to.have.status(400);
         expect(res).to.be.an('object');
         expect(res.body.status).to.be.deep.equals('error');
-        expect(res.body.message).to.be.deep.equals('this answer has been previously upvoted by you');
+        expect(res.body.message).to.be.deep
+          .equals('this answer has been previously upvoted by you');
         done();
       });
   });
@@ -303,7 +307,8 @@ describe('POST api/v1/answers/:answerId (Vote answer)', () => {
         expect(res).to.have.status(400);
         expect(res).to.be.an('object');
         expect(res.body.status).to.be.deep.equals('error');
-        expect(res.body.message).to.be.deep.equals('this answer has been previously downvoted by you');
+        expect(res.body.message).to.be.deep
+          .equals('this answer has been previously downvoted by you');
         done();
       });
   });
@@ -335,7 +340,8 @@ describe('POST api/v1/answers/:answerId (Vote answer)', () => {
         expect(res).to.have.status(200);
         expect(res).to.be.an('object');
         expect(res.body).to.have.keys('status', 'message', 'votedAnswer');
-        expect(res.body.message).to.deep.equals('you have downvoted this answer');
+        expect(res.body.message).to.deep
+          .equals('you have downvoted this answer');
         done();
       });
   });
@@ -367,7 +373,8 @@ describe('POST api/v1/answers/:answerId (Vote answer)', () => {
         expect(res).to.have.status(201);
         expect(res).to.be.an('object');
         expect(res.body).to.have.keys('status', 'message', 'votedAnswer');
-        expect(res.body.message).to.deep.equals('you have downvoted this answer');
+        expect(res.body.message).to.deep
+          .equals('you have downvoted this answer');
         done();
       });
   });

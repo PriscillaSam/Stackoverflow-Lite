@@ -1,4 +1,4 @@
-import answers from '../../models/dummy-models/answers';
+import answers from '../../models/dummyModels/answers';
 
 const answerRepo = {
   answers,
@@ -10,7 +10,8 @@ const answerRepo = {
   postAnswer(answerObj) {
     const { userId, questionId, answer } = answerObj;
 
-    const userAnswer = this.answers.find(ans => ans.userId === userId && ans.questionId === questionId);
+    const userAnswer = this.answers
+      .find(ans => ans.userId === userId && ans.questionId === questionId);
     if (userAnswer) {
       return 'not allowed';
     }

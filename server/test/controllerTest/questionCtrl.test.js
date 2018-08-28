@@ -1,8 +1,7 @@
-/* eslint max-len: 0 */
-
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../../../app';
+import users from '../testData';
 
 chai.use(chaiHttp);
 const { expect } = chai;
@@ -56,9 +55,12 @@ describe('GET api/v1/questions/:id', () => {
         expect(res).to.have.status(200);
         expect(res.body).to.have.property('questionObj');
         expect(res.body.status).to.deep.equals('success');
-        expect(res.body.questionObj).to.haveOwnProperty('answers').to.be.an('array');
-        expect(res.body.questionObj.question).to.deep.equals('Why is programming hard?');
-        expect(res.body.message).to.deep.equal('question has been successfully gotten');
+        expect(res.body.questionObj).to.haveOwnProperty('answers').to.be
+          .an('array');
+        expect(res.body.questionObj.question).to.deep
+          .equals('Why is programming hard?');
+        expect(res.body.message).to.deep
+          .equal('question has been successfully gotten');
         done();
       });
   });
@@ -80,10 +82,7 @@ describe('POST api/v1/questions', () => {
   before((done) => {
     chai.request(app)
       .post('/api/v1/auth/login')
-      .send({
-        email: 'priscilla@gmail.com',
-        password: 'password',
-      })
+      .send(users.priscilla)
       .end((err, res) => {
         if (err) done(err);
         userToken = res.body.token;
@@ -114,10 +113,7 @@ describe('DELETE api/v1/question/:id', () => {
   before((done) => {
     chai.request(app)
       .post('/api/v1/auth/login')
-      .send({
-        email: 'garry.doe@gmail.com',
-        password: 'password',
-      })
+      .send(users.garry)
       .end((err, res) => {
         if (err) done(err);
         userToken = res.body.token;
@@ -133,7 +129,8 @@ describe('DELETE api/v1/question/:id', () => {
         if (err) done(err);
         expect(res).to.have.status(403);
         expect(res.body.status).to.deep.equals('error');
-        expect(res.body.message).to.deep.equals('you are not allowed to perform this operation');
+        expect(res.body.message).to.deep
+          .equals('you are not allowed to perform this operation');
         done();
       });
   });
@@ -159,7 +156,8 @@ describe('DELETE api/v1/question/:id', () => {
         if (err) done(err);
         expect(res).to.have.status(200);
         expect(res.body.status).to.deep.equals('success');
-        expect(res.body.message).to.deep.equals('your question has been deleted');
+        expect(res.body.message).to.deep
+          .equals('your question has been deleted');
         expect(res.body).to.have.property('deletedQuestion');
         done();
       });
@@ -173,7 +171,8 @@ describe('DELETE api/v1/question/:id', () => {
         expect(res).to.have.status(400);
         expect(res.body).to.be.an('object');
         expect(res.body).to.have.property('errorData');
-        expect(res.body.errorData.errorMessages).to.have.property('id').to.equal('id must be a number');
+        expect(res.body.errorData.errorMessages).to.have
+          .property('id').to.equal('id must be a number');
         done();
       });
   });

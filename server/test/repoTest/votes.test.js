@@ -1,6 +1,6 @@
 import chai from 'chai';
-import repo from '../../repository/dummy-repo/vote';
-import votes from '../../models/dummy-models/votes';
+import repo from '../../repository/dummyRepo/vote';
+import votes from '../../models/dummyModels/votes';
 
 const { expect } = chai;
 

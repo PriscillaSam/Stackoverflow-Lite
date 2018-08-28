@@ -1,5 +1,3 @@
-/* eslint no-unused-vars: 0 */
-/* eslint consistent-return: 0 */
 import validator from 'express-validation';
 
 /**

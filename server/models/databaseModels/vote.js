@@ -1,4 +1,4 @@
-import votes from '../dummy-models/votes';
+import votes from '../dummyModels/votes';
 
 let voteValues = '';
 

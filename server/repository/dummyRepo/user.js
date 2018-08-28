@@ -1,4 +1,4 @@
-import users from '../../models/dummy-models/user';
+import users from '../../models/dummyModels/user';
 
 const repo = {
   /**

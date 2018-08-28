@@ -1,5 +1,5 @@
 import chai from 'chai';
-import repo from '../../repository/dummy-repo/user';
+import repo from '../../repository/dummyRepo/user';
 
 const { expect } = chai;
 

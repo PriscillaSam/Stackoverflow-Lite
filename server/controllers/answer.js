@@ -1,8 +1,6 @@
-/* eslint consistent-return: 0 */
-import answerRepo from '../repository/dummy-repo/answer';
-import repo from '../repository/dummy-repo/question';
-import userRepo from '../repository/dummy-repo/user';
-import voteRepo from '../repository/dummy-repo/vote';
+import answerRepo from '../repository/dummyRepo/answer';
+import userRepo from '../repository/dummyRepo/user';
+import voteRepo from '../repository/dummyRepo/vote';
 import errors from '../helpers/errorMessages';
 import pool from '../config/db.config';
 import queries from '../helpers/queries';
@@ -17,7 +15,8 @@ class Answer {
    * Post an Answer
    * @param {object} req Request Object
    * @param {object} res Response Object
-   * @returns {object} Answer object or error object if question or answer does not exist
+   * @returns {object} Answer object
+   * or error object if question or answer does not exist
    */
   static postAnswer(req, res) {
     const questionId = parseInt(req.params.id, 10);
@@ -37,7 +36,8 @@ class Answer {
                 if (answers.find(ans => ans.userid === userId)) {
                   return errors.unauthorized(res);
                 }
-                client.query(answerQueries.postAnswer(userId, questionId, answer))
+                client.query(answerQueries
+                  .postAnswer(userId, questionId, answer))
                   .then((postResponse) => {
                     client.release();
                     const [newAnswer] = postResponse.rows;
@@ -59,7 +59,8 @@ class Answer {
    * Updates an answer
    * @param {object} req Request
    * @param {object} res Response
-   * @returns {object} Updated answer object or error object if answer is not found
+   * @returns {object} Updated answer object
+   * or error object if answer is not found
    */
   static updateAnswer(req, res) {
     const { questionId, answerId } = req.params;
@@ -83,15 +84,18 @@ class Answer {
                 if (existingAnswer.questionid !== questionId) {
                   return res.status(404).json({
                     status: 'error',
-                    message: 'Bad request. This answer belongs to another question.',
+                    message:
+                    'Bad request. This answer belongs to another question.',
                   });
                 }
-                if (userId !== existingAnswer.userid && userId !== questionObj.userid) {
+                if (userId !== existingAnswer.userid
+                  && userId !== questionObj.userid) {
                   return errors.unauthorized(res);
                 }
                 if (existingAnswer.userid === userId) {
                   if (answer) {
-                    client.query(answerQueries.updateAnswer(answerId, 'answer', answer))
+                    client.query(answerQueries
+                      .updateAnswer(answerId, 'answer', answer))
                       .then((updateRes) => {
                         const [updatedAnswer] = updateRes.rows;
                         return res.status(200).json({
@@ -109,7 +113,8 @@ class Answer {
                 }
 
                 if (questionObj.userid === userId && !answer) {
-                  client.query(answerQueries.updateAnswer(answerId, 'isaccepted', true))
+                  client.query(answerQueries
+                    .updateAnswer(answerId, 'isaccepted', true))
                     .then((acceptRes) => {
                       const [acceptedAnswer] = acceptRes.rows;
                       return res.status(200).json({
@@ -128,7 +133,8 @@ class Answer {
    * Upvote or Downvote an answer
    * @param {object} req Request Object
    * @param {object} res Response Object
-   * @returns {object} Object with status, message and optionally voted answer field for a new vote
+   * @returns {object} Object with status,
+   * message and optionally voted answer object for a new vote
    */
   static voteAnswer(req, res) {
     const answerId = req.params.id;

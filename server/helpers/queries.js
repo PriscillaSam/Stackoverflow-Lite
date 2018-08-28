@@ -1,5 +1,3 @@
-/* eslint max-len: 0 */
-
 const userQueries = {
   /**
    * Create user query function
@@ -10,7 +8,8 @@ const userQueries = {
    */
   createUser(name, email, passHash) {
     return {
-      text: 'INSERT into users(name, email, passHash) VALUES($1, $2, $3) RETURNING id, name, email',
+      text: `INSERT into users(name, email, passHash) 
+      VALUES($1, $2, $3) RETURNING id, name, email`,
       values: [name, email, passHash],
     };
   },
@@ -39,7 +38,8 @@ const questionQueries = {
      q.createdat, 
      u.id as userid,
      name,
-     COALESCE((SELECT COUNT (a.id) FROM answers a WHERE a.questionid = q.id GROUP BY q.id),0) as answers
+     COALESCE((SELECT COUNT (a.id) FROM answers a 
+     WHERE a.questionid = q.id GROUP BY q.id),0) as answers
     FROM questions q 
     JOIN users u ON u.id = q.userid
     `;
@@ -74,7 +74,8 @@ const questionQueries = {
    */
   postQuestion(question, userId) {
     return {
-      text: 'INSERT into questions(question, userid) VALUES($1, $2) RETURNING id, question',
+      text: `INSERT into questions(question, userid) 
+      VALUES($1, $2) RETURNING id, question`,
       values: [question, userId],
     };
   },
@@ -105,8 +106,14 @@ const answerQueries = {
         answer,
         u.id as userid,
         u.name,
-        COALESCE((SELECT COUNT (v.id) FROM votes v WHERE v.answerid = a.id AND v.votestatus = 1 GROUP BY a.id),0) as upvotes,
-        COALESCE((SELECT COUNT (v.id) FROM votes v WHERE v.answerid = a.id AND v.votestatus = 0 GROUP BY a.id),0) as downvotes
+        COALESCE((SELECT COUNT (v.id) FROM votes v 
+        WHERE v.answerid = a.id 
+        AND v.votestatus = 1 GROUP BY a.id),0) as upvotes,
+
+        COALESCE((SELECT COUNT (v.id) FROM votes v 
+        WHERE v.answerid = a.id 
+        AND v.votestatus = 0 GROUP BY a.id),0) as downvotes
+
         FROM answers a 
         JOIN users u ON u.id = a.userid
         WHERE a.questionid = $1 `,
@@ -137,7 +144,9 @@ const answerQueries = {
    */
   getAnswer(id) {
     return {
-      text: 'SELECT id, answer, questionid, userid FROM answers a WHERE a.id = $1',
+      text: `
+      SELECT id, answer, questionid, userid 
+      FROM answers a WHERE a.id = $1`,
       values: [id],
     };
   },

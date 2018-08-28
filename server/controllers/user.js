@@ -1,6 +1,6 @@
 import pool from '../config/db.config';
 import encrypt from '../helpers/passwordHasher';
-import auth from '../middleware/auth-manager';
+import auth from '../middleware/authManager';
 import queries from '../helpers/queries';
 import errors from '../helpers/errorMessages';
 

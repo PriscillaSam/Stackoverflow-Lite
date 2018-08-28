@@ -1,4 +1,4 @@
-import votes from '../../models/dummy-models/votes';
+import votes from '../../models/dummyModels/votes';
 
 const repo = {
   /**

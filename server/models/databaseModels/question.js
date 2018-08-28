@@ -1,4 +1,4 @@
-import questions from '../dummy-models/questions';
+import questions from '../dummyModels/questions';
 
 let questionValues = '';
 
