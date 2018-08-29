@@ -204,9 +204,7 @@ describe('POST api/v1/answers/:answerId (Vote answer)', () => {
   it('should return 400 error if status is not supplied', (done) => {
     chai.request(app)
       .post('/api/v1/answers/1')
-      .send({
-        userId: 2,
-      })
+      .set('Authorization', userToken)
       .end((err, res) => {
         if (err) done(err);
         expect(res).to.have.status(400);
@@ -219,8 +217,8 @@ describe('POST api/v1/answers/:answerId (Vote answer)', () => {
   it('should return 400 error if status is not 0 0r 1', (done) => {
     chai.request(app)
       .post('/api/v1/answers/1')
+      .set('Authorization', userToken)
       .send({
-        userId: 2,
         voteStatus: 3,
       })
       .end((err, res) => {
@@ -233,26 +231,12 @@ describe('POST api/v1/answers/:answerId (Vote answer)', () => {
         done();
       });
   });
-  it('should return 404 error status if user is not found', (done) => {
-    chai.request(app)
-      .post('/api/v1/answers/1')
-      .send({
-        userId: 16,
-        voteStatus: 1,
-      })
-      .end((err, res) => {
-        if (err) done(err);
-        expect(res).to.have.status(404);
-        expect(res.body.status).to.deep.equals('error');
-        expect(res.body.message).to.deep.equals('this user does not exist');
-        done();
-      });
-  });
+
   it('should return 404 error status if answer is not found', (done) => {
     chai.request(app)
       .post('/api/v1/answers/30')
+      .set('Authorization', userToken)
       .send({
-        userId: 1,
         voteStatus: 1,
       })
       .end((err, res) => {
@@ -263,11 +247,12 @@ describe('POST api/v1/answers/:answerId (Vote answer)', () => {
         done();
       });
   });
-  it('should return 404 error status if answer is not found', (done) => {
+
+  it('should return 403 error status if answer belongs to user', (done) => {
     chai.request(app)
-      .post('/api/v1/answers/19')
+      .post('/api/v1/answers/4')
+      .set('Authorization', userToken)
       .send({
-        userId: 3,
         voteStatus: 1,
       })
       .end((err, res) => {
@@ -278,11 +263,12 @@ describe('POST api/v1/answers/:answerId (Vote answer)', () => {
         done();
       });
   });
+
   it('should return 400 error if user has upvoted before', (done) => {
     chai.request(app)
-      .post('/api/v1/answers/8')
+      .post('/api/v1/answers/20')
+      .set('Authorization', askerToken)
       .send({
-        userId: 2,
         voteStatus: 1,
       })
       .end((err, res) => {
@@ -298,8 +284,8 @@ describe('POST api/v1/answers/:answerId (Vote answer)', () => {
   it('should return 400 error if user has downvoted before', (done) => {
     chai.request(app)
       .post('/api/v1/answers/8')
+      .set('Authorization', userToken)
       .send({
-        userId: 1,
         voteStatus: 0,
       })
       .end((err, res) => {
@@ -315,31 +301,31 @@ describe('POST api/v1/answers/:answerId (Vote answer)', () => {
   it('should return a status 200 if upvote is successful', (done) => {
     chai.request(app)
       .post('/api/v1/answers/8')
+      .set('Authorization', userToken)
       .send({
-        userId: 9,
         voteStatus: 1,
       })
       .end((err, res) => {
         if (err) done(err);
         expect(res).to.have.status(200);
         expect(res).to.be.an('object');
-        expect(res.body).to.have.keys('status', 'message', 'votedAnswer');
+        expect(res.body).to.have.keys('status', 'message', 'answer');
         expect(res.body.message).to.deep.equals('you have upvoted this answer');
         done();
       });
   });
   it('should return a status 200 if downvote is successful', (done) => {
     chai.request(app)
-      .post('/api/v1/answers/8')
+      .post('/api/v1/answers/20')
+      .set('Authorization', askerToken)
       .send({
-        userId: 8,
         voteStatus: 0,
       })
       .end((err, res) => {
         if (err) done(err);
         expect(res).to.have.status(200);
         expect(res).to.be.an('object');
-        expect(res.body).to.have.keys('status', 'message', 'votedAnswer');
+        expect(res.body).to.have.keys('status', 'message', 'answer');
         expect(res.body.message).to.deep
           .equals('you have downvoted this answer');
         done();
@@ -348,31 +334,31 @@ describe('POST api/v1/answers/:answerId (Vote answer)', () => {
   it('should return a status 201 if new upvote is successful', (done) => {
     chai.request(app)
       .post('/api/v1/answers/17')
+      .set('Authorization', userToken)
       .send({
-        userId: 5,
         voteStatus: 1,
       })
       .end((err, res) => {
         if (err) done(err);
         expect(res).to.have.status(201);
         expect(res).to.be.an('object');
-        expect(res.body).to.have.keys('status', 'message', 'votedAnswer');
+        expect(res.body).to.have.keys('status', 'message', 'answer');
         expect(res.body.message).to.deep.equals('you have upvoted this answer');
         done();
       });
   });
   it('should return a status 201 if new downvote is successful', (done) => {
     chai.request(app)
-      .post('/api/v1/answers/16')
+      .post('/api/v1/answers/17')
+      .set('Authorization', askerToken)
       .send({
-        userId: 5,
         voteStatus: 0,
       })
       .end((err, res) => {
         if (err) done(err);
         expect(res).to.have.status(201);
         expect(res).to.be.an('object');
-        expect(res.body).to.have.keys('status', 'message', 'votedAnswer');
+        expect(res.body).to.have.keys('status', 'message', 'answer');
         expect(res.body.message).to.deep
           .equals('you have downvoted this answer');
         done();
