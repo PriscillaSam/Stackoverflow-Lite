@@ -46,7 +46,7 @@ const questionQueries = {
     return query;
   },
   /**
-   * Get question query method
+   * Get question query function
    * @param {number} id Question id
    * @returns {string} Get question query
    */
@@ -167,7 +167,79 @@ const answerQueries = {
       values: [answerId, value],
     };
   },
+
 };
 
+const voteQueries = {
+  /**
+   * Vote answer query function
+   * @param {Array} array Array consisting of the query parameters
+   * @returns {object} Vote answer query object
+   */
+  voteAnswer(array) {
+    return {
+      text: `
+      INSERT INTO votes
+      (answerid, userid, votestatus)
+      VALUES ($1, $2, $3)
+      RETURNING votestatus,
+      COALESCE((SELECT COUNT (v.id) FROM votes v 
+      WHERE v.answerid = $1 
+      AND v.votestatus = 1 GROUP BY answerid),0) as upvotes,
 
-export default { userQueries, questionQueries, answerQueries };
+      COALESCE((SELECT COUNT (v.id) FROM votes v 
+      WHERE v.answerid = $1
+      AND v.votestatus = 0 GROUP BY answerid),0) as downvotes
+      `,
+      values: array,
+    };
+  },
+  /**
+   * Get votes query function
+   * @param {number} answerId Answer id
+   * @param {number} userId User id
+   * @returns {object} Get votes query object
+   */
+  getUserVote(answerId, userId) {
+    return {
+      text: `
+      SELECT v.id,
+      v.votestatus
+      FROM votes v
+      WHERE v.answerid = $1 AND v.userid = $2
+      `,
+      values: [answerId, userId],
+    };
+  },
+  /**
+   * Update vote query function
+   * @param {number} voteId Vote id
+   * @param {number} voteStatus Vote status
+   * @returns {object} Update vote query object
+   */
+  updateVote(voteId, voteStatus) {
+    return {
+      text: `
+      UPDATE votes
+      SET votestatus = $2
+      WHERE id = $1
+      RETURNING votestatus,
+      COALESCE((SELECT COUNT (v.id) FROM votes v 
+      WHERE v.answerid = $1 
+      AND v.votestatus = 1 GROUP BY answerid),0) as upvotes,
+
+      COALESCE((SELECT COUNT (v.id) FROM votes v 
+      WHERE v.answerid = $1
+      AND v.votestatus = 0 GROUP BY answerid),0) as downvotes
+      `,
+      values: [voteId, voteStatus],
+    };
+  },
+};
+
+export default {
+  userQueries,
+  questionQueries,
+  answerQueries,
+  voteQueries,
+};

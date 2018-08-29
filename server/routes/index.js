@@ -15,18 +15,19 @@ router.post('/auth/login', validator.validateLogin, User.login);
 router.get('/questions', Question.getQuestions);
 router.get('/questions/:id', validator.validateId, Question.getQuestion);
 
-router.post('/questions/',
-  auth.verifyToken, validator.validateQuestion, Question.postQuestion);
+router.use(auth.verifyToken);
+router.post('/questions/', validator.validateQuestion, Question.postQuestion);
 
 router.delete('/questions/:id',
-  auth.verifyToken, validator.validateDelete, Question.deleteQuestion);
+  validator.validateDelete, Question.deleteQuestion);
 
-router.post('/questions/:id/answers/',
-  auth.verifyToken, validator.validatePostAnswer, Answer.postAnswer);
+router.post('/questions/:id/answers/', 
+  validator.validatePostAnswer, Answer.postAnswer);
 
 router.put('/questions/:questionId/answers/:answerId',
-  auth.verifyToken, validator.validateUpdateAnswer, Answer.updateAnswer);
+  validator.validateUpdateAnswer, Answer.updateAnswer);
 
 router.use(checkStatus);
 router.post('/answers/:id', validator.validateDelete, Answer.voteAnswer);
+
 export default router;

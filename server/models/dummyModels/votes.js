@@ -65,7 +65,7 @@ const votes = [
     id: 10,
     userId: 5,
     answerId: 20,
-    voteStatus: 0,
+    voteStatus: 1,
 
   },
   {

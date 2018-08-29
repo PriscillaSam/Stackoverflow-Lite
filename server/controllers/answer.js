@@ -1,11 +1,8 @@
-import answerRepo from '../repository/dummyRepo/answer';
-import userRepo from '../repository/dummyRepo/user';
-import voteRepo from '../repository/dummyRepo/vote';
 import errors from '../helpers/errorMessages';
 import pool from '../config/db.config';
 import queries from '../helpers/queries';
 
-const { questionQueries, answerQueries } = queries;
+const { questionQueries, answerQueries, voteQueries } = queries;
 
 /**
  * Answer controller
@@ -140,58 +137,85 @@ class Answer {
     const answerId = req.params.id;
     const { userId, voteStatus } = req.body;
 
-    const user = userRepo.getUser(userId);
-    if (!user) {
-      return errors.notFound(res, 'user');
-    }
+    pool.connect()
+      .then((client) => {
+        client.release();
+        client.query(answerQueries.getAnswer(answerId))
+          .then((response) => {
+            const [answer] = response.rows;
+            if (!answer) {
+              return errors.notFound(res, 'answer');
+            }
+            if (answer.userid === userId) {
+              return res.status(403).json({
+                status: 'error',
+                message: 'you cannot vote your answer',
+              });
+            }
+            client.query(voteQueries.getUserVote(answerId, userId))
+              .then((voteResponse) => {
+                const [previousVote] = voteResponse.rows;
+                if (previousVote) {
+                  if (previousVote.votestatus === voteStatus) {
+                    if (voteStatus === 0) {
+                      return res.status(400).json({
+                        status: 'error',
+                        message:
+                        'this answer has been previously downvoted by you',
+                      });
+                    }
+                    return res.status(400).json({
+                      status: 'error',
+                      message:
+                      'this answer has been previously upvoted by you',
+                    });
+                  }
+                  client
+                    .query(voteQueries.updateVote(previousVote.id, voteStatus))
+                    .then((voteRes) => {
+                      const [updatedVote] = voteRes.rows;
+                      answer.upvotes = updatedVote.upvotes;
+                      answer.downvotes = updatedVote.downvotes;
 
-    const answer = answerRepo.getAnswer(answerId);
-    if (!answer) {
-      return errors.notFound(res, 'answer');
-    }
-
-    if (answer.userId === user.id) {
-      return res.status(403).json({
-        status: 'error',
-        message: 'you cannot vote your answer',
+                      if (updatedVote.votestatus === 0) {
+                        return res.status(200).json({
+                          status: 'success',
+                          message:
+                          'you have downvoted this answer',
+                          answer,
+                        });
+                      }
+                      return res.status(200).json({
+                        status: 'success',
+                        message:
+                        'you have upvoted this answer',
+                        answer,
+                      });
+                    });
+                } else {
+                  const values = [answerId, userId, voteStatus];
+                  client.query(voteQueries.voteAnswer(values))
+                    .then((newVoteRes) => {
+                      const [newvote] = newVoteRes.rows;
+                      answer.upvotes = newvote.upvotes;
+                      answer.downvotes = newvote.downvotes;
+                      if (newvote.votestatus === 0) {
+                        return res.status(201).json({
+                          status: 'success',
+                          message: 'you have downvoted this answer',
+                          answer,
+                        });
+                      }
+                      return res.status(201).json({
+                        status: 'success',
+                        message: 'you have upvoted this answer',
+                        answer,
+                      });
+                    });
+                }
+              });
+          });
       });
-    }
-
-    const response = voteRepo.createVote(userId, answerId, voteStatus);
-    const votedAnswer = answerRepo.getAnswer(answerId);
-
-    if (typeof response === 'string') {
-      const responseArray = response.split(' ');
-      const responseType = responseArray[1];
-      const voteType = responseArray[0];
-
-      if (responseType === 'error') {
-        return res.status(400).json({
-          status: responseType,
-          message: `this answer has been previously ${voteType}d by you`,
-        });
-      }
-
-      return res.status(200).json({
-        status: responseType,
-        message: `you have ${voteType}d this answer`,
-        votedAnswer,
-      });
-    }
-
-    if (response === 0) {
-      return res.status(201).json({
-        status: 'success',
-        message: 'you have downvoted this answer',
-        votedAnswer,
-      });
-    }
-
-    return res.status(201).json({
-      status: 'success',
-      message: 'you have upvoted this answer',
-      votedAnswer,
-    });
   }
 }
 
