@@ -7,6 +7,7 @@ chai.use(chaiHttp);
 const { expect } = chai;
 
 let userToken;
+let askerToken;
 
 describe('GET api/v1/questions', () => {
   it('should return response status 200', (done) => {
@@ -173,6 +174,44 @@ describe('DELETE api/v1/question/:id', () => {
         expect(res.body).to.have.property('errorData');
         expect(res.body.errorData.errorMessages).to.have
           .property('id').to.equal('id must be a number');
+        done();
+      });
+  });
+});
+
+describe('GET api/v1/questions', () => {
+  before((done) => {
+    chai.request(app)
+      .post('/api/v1/auth/login')
+      .send(users.micheal)
+      .end((err, res) => {
+        if (err) done(err);
+        askerToken = res.body.token;
+        done();
+      });
+  });
+
+  it('should return status 200 if request was successful', (done) => {
+    chai.request(app)
+      .get('/api/v1/users/questions')
+      .set('Authorization', askerToken)
+      .end((err, res) => {
+        if (err) done(err);
+        expect(res).to.have.status(200);
+        expect(res.body).to.have.keys('status', 'message', 'questions');
+        done();
+      });
+  });
+  it('should get all the questions for a user', (done) => {
+    chai.request(app)
+      .get('/api/v1/users/questions')
+      .set('Authorization', askerToken)
+      .end((err, res) => {
+        if (err) done(err);
+        expect(res.body.questions).to.be.an('array');
+        expect(res.body.message).to.be.deep
+          .equals('your questions have been retrieved successfully');
+        expect(res.body.questions).to.have.lengthOf(6);
         done();
       });
   });

@@ -119,6 +119,30 @@ class Question {
           });
       });
   }
+
+  /**
+   * Get all questions asked by user
+   * @param {object} req Request object
+   * @param {object} res Response object
+   * @returns {object} Array of user questions
+   */
+  static getUserQuestions(req, res) {
+    const { userId } = req.body;
+
+    pool.connect()
+      .then((client) => {
+        client.release();
+        client.query(questionQueries.getQuestionByUserId(userId))
+          .then((response) => {
+            const questions = response.rows;
+            return res.status(200).json({
+              status: 'success',
+              message: 'your questions have been retrieved successfully',
+              questions,
+            });
+          });
+      });
+  }
 }
 
 export default Question;

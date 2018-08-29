@@ -67,6 +67,24 @@ const questionQueries = {
     };
   },
   /**
+   * Get user's questions query function
+   * @param {number} id User id
+   * @returns {object} User's questions
+   */
+  getQuestionByUserId(id) {
+    return {
+      text: `
+      SELECT id,
+      question,
+      COALESCE((SELECT COUNT (a.id) FROM answers a 
+      WHERE a.questionid = q.id GROUP BY q.id),0) as answers
+      FROM questions q
+      WHERE userid = $1
+      `,
+      values: [id],
+    };
+  },
+  /**
    * Post question query function
    * @param {string} question Asked question
    * @param {number} userId User id
