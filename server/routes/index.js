@@ -29,6 +29,6 @@ router.put('/questions/:questionId/answers/:answerId',
   validator.validateUpdateAnswer, Answer.updateAnswer);
 
 router.use(checkStatus);
-router.post('/answers/:id', validator.validateDelete, Answer.voteAnswer);
+router.post('/answers/:id/votes', validator.validateDelete, Answer.voteAnswer);
 
 export default router;

@@ -71,7 +71,7 @@ const questionQueries = {
    * @param {number} id User id
    * @returns {object} User's questions
    */
-  getQuestionByUserId(id) {
+  getUserQuestions(id) {
     return {
       text: `
       SELECT id,
@@ -116,7 +116,7 @@ const answerQueries = {
    * @param {number} id Question id
    * @returns {object} Get answers query object
    */
-  getAnswersByQId(id) {
+  getQuestionAnswers(id) {
     return {
       text: `
         SELECT 
@@ -126,11 +126,11 @@ const answerQueries = {
         u.name,
         COALESCE((SELECT COUNT (v.id) FROM votes v 
         WHERE v.answerid = a.id 
-        AND v.votestatus = 1 GROUP BY a.id),0) as upvotes,
+        AND v.vote = 1 GROUP BY a.id),0) as upvotes,
 
         COALESCE((SELECT COUNT (v.id) FROM votes v 
         WHERE v.answerid = a.id 
-        AND v.votestatus = 0 GROUP BY a.id),0) as downvotes
+        AND v.vote = 0 GROUP BY a.id),0) as downvotes
 
         FROM answers a 
         JOIN users u ON u.id = a.userid
@@ -198,16 +198,16 @@ const voteQueries = {
     return {
       text: `
       INSERT INTO votes
-      (answerid, userid, votestatus)
+      (answerid, userid, vote)
       VALUES ($1, $2, $3)
-      RETURNING votestatus,
+      RETURNING vote,
       COALESCE((SELECT COUNT (v.id) FROM votes v 
       WHERE v.answerid = $1 
-      AND v.votestatus = 1 GROUP BY answerid),0) as upvotes,
+      AND v.vote = 1 GROUP BY answerid),0) as upvotes,
 
       COALESCE((SELECT COUNT (v.id) FROM votes v 
       WHERE v.answerid = $1
-      AND v.votestatus = 0 GROUP BY answerid),0) as downvotes
+      AND v.vote = 0 GROUP BY answerid),0) as downvotes
       `,
       values: array,
     };
@@ -222,7 +222,7 @@ const voteQueries = {
     return {
       text: `
       SELECT v.id,
-      v.votestatus
+      v.vote
       FROM votes v
       WHERE v.answerid = $1 AND v.userid = $2
       `,
@@ -239,18 +239,21 @@ const voteQueries = {
     return {
       text: `
       UPDATE votes
-      SET votestatus = $2
+      SET vote = $2
       WHERE id = $1
-      RETURNING votestatus,
-      COALESCE((SELECT COUNT (v.id) FROM votes v 
-      WHERE v.answerid = $1 
-      AND v.votestatus = 1 GROUP BY answerid),0) as upvotes,
-
-      COALESCE((SELECT COUNT (v.id) FROM votes v 
-      WHERE v.answerid = $1
-      AND v.votestatus = 0 GROUP BY answerid),0) as downvotes
+      RETURNING vote
       `,
       values: [voteId, voteStatus],
+    };
+  },
+  getAnswerVotes(id) {
+    return {
+      text: `
+      SELECT vote
+      FROM votes
+      WHERE answerid = $1
+      `,
+      values: [id],
     };
   },
 };

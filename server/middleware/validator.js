@@ -2,7 +2,7 @@ import joi from 'joi';
 import validate from 'express-validation';
 
 const numJoi = joi.number().integer().required();
-const stringJoi = joi.string().min(8).max(100).required();
+const stringJoi = joi.string().min(6).max(100).required();
 const validator = {
   validateId: validate({
     params: {

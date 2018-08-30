@@ -47,7 +47,7 @@ class Question {
             if (!questionObj) {
               return errors.notFound(res, 'question');
             }
-            client.query(answerQueries.getAnswersByQId(questionId))
+            client.query(answerQueries.getQuestionAnswers(questionId))
               .then((answerResponse) => {
                 const answers = answerResponse.rows;
                 questionObj.answers = answers;
@@ -132,7 +132,7 @@ class Question {
     pool.connect()
       .then((client) => {
         client.release();
-        client.query(questionQueries.getQuestionByUserId(userId))
+        client.query(questionQueries.getUserQuestions(userId))
           .then((response) => {
             const questions = response.rows;
             return res.status(200).json({
