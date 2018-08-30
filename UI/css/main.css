@@ -117,6 +117,7 @@
 
 .overlay{
     background-color: rgba(0, 0, 0, 0.7);
+    min-height: 200px;
      padding: 50px;
 }
 
@@ -427,7 +428,7 @@
  }
 
  #nav-sm{
-    width: 100%;
+    width: 80%;
   }
 
   .box2{
@@ -445,6 +446,9 @@
 
 @media (max-width:410px){   
   
+    .text-sm{
+        font-size: 13px;
+    }
    #form-back{
        padding:0 20px
    }
@@ -461,9 +465,8 @@
         font-size: 1.2em
     }
 
-    .banner{
-        height: 200px;
-        padding-left:20px
+    .overlay{
+        padding: 20px
     }
 
     .display-1{
@@ -511,7 +514,6 @@
 
 @media(max-height:600px){
     .modal-body{
-        bottom: 20px
     }
 }
 
