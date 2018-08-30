@@ -1,4 +1,4 @@
-import votes from '../dummy-models/votes';
+import votes from '../dummyModels/votes';
 
 let voteValues = '';
 
@@ -20,6 +20,6 @@ const getVotes = () => {
 };
 
 const seedVotes = `
-INSERT INTO votes (userid, answerid, votestatus) VALUES ${getVotes()}`;
+INSERT INTO votes (userid, answerid, vote) VALUES ${getVotes()}`;
 
 export default seedVotes;

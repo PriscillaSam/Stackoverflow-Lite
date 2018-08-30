@@ -2,6 +2,7 @@ import joi from 'joi';
 import validate from 'express-validation';
 
 const numJoi = joi.number().integer().required();
+const stringJoi = joi.string().min(6).max(100).required();
 const validator = {
   validateId: validate({
     params: {
@@ -10,7 +11,7 @@ const validator = {
   }),
   validateQuestion: validate({
     body: {
-      question: joi.string().min(10).max(100).required(),
+      question: stringJoi,
     },
   }),
   validateDelete: validate({
@@ -23,24 +24,20 @@ const validator = {
       id: numJoi,
     },
     body: {
-      userId: numJoi,
-      answer: joi.string().min(10).max(100).required(),
+      answer: stringJoi,
     },
   }),
-  validateAcceptAnswer: validate({
+  validateUpdateAnswer: validate({
     params: {
       answerId: numJoi,
       questionId: numJoi,
     },
-    body: {
-      userId: numJoi,
-    },
   }),
   validateSignUp: validate({
     body: {
-      name: joi.string().required(),
+      name: stringJoi,
       email: joi.string().email().required(),
-      password: joi.string().required(),
+      password: stringJoi,
       confirmPassword: joi.string()
         .valid(joi.ref('password')).required().options({
           language: {

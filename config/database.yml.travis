@@ -1,4 +1,0 @@
-user: postgres
-adapter: postgresql
-database: stackoverflow_lite_test
-password: admin1

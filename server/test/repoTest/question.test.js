@@ -1,8 +1,7 @@
-/* eslint prefer-destructuring: 0 */
 import chai from 'chai';
-import repo from '../../repository/dummy-repo/question';
-import questions from '../../models/dummy-models/questions';
-import answers from '../../models/dummy-models/answers';
+import repo from '../../repository/dummyRepo/question';
+import questions from '../../models/dummyModels/questions';
+import answers from '../../models/dummyModels/answers';
 
 const { expect } = chai;
 
@@ -60,11 +59,11 @@ describe('Get question function', () => {
 describe('Post question function', () => {
   it('should add a question to the question array', () => {
     const question = 'What is your name?';
-    const length = questions.length;
+    const len = questions.length;
     const user = { id: 4, name: 'Joe Sam' };
 
     const returnObject = repo.postQuestion(question, user);
-    expect(repo.questions).to.have.lengthOf(length + 1);
+    expect(repo.questions).to.have.lengthOf(len + 1);
     expect(returnObject).to.be.an('object');
   });
 });

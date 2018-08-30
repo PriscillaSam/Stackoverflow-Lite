@@ -1,5 +1,5 @@
-import questions from '../../models/dummy-models/questions';
-import answers from '../../models/dummy-models/answers';
+import questions from '../../models/dummyModels/questions';
+import answers from '../../models/dummyModels/answers';
 
 const repo = {
   questions,

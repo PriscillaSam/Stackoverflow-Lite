@@ -2,7 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import router from './server/routes/index';
 import cleanStrings from './server/middleware/cleanStrings';
-import errorHandler from './server/middleware/error-handler';
+import errorHandler from './server/middleware/errorHandler';
 
 
 dotenv.config();
@@ -22,10 +22,10 @@ app.use('/api/v1', router);
 
 app.use(errorHandler);
 
-
 const port = process.env.PORT || 3000;
-app.listen(port);
+app.listen(port, () => {
+  console.log(`Port started on ${port}`);
+});
 
-console.log(`Port started on ${port}`);
 
 export default app;

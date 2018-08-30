@@ -1,4 +1,4 @@
-import repo from '../../repository/dummy-repo/vote';
+import repo from '../../repository/dummyRepo/vote';
 
 const answers = [
   {
@@ -41,7 +41,9 @@ const answers = [
     id: 5,
     userId: 5,
     questionId: 2,
-    answer: 'I really dont care about cooking. I dont even know why you guys bother to cook. Eating out is the best option',
+    answer: `I really dont care about cooking. 
+    I dont even know why you guys bother to cook. 
+    Eating out is the best option`,
     isAccepted: false,
     ...repo.getVotes(5),
 
@@ -69,7 +71,8 @@ const answers = [
     id: 8,
     userId: 3,
     questionId: 3,
-    answer: 'I dont know the answer to this question but i just wanted to say i love the question',
+    answer: `I dont know the answer to this question,
+     but i just wanted to say i love the question`,
     isAccepted: false,
     ...repo.getVotes(8),
 
@@ -208,6 +211,24 @@ const answers = [
     answer: 'Test answer for question 10',
     isAccepted: false,
     ...repo.getVotes(23),
+
+  },
+  {
+    id: 24,
+    userId: 5,
+    questionId: 5,
+    answer: 'I think it was a woman',
+    isAccepted: false,
+    ...repo.getVotes(24),
+
+  },
+  {
+    id: 25,
+    userId: 6,
+    questionId: 5,
+    answer: 'Garrys test answer',
+    isAccepted: false,
+    ...repo.getVotes(24),
 
   },
 ];

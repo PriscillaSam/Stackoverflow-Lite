@@ -3,25 +3,26 @@
  * @param {object} req Request Object
  * @param {object} res Response Object
  * @param {Function} next Next middleware
- * @returns {Function} Error object if field is empty or wrong data type is passed
+ * @returns {Function} Error object if field is empty or
+ * wrong data type is passed
  */
-const checkvoteStatus = (req, res, next) => {
-  let { voteStatus } = req.body;
-  if (voteStatus === null || voteStatus === undefined) {
+const checkvote = (req, res, next) => {
+  let { vote } = req.body;
+  if (vote === null || vote === undefined) {
     return res.status(400).json({
       status: 'error',
-      message: 'voteStatus field is required',
+      message: 'vote field is required',
     });
   }
-  voteStatus = parseInt(voteStatus, 10);
-  if (voteStatus !== 0 && voteStatus !== 1) {
+  vote = parseInt(vote, 10);
+  if (vote !== 0 && vote !== 1) {
     return res.status(400).json({
       status: 'error',
-      message: 'voteStatus field can only be 0 or 1',
+      message: 'vote field can only be 0 or 1',
     });
   }
-  req.body.voteStatus = voteStatus;
+  req.body.vote = vote;
   return next();
 };
 
-export default checkvoteStatus;
+export default checkvote;

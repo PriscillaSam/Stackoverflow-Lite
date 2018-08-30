@@ -27,12 +27,12 @@ const users = [
   {
     id: 6,
     name: 'Garry Doe',
-    email: 'garry.doe@gmailcom',
+    email: 'garry.doe@gmail.com',
   },
   {
     id: 7,
-    name: 'Priscilla Doe',
-    email: 'priscilla@gmail.com',
+    name: 'Daniel Doe',
+    email: 'daniel@gmail.com',
   },
   {
     id: 8,

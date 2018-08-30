@@ -11,8 +11,8 @@
     "pretest": "export NODE_ENV=test || SET \"NODE_ENV=test\" && npm run db:setup",
     "test": "cross-env NODE_ENV=test nyc --reporter=lcov --reporter=text --cache mocha server/**/*.test.js --exit",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "db:migrate": "babel-node server/models/database-models/model.js",
-    "db:seed": "babel-node server/models/database-models/seed.db.js"
+    "db:migrate": "babel-node server/models/databaseModels/model.js",
+    "db:seed": "babel-node server/models/databaseModels/seed.db.js"
   },
   "repository": {
     "type": "git",
@@ -32,6 +32,7 @@
     "express-validation": "^1.0.2",
     "joi": "^13.6.0",
     "jsonwebtoken": "^8.3.0",
+    "parse-database-url": "^0.3.0",
     "pg": "^7.4.3"
   },
   "devDependencies": {

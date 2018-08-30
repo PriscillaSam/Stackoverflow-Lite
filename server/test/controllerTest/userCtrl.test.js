@@ -1,33 +1,17 @@
-/* eslint max-len: 0 */
-
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../../../app';
+import users from '../testData';
 
 chai.use(chaiHttp);
 const { expect } = chai;
 
-const user = {
-  name: 'Sam-Iduh Priscilla',
-  email: 'priscillasam@gmail.com',
-  password: 'password',
-  confirmPassword: 'password',
-};
-
 
 describe('POST api/v1/auth/signup', () => {
-  before((done) => {
-    chai.request(app)
-      .post('/api/v1/auth/signup')
-      .send(user)
-      .end((err, res) => {
-        done();
-      });
-  });
   it('should return an error if user already exists', (done) => {
     chai.request(app)
       .post('/api/v1/auth/signup')
-      .send(user)
+      .send(users.existingUser)
       .end((err, res) => {
         if (err) done(err);
         expect(res).to.have.status(409);
@@ -40,19 +24,15 @@ describe('POST api/v1/auth/signup', () => {
   it('should create a new user if signup is successful', (done) => {
     chai.request(app)
       .post('/api/v1/auth/signup')
-      .send({
-        name: 'Sam-Iduh Priscilla',
-        email: 'priscillaiduh@gmail.com',
-        password: 'password',
-        confirmPassword: 'password',
-      })
+      .send(users.newUser)
       .end((err, res) => {
         if (err) done(err);
         expect(res).to.have.status(201);
         expect(res).to.be.an('object');
         expect(res.body).to.have.keys('status', 'message', 'token');
         expect(res.body.status).to.deep.equals('success');
-        expect(res.body.message).to.deep.equals('Hi Sam-Iduh Priscilla. Welcome to Stackoverflow-Lite');
+        expect(res.body.message).to.deep
+          .equals('Hi Sam-Iduh Priscilla. Welcome to Stackoverflow-Lite');
         done();
       });
   });
@@ -62,17 +42,15 @@ describe('POST api/v1/auth/login', () => {
   it('should login user if user exists', (done) => {
     chai.request(app)
       .post('/api/v1/auth/login')
-      .send({
-        email: 'priscillasam@gmail.com',
-        password: 'password',
-      })
+      .send(users.priscilla)
       .end((err, res) => {
         if (err) done(err);
         expect(res).to.have.status(200);
         expect(res).to.be.an('object');
         expect(res.body).to.have.keys('status', 'message', 'token');
         expect(res.body.status).to.deep.equals('success');
-        expect(res.body.message).to.deep.equals('Welcome back Sam-Iduh Priscilla. Login successful');
+        expect(res.body.message).to.deep
+          .equals('Welcome back Priscilla Doe. Login successful');
         done();
       });
   });
@@ -96,8 +74,8 @@ describe('POST api/v1/auth/login', () => {
     chai.request(app)
       .post('/api/v1/auth/login')
       .send({
-        email: 'priscillasam@gmail.com',
-        password: 'pass',
+        email: 'sami@gmail.com',
+        password: 'passwortd',
       })
       .end((err, res) => {
         if (err) done(err);

@@ -1,4 +1,4 @@
-import users from '../dummy-models/user';
+import users from '../dummyModels/user';
 
 let userValues = '';
 const passhash = '$2b$10$./5TI8NosIOvFo6kq030rero7yvdoW9JLDSeBZezxfZ57hqxcb3UK';
