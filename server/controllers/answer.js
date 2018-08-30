@@ -27,26 +27,19 @@ class Answer {
             if (!questionObj) {
               return errors.notFound(res, 'question');
             }
-            client.query(answerQueries.getAnswersByQId(questionId))
-              .then((answerResponse) => {
-                const answers = answerResponse.rows;
-                if (answers.find(ans => ans.userid === userId)) {
-                  return errors.unauthorized(res);
-                }
-                client.query(answerQueries
-                  .postAnswer(userId, questionId, answer))
-                  .then((postResponse) => {
-                    client.release();
-                    const [newAnswer] = postResponse.rows;
-                    newAnswer.upvotes = 0;
-                    newAnswer.downvotes = 0;
+            client.query(answerQueries
+              .postAnswer(userId, questionId, answer))
+              .then((postResponse) => {
+                client.release();
+                const [newAnswer] = postResponse.rows;
+                newAnswer.upvotes = 0;
+                newAnswer.downvotes = 0;
 
-                    return res.status(201).json({
-                      status: 'success',
-                      message: 'Your answer has been posted',
-                      newAnswer,
-                    });
-                  });
+                return res.status(201).json({
+                  status: 'success',
+                  message: 'Your answer has been posted',
+                  newAnswer,
+                });
               });
           });
       });
@@ -79,7 +72,7 @@ class Answer {
                   return errors.notFound(res, 'answer');
                 }
                 if (existingAnswer.questionid !== questionId) {
-                  return res.status(404).json({
+                  return res.status(409).json({
                     status: 'error',
                     message:
                     'Bad request. This answer belongs to another question.',
@@ -135,7 +128,7 @@ class Answer {
    */
   static voteAnswer(req, res) {
     const answerId = req.params.id;
-    const { userId, voteStatus } = req.body;
+    const { userId, vote } = req.body;
 
     pool.connect()
       .then((client) => {
@@ -156,8 +149,8 @@ class Answer {
               .then((voteResponse) => {
                 const [previousVote] = voteResponse.rows;
                 if (previousVote) {
-                  if (previousVote.votestatus === voteStatus) {
-                    if (voteStatus === 0) {
+                  if (previousVote.vote === vote) {
+                    if (vote === 0) {
                       return res.status(400).json({
                         status: 'error',
                         message:
@@ -171,35 +164,41 @@ class Answer {
                     });
                   }
                   client
-                    .query(voteQueries.updateVote(previousVote.id, voteStatus))
+                    .query(voteQueries.updateVote(previousVote.id, vote))
                     .then((voteRes) => {
                       const [updatedVote] = voteRes.rows;
-                      answer.upvotes = updatedVote.upvotes;
-                      answer.downvotes = updatedVote.downvotes;
+                      client.query(voteQueries.getAnswerVotes(answerId))
+                        .then((voteRespons) => {
+                          const votes = voteRespons.rows;
+                          answer.upvotes = votes
+                            .filter(v => v.vote === 1).length;
+                          answer.downvotes = votes
+                            .filter(v => v.vote === 0).length;
 
-                      if (updatedVote.votestatus === 0) {
-                        return res.status(200).json({
-                          status: 'success',
-                          message:
-                          'you have downvoted this answer',
-                          answer,
+                          if (updatedVote.vote === 0) {
+                            return res.status(200).json({
+                              status: 'success',
+                              message:
+                              'you have downvoted this answer',
+                              answer,
+                            });
+                          }
+                          return res.status(200).json({
+                            status: 'success',
+                            message:
+                            'you have upvoted this answer',
+                            answer,
+                          });
                         });
-                      }
-                      return res.status(200).json({
-                        status: 'success',
-                        message:
-                        'you have upvoted this answer',
-                        answer,
-                      });
                     });
                 } else {
-                  const values = [answerId, userId, voteStatus];
+                  const values = [answerId, userId, vote];
                   client.query(voteQueries.voteAnswer(values))
                     .then((newVoteRes) => {
                       const [newvote] = newVoteRes.rows;
                       answer.upvotes = newvote.upvotes;
                       answer.downvotes = newvote.downvotes;
-                      if (newvote.votestatus === 0) {
+                      if (newvote.vote === 0) {
                         return res.status(201).json({
                           status: 'success',
                           message: 'you have downvoted this answer',

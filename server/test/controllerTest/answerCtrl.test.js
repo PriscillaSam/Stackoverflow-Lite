@@ -34,23 +34,7 @@ describe('POST api/v1/questions/:questionId/answers', () => {
         done();
       });
   });
-  it(`should return an authorized response
-    if user has previously posted an answer`, (done) => {
-    chai.request(app)
-      .post('/api/v1/questions/2/answers')
-      .set('Authorization', userToken)
-      .send({
-        answer: 'This is a test answer',
-      })
-      .end((err, res) => {
-        if (err) done(err);
-        expect(res).to.have.status(403);
-        expect(res.body.status).to.deep.equals('error');
-        expect(res.body.message)
-          .to.deep.equals('you are not allowed to perform this operation');
-        done();
-      });
-  });
+
   it('should return status code 201 if post is successful', (done) => {
     chai.request(app)
       .post('/api/v1/questions/3/answers')
@@ -129,7 +113,7 @@ describe('PUT api/v1/questions/:questionId/answers/:answerId', () => {
       })
       .end((err, res) => {
         if (err) done(err);
-        expect(res).to.have.status(404);
+        expect(res).to.have.status(409);
         expect(res.body.message).to.deep
           .equals('Bad request. This answer belongs to another question.');
         expect(res.body).to.have.keys('status', 'message');
@@ -200,26 +184,26 @@ describe('PUT api/v1/questions/:questionId/answers/:answerId', () => {
   });
 });
 
-describe('POST api/v1/answers/:answerId (Vote answer)', () => {
+describe('POST api/v1/answers/:answerId/votes (Vote answer)', () => {
   it('should return 400 error if status is not supplied', (done) => {
     chai.request(app)
-      .post('/api/v1/answers/1')
+      .post('/api/v1/answers/1/votes')
       .set('Authorization', userToken)
       .end((err, res) => {
         if (err) done(err);
         expect(res).to.have.status(400);
         expect(res).to.be.an('object');
         expect(res.body.status).to.deep.equals('error');
-        expect(res.body.message).to.deep.equals('voteStatus field is required');
+        expect(res.body.message).to.deep.equals('vote field is required');
         done();
       });
   });
   it('should return 400 error if status is not 0 0r 1', (done) => {
     chai.request(app)
-      .post('/api/v1/answers/1')
+      .post('/api/v1/answers/1/votes')
       .set('Authorization', userToken)
       .send({
-        voteStatus: 3,
+        vote: 3,
       })
       .end((err, res) => {
         if (err) done(err);
@@ -227,17 +211,17 @@ describe('POST api/v1/answers/:answerId (Vote answer)', () => {
         expect(res).to.be.an('object');
         expect(res.body.status).to.deep.equals('error');
         expect(res.body.message).to.deep
-          .equals('voteStatus field can only be 0 or 1');
+          .equals('vote field can only be 0 or 1');
         done();
       });
   });
 
   it('should return 404 error status if answer is not found', (done) => {
     chai.request(app)
-      .post('/api/v1/answers/30')
+      .post('/api/v1/answers/30/votes')
       .set('Authorization', userToken)
       .send({
-        voteStatus: 1,
+        vote: 1,
       })
       .end((err, res) => {
         if (err) done(err);
@@ -250,10 +234,10 @@ describe('POST api/v1/answers/:answerId (Vote answer)', () => {
 
   it('should return 403 error status if answer belongs to user', (done) => {
     chai.request(app)
-      .post('/api/v1/answers/4')
+      .post('/api/v1/answers/4/votes')
       .set('Authorization', userToken)
       .send({
-        voteStatus: 1,
+        vote: 1,
       })
       .end((err, res) => {
         if (err) done(err);
@@ -266,10 +250,10 @@ describe('POST api/v1/answers/:answerId (Vote answer)', () => {
 
   it('should return 400 error if user has upvoted before', (done) => {
     chai.request(app)
-      .post('/api/v1/answers/20')
+      .post('/api/v1/answers/20/votes')
       .set('Authorization', askerToken)
       .send({
-        voteStatus: 1,
+        vote: 1,
       })
       .end((err, res) => {
         if (err) done(err);
@@ -283,10 +267,10 @@ describe('POST api/v1/answers/:answerId (Vote answer)', () => {
   });
   it('should return 400 error if user has downvoted before', (done) => {
     chai.request(app)
-      .post('/api/v1/answers/8')
+      .post('/api/v1/answers/8/votes')
       .set('Authorization', userToken)
       .send({
-        voteStatus: 0,
+        vote: 0,
       })
       .end((err, res) => {
         if (err) done(err);
@@ -300,10 +284,10 @@ describe('POST api/v1/answers/:answerId (Vote answer)', () => {
   });
   it('should return a status 200 if upvote is successful', (done) => {
     chai.request(app)
-      .post('/api/v1/answers/8')
+      .post('/api/v1/answers/8/votes')
       .set('Authorization', userToken)
       .send({
-        voteStatus: 1,
+        vote: 1,
       })
       .end((err, res) => {
         if (err) done(err);
@@ -316,10 +300,10 @@ describe('POST api/v1/answers/:answerId (Vote answer)', () => {
   });
   it('should return a status 200 if downvote is successful', (done) => {
     chai.request(app)
-      .post('/api/v1/answers/20')
+      .post('/api/v1/answers/20/votes')
       .set('Authorization', askerToken)
       .send({
-        voteStatus: 0,
+        vote: 0,
       })
       .end((err, res) => {
         if (err) done(err);
@@ -333,10 +317,10 @@ describe('POST api/v1/answers/:answerId (Vote answer)', () => {
   });
   it('should return a status 201 if new upvote is successful', (done) => {
     chai.request(app)
-      .post('/api/v1/answers/17')
+      .post('/api/v1/answers/17/votes')
       .set('Authorization', userToken)
       .send({
-        voteStatus: 1,
+        vote: 1,
       })
       .end((err, res) => {
         if (err) done(err);
@@ -349,10 +333,10 @@ describe('POST api/v1/answers/:answerId (Vote answer)', () => {
   });
   it('should return a status 201 if new downvote is successful', (done) => {
     chai.request(app)
-      .post('/api/v1/answers/17')
+      .post('/api/v1/answers/17/votes')
       .set('Authorization', askerToken)
       .send({
-        voteStatus: 0,
+        vote: 0,
       })
       .end((err, res) => {
         if (err) done(err);
