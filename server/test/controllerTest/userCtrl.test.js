@@ -17,7 +17,7 @@ describe('POST api/v1/auth/signup', () => {
         expect(res).to.have.status(409);
         expect(res).to.be.an('object');
         expect(res.body.status).to.deep.equals('error');
-        expect(res.body.message).to.deep.equals('this email is already in use');
+        expect(res.body.message).to.deep.equals('This email is already in use');
         done();
       });
   });

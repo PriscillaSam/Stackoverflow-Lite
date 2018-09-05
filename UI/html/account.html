@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="../css/style.css">
     <link rel="stylesheet" type="text/css" media="screen" href="../css/main.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 <body id="form-back">   
         <div class="center">        
@@ -14,25 +16,33 @@
                     <a href="home.html">StackOverflow-<span class="brand-span">LITE</span></a>
                 </h1>
             </header>
+            <div class="alert bg-danger fadeIn hidden">
+                <p class="text-center text-white" id="alertText"></p>
+            </div>
             <div id="signup" >            
                 <div class="form-group">
                         <h2 class="text-center text-primary mt-0 mb-0">REGISTER</h2>
                             <hr class="form-rule">
-                    <form method="POST" action="profile.html">
+                    <form method="POST" id="regForm" action="profile.html">
                         <div class="input-area">
-                            <input type="text" placeholder="your name" class="form-input" autocomplete="name" required>
+                            <input type="text" placeholder="your name" class="form-input" id="name" required>
                         </div>
                         <div class="input-area">
-                            <input type="email" placeholder="your email" class="form-input" required autocomplete="email" >
+                            <input type="email" placeholder="your email" class="form-input" id="regEmail" required>
                         </div>
                         <div class="input-area">
-                            <input type="password" placeholder="your password" class="form-input" required>
+                            <input type="password" placeholder="your password" class="form-input" id="regPassword" required>
                         </div>
                         <div class="input-area">
-                            <input type="password" placeholder="confirm your password" class="form-input" required>
+                            <input type="password" placeholder="confirm your password" class="form-input" id="confirmPass" required>
                         </div>
                         <div class="">
-                            <button type="submit" class="btn btn-success btn-block">Register</button>
+                            <button type="submit" class="btn btn-success btn-block">
+                                <span id="spinner" class="hidden">
+                                    <i class="fa fa-spin fa-spinner fa-lg fa-fw"></i>
+                                </span>
+                                <span id="regBtnText">Register</span>
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -65,5 +75,6 @@
 
     </div>
     <script src="../js/main.js"></script>
+    <script src="../../client_side/account.js"></script>
 </body>
 </html>

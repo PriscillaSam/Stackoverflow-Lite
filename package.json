@@ -26,6 +26,7 @@
   "homepage": "https://github.com/PriscillaSam/Stackoverflow-Lite#readme",
   "dependencies": {
     "bcrypt": "^3.0.0",
+    "cors": "^2.8.4",
     "cross-env": "^5.2.0",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
