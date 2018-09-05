@@ -26,7 +26,7 @@ class User {
               client.release();
               return res.status(409).json({
                 status: 'error',
-                message: 'this email is already in use',
+                message: 'This email is already in use',
               });
             }
 
