@@ -17,7 +17,7 @@ const errors = {
   authError(res) {
     return res.status(404).json({
       status: 'error',
-      message: 'failed to authenticate user. invalid email or password',
+      message: 'Failed to authenticate user. Invalid email or password',
     });
   },
 };
