@@ -23,7 +23,7 @@
                 <div class="form-group">
                         <h2 class="text-center text-primary mt-0 mb-0">REGISTER</h2>
                             <hr class="form-rule">
-                    <form method="POST" id="regForm" action="profile.html">
+                    <form method="POST" id="regForm">
                         <div class="input-area">
                             <input type="text" placeholder="your name" class="form-input" id="name" required>
                         </div>
@@ -37,11 +37,11 @@
                             <input type="password" placeholder="confirm your password" class="form-input" id="confirmPass" required>
                         </div>
                         <div class="">
-                            <button type="submit" class="btn btn-success btn-block">
-                                <span id="spinner" class="hidden">
+                            <button type="submit" class="btn btn-success btn-block" id="regBtn">
+                                <span class="hidden spinner">
                                     <i class="fa fa-spin fa-spinner fa-lg fa-fw"></i>
                                 </span>
-                                <span id="regBtnText">Register</span>
+                                <span class="btnText">Register</span>
                             </button>
                         </div>
                     </form>
@@ -54,17 +54,22 @@
                     <div class="form-group">
                             <h2 class="text-center text-primary mt-0 mb-0">LOG IN</h2>
                                 <hr class="form-rule">
-                        <form method="POST" action="profile.html">
+                        <form method="POST" id="loginForm">
                            
                             <div class="input-area">
-                                <input type="email" placeholder="your email" class="form-input" required autocomplete="email" >
+                                <input type="email" placeholder="your email" class="form-input" id="loginEmail" required>
                             </div>
                             <div class="input-area">
-                                <input type="password" placeholder="your password" class="form-input" required>
+                                <input type="password" placeholder="your password" class="form-input" id="loginPassword" required>
                             </div>
                            
                             <div class="">
-                                <button type="submit" class="btn btn-success btn-block">Welcome</button>
+                                <button type="submit" class="btn btn-success btn-block" id="loginBtn">
+                                    <span class="hidden spinner">
+                                        <i class="fa fa-spin fa-spinner fa-lg fa-fw"></i>
+                                    </span>
+                                    <span class="btnText">Welcome</span>
+                                </button>                            
                             </div>
                         </form>
                     </div>
@@ -74,7 +79,7 @@
             </div>
 
     </div>
-    <script src="../js/main.js"></script>
     <script src="../../client_side/account.js"></script>
+    <script src="../js/main.js"></script>
 </body>
 </html>
