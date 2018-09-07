@@ -518,11 +518,6 @@
     }
 }
 
-@media(max-height:600px){
-    .modal-body{
-    }
-}
-
 /*Key-frames*/
 @keyframes fadeOut{
     from{

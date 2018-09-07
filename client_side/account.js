@@ -1,11 +1,9 @@
-const getElement = id => document.getElementById(id);
-
-const alertBox = document.getElementsByClassName('alert')[0];
-const regForm = getElement('regForm');
-const loginForm = getElement('loginForm');
-const alertText = getElement('alertText');
-const regBtn = getElement('regBtn');
-const loginBtn = getElement('loginBtn');
+const alertBox = elemByClass('alert')[0];
+const regForm = elemById('regForm');
+const loginForm = elemById('loginForm');
+const alertText = elemById('alertText');
+const regBtn = elemById('regBtn');
+const loginBtn = elemById('loginBtn');
 
 const regUrl = 'https://so-lite.herokuapp.com/api/v1/auth/signup';
 const loginUrl = 'https://so-lite.herokuapp.com/api/v1/auth/login';
@@ -25,11 +23,13 @@ const btnActivity = (btn) => {
 
 const refreshBtn = (btn) => {
   btn.querySelector('.spinner').classList.add('hidden');
-  btn.querySelector('.btnText').innerHTML = '';
+  const btnText = btn.querySelector('.btnText');
+  btnText.innerHTML = '';
 };
 
 const btnTextDisplay = (btn, text) => {
-  btn.querySelector('.btnText').innerHTML = text;
+  const btnText = btn.querySelector('.btnText');
+  btnText.innerHTML = text;
 };
 
 const displayResponse = (response, btn, text) => {
@@ -59,10 +59,10 @@ regForm.addEventListener('submit', (event) => {
   fetch(regUrl, {
     method: 'POST',
     body: JSON.stringify({
-      name: getElement('name').value,
-      email: getElement('regEmail').value,
-      password: getElement('regPassword').value,
-      confirmPassword: getElement('confirmPass').value,
+      name: elemById('name').value,
+      email: elemById('regEmail').value,
+      password: elemById('regPassword').value,
+      confirmPassword: elemById('confirmPass').value,
     }),
     headers: {
       'Content-Type': 'application/json',
@@ -85,8 +85,8 @@ loginForm.addEventListener('submit', (event) => {
   fetch(loginUrl, {
     method: 'POST',
     body: JSON.stringify({
-      email: getElement('loginEmail').value,
-      password: getElement('loginPassword').value,
+      email: elemById('loginEmail').value,
+      password: elemById('loginPassword').value,
     }),
     headers: {
       'Content-Type': 'application/json',
