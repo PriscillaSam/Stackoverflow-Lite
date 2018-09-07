@@ -40,8 +40,11 @@ const questionQueries = {
      name,
      COALESCE((SELECT COUNT (a.id) FROM answers a 
      WHERE a.questionid = q.id GROUP BY q.id),0) as answers
+
     FROM questions q 
     JOIN users u ON u.id = q.userid
+    ORDER BY createdat DESC
+
     `;
     return query;
   },
@@ -130,11 +133,14 @@ const answerQueries = {
 
         COALESCE((SELECT COUNT (v.id) FROM votes v 
         WHERE v.answerid = a.id 
-        AND v.vote = 0 GROUP BY a.id),0) as downvotes
+        AND v.vote = 0 GROUP BY a.id),0) as downvotes,
+        a.createdat
 
         FROM answers a 
         JOIN users u ON u.id = a.userid
-        WHERE a.questionid = $1 `,
+        WHERE a.questionid = $1 
+        ORDER BY createdat DESC
+        `,
       values: [id],
     };
   },
