@@ -1,5 +1,3 @@
-//get modal
-// const modal = document.getElementsByClassName('modal');
 const confirmBox = document.getElementById('accept-box');
 const acceptBtns = document.getElementsByClassName('js-accept');
 const closeModal = document.getElementsByClassName('cl-modal');
@@ -14,8 +12,13 @@ const accept = document.getElementById('accept-link');
 
 [...questionModalToggle].forEach(btn => {
     btn.addEventListener('click', (event) => {
-    event.preventDefault();
-    questionModal.classList.remove('hidden'); 
+        event.preventDefault();
+    if (!localStorage.getItem('token')) {
+        window.location.replace('../html/account.html');
+    } else {
+        questionModal.classList.remove('hidden'); 
+    }
+  
 });
 });
 

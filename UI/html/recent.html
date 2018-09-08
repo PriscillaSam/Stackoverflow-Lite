@@ -29,13 +29,17 @@
       
         <div class="d-i-block collapse">
             <ul class="nav-collapse">       
+                <li class="d-inline mr-3" id="user">
+                    <a class="btn btn-success" href="account.html">Sign up</a>
+                </li>        
                 <li class="d-inline mr-3">
-                    <a href="profile.html" class="text-success p-large">Ask a question</a>
-                </li>
-                <li class="d-inline">
-                    <a class="btn btn-success" href="account.html">Log in</a>
-                </li>            
-               
+                    <a href="" id="" class="text-success p-large js-question">Ask a question</a>
+                </li> 
+                <li class="mr-3 hidden" id="logout-btn">
+                    <a href="account.html" class="text-success">
+                        <i class="fa fa-power-off fa-lg" title="Log Out"></i>
+                    </a>
+                </li>     
             </ul>
         </div>     
     </nav> 
@@ -125,6 +129,7 @@
 </footer>
 <script src="../../client_side/helpers/functions.js"></script>
 <script src="../js/app.js"></script>
+<script src="../../client_side/helpers/identify.js"></script>
 <script src="../../client_side/questions.js"></script>
 </body>
 </html>
