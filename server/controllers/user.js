@@ -43,6 +43,7 @@ class User {
                 return res.status(201).json({
                   status: 'success',
                   message: `Hi ${newUser.name}. Welcome to Stackoverflow-Lite`,
+                  name: newUser.name,
                   token,
                 });
               });
@@ -77,6 +78,7 @@ class User {
                 return res.status(200).json({
                   status: 'success',
                   message: `Welcome back ${name}. Login successful`,
+                  name,
                   token,
                 });
               }

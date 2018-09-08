@@ -5,8 +5,10 @@ const alertText = elemById('alertText');
 const regBtn = elemById('regBtn');
 const loginBtn = elemById('loginBtn');
 
-const regUrl = 'https://so-lite.herokuapp.com/api/v1/auth/signup';
-const loginUrl = 'https://so-lite.herokuapp.com/api/v1/auth/login';
+// const regUrl = 'https://so-lite.herokuapp.com/api/v1/auth/signup';
+// const regUrl = 'https://so-lite.herokuapp.com/api/v1/auth/login';
+const regUrl = 'http://localhost:3000/api/v1/auth/signup';
+const loginUrl = 'http://localhost:3000/api/v1/auth/login';
 
 const refresh = () => {
   alertBox.classList.add('hidden', 'bg-danger');
@@ -43,7 +45,10 @@ const displayResponse = (response, btn, text) => {
     alertBox.classList.remove('bg-danger', 'hidden');
     alertBox.classList.add('bg-success');
     alertText.innerHTML = response.message;
+
     localStorage.setItem('token', response.token);
+    localStorage.setItem('name', response.name);
+
     btnTextDisplay(btn, 'Redirecting...');
     setTimeout(() => {
       window.location.replace('../html/profile.html');
@@ -70,7 +75,7 @@ regForm.addEventListener('submit', (event) => {
   })
     .then(response => response.json())
     .then((body) => {
-      displayResponse(body, regBtn, 'Register');
+      displayResponse(body, regBtn, 'Create Account');
     })
     .catch((error) => {
       console.log(error);
