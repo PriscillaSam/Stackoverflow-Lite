@@ -29,17 +29,17 @@
       
         <div class="d-i-block collapse">
             <ul class="nav-collapse">       
-                <li class="d-inline mr-3" id="user">
+                <li class="d-inline mr-3 user">
                     <a class="btn btn-success" href="account.html">Sign up</a>
                 </li>        
                 <li class="d-inline mr-3">
                     <a href="" id="" class="text-success p-large js-question">Ask a question</a>
                 </li> 
-                <li class="mr-3 hidden" id="logout-btn">
+                <li class="mr-3 hidden logout-btn">
                     <a href="account.html" class="text-success">
                         <i class="fa fa-power-off fa-lg" title="Log Out"></i>
                     </a>
-                </li>     
+                </li>    
             </ul>
         </div>     
     </nav> 
@@ -76,7 +76,6 @@
                             </div>
                             <button class="btn"><i class="fa fa-search"></i></button>
                         </form>
-
                     </div>                                            
                 </div>
             </section>
@@ -91,12 +90,18 @@
         <span class="">&times;</span>
     </a>
     <ul>
-        <li class="">
-            <a href="account.html" class="text-success">Log in</a>
+        <li class="mt-2">
+            <a href="account.html" class="text-primary user"> <i class="fa fa-user-o fa-lg text-success mr-1 "></i>Sign up</a>
         </li>       
         <li class="mt-2">
-            <a href="" class="text-success">Ask a question</a>
+            <a href="" class="text-primary js-question" ><i class="fa fa-edit fa-lg text-success mr-1"></i>Ask a question</a>
         </li>
+        <li class="mt-2">
+            <a href="account.html" class="text-primary logout-btn hidden">
+                <i class="fa fa-power-off fa-lg mr-1 text-success"></i>
+                Log out
+            </a>
+        </li> 
       
     </ul>
    
@@ -129,7 +134,12 @@
 </footer>
 <script src="../../client_side/helpers/functions.js"></script>
 <script src="../js/app.js"></script>
-<script src="../../client_side/helpers/identify.js"></script>
+<script src="../../client_side/helpers/templates.js"></script>
+<script src="../../client_side/helpers/session.js"></script>
 <script src="../../client_side/questions.js"></script>
+<script>
+
+
+</script>
 </body>
 </html>

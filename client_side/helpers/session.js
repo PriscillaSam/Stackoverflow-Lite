@@ -5,7 +5,8 @@ if (localStorage.getItem('token')) {
   [...logoutBtn].forEach((btn) => {
     btn.classList.replace('hidden', 'd-inline');
     btn.addEventListener('click', () => {
-      localStorage.clear();
+      localStorage.removeItem('name');
+      localStorage.removeItem('token');
     });
   });
   const name = localStorage.getItem('name');

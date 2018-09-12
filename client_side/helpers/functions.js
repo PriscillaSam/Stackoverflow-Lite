@@ -1,5 +1,6 @@
 const elemById = id => document.getElementById(id);
 const elemByClass = className => document.getElementsByClassName(className);
+const create = elem => document.createElement(elem);
 
 /**
  * Get the items from an array
@@ -23,14 +24,8 @@ const getItems = (array, count) => {
  * @returns {*} Nothing
  */
 const createContent = (questions, count, elem) => {
-  const section = elemById(elem);
   getItems(questions, count).forEach((question) => {
-    const boxContent = cardContent(question);
-
-    const box = document.createElement('div');
-    box.className = 'box';
-    box.innerHTML = boxContent;
-    section.appendChild(box);
+    questionCard(question, elem);
   });
 };
 
