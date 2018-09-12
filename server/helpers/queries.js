@@ -59,6 +59,7 @@ const questionQueries = {
     SELECT
       q.id,
       question,
+      q.createdat,
       u.id as userId,
       name
     FROM questions q
@@ -127,6 +128,7 @@ const answerQueries = {
         answer,
         u.id as userid,
         u.name,
+        u.email,
         COALESCE((SELECT COUNT (v.id) FROM votes v 
         WHERE v.answerid = a.id 
         AND v.vote = 1 GROUP BY a.id),0) as upvotes,

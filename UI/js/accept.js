@@ -22,12 +22,11 @@ const accept = document.getElementById('accept-link');
 });
 });
 
-[...acceptBtns].forEach(btn => {
-    btn.addEventListener('click', (event) => {
-        event.preventDefault();
-        acceptModal.classList.remove('hidden');
-    });
-});
+const acceptAnswer = (event) => {
+    event.preventDefault();
+    acceptModal.classList.remove('hidden');
+};
+
 
 [...closeModal].forEach(btn => {
     btn.addEventListener('click', (event) => {
