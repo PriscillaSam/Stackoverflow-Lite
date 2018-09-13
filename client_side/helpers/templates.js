@@ -45,8 +45,8 @@ const questionCard = (question, elem) => {
 };
 
 
-const answerCard = (answer, questionUser) => {
-  const answers = elemById('answers');
+const answerCard = (answer, questionUser, div) => {
+  const answers = elemById(div);
   const p = create('p');
   const a = create('a');
   const h3 = create('h3');

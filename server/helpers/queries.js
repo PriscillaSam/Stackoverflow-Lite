@@ -158,7 +158,7 @@ const answerQueries = {
       text: `
       INSERT into answers(userid, questionid, answer, isaccepted) 
       VALUES($1, $2, $3, $4) 
-      RETURNING id, answer, userid, isaccepted, updatedat
+      RETURNING id, answer, userid, isaccepted, createdat
       `,
       values: [userId, questionId, answer, false],
     };

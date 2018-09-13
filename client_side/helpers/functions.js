@@ -2,6 +2,53 @@ const elemById = id => document.getElementById(id);
 const elemByClass = className => document.getElementsByClassName(className);
 const create = elem => document.createElement(elem);
 
+
+const btnActivity = (btn) => {
+  const spinner = btn.querySelector('.spinner');
+  const btnText = btn.querySelector('.btnText');
+
+  spinner.classList.remove('hidden');
+  btnText.innerHTML = 'Please wait...';
+};
+
+const refreshBtn = (btn) => {
+  btn.querySelector('.spinner').classList.add('hidden');
+  const btnText = btn.querySelector('.btnText');
+  btnText.innerHTML = '';
+};
+
+const btnTextDisplay = (btn, text) => {
+  const btnText = btn.querySelector('.btnText');
+  btnText.innerHTML = text;
+};
+
+const getAlertBox = (div) => {
+  const alertBox = div.querySelector('.alert');
+  return alertBox;
+};
+
+const getAlertText = (div) => {
+  const alertText = div.querySelector('.alertText');
+  return alertText;
+};
+const refresh = (div) => {
+  getAlertBox(div).classList.add('hidden', 'bg-danger');
+  getAlertText(div).innerHTML = '';
+};
+
+const errorResponse = (response, div) => {
+  getAlertBox(div).classList.remove('hidden');
+  getAlertText(div).innerHTML = response.message || Object
+    .values(response.errorData.errorMessages);
+};
+
+const successResponse = (response, div) => {
+  const alertBox = getAlertBox(div);
+  alertBox.classList.remove('bg-danger', 'hidden');
+  alertBox.classList.add('bg-success');
+  getAlertText(div).innerHTML = response.message;
+};
+
 /**
  * Get the items from an array
  * @param {Array} array Array element
