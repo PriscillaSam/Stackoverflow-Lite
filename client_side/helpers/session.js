@@ -7,6 +7,7 @@ if (localStorage.getItem('token')) {
     btn.addEventListener('click', () => {
       localStorage.removeItem('name');
       localStorage.removeItem('token');
+      localStorage.removeItem('email');
     });
   });
   const name = localStorage.getItem('name');

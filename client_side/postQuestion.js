@@ -1,6 +1,6 @@
 const form = elemById('question-form');
-const alertBox = elemByClass('alert')[0];
-const alertText = elemById('alert-text');
+const alertBox = getAlertBox(form);
+const alertText = getAlertText(form);
 const questionBtn = elemById('question-btn');
 
 const token = localStorage.getItem('token');
@@ -9,16 +9,14 @@ const url = 'http://localhost:3000/api/v1/questions';
 // const url = 'https://so-lite.herokuapp.com/api/v1/questions';
 
 
-form.addEventListener('submit', (event) => {
-  alertBox.classList.add('hidden', 'bg-danger');
-  alertBox.classList.remove('bg-success');
+const btnText = `
+<i class="fa fa-share fa-fw"></i>Post Question`;
 
+form.addEventListener('submit', (event) => {
   event.preventDefault();
-  questionBtn.innerHTML = `
-  <span>
-    <i class="fa fa-spin fa-spinner fa-lg fa-fw"></i>
-    Please wait...
-  </span>`;
+
+  refresh(form);
+  btnActivity(questionBtn);
 
   fetch(url, {
     method: 'POST',
@@ -31,20 +29,13 @@ form.addEventListener('submit', (event) => {
     },
   })
     .then(response => response.json())
-    .then((body) => {
-      alertBox.classList.remove('hidden');
-      questionBtn.innerHTML = `
-      <span>
-        <i class="fa fa-share fa-lg fa-fw"></i>
-        Post Question
-      </span>
-      `;
-      if (body.errorData) {
-        alertText.innerHTML = Object.values(body.errorData.errorMessages);
+    .then((response) => {
+      refreshBtn(questionBtn);
+      btnTextDisplay(questionBtn, btnText);
+      if (response.errorData) {
+        errorResponse(response, form);
       } else {
-        alertBox.classList.replace('bg-danger', 'bg-success');
-        alertText.innerHTML = body.message;
-
+        successResponse(response, form);
         setTimeout(() => {
           elemById('question-modal').querySelector('.cl-modal').click();
         }, 1500);

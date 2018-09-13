@@ -1,51 +1,23 @@
-const alertBox = elemByClass('alert')[0];
+const loginDiv = elemById('form-back');
 const regForm = elemById('regForm');
 const loginForm = elemById('loginForm');
-const alertText = elemById('alertText');
 const regBtn = elemById('regBtn');
 const loginBtn = elemById('loginBtn');
+
 
 // const regUrl = 'https://so-lite.herokuapp.com/api/v1/auth/signup';
 // const regUrl = 'https://so-lite.herokuapp.com/api/v1/auth/login';
 const regUrl = 'http://localhost:3000/api/v1/auth/signup';
 const loginUrl = 'http://localhost:3000/api/v1/auth/login';
 
-const refresh = () => {
-  alertBox.classList.add('hidden', 'bg-danger');
-  alertText.innerHTML = '';
-};
-
-const btnActivity = (btn) => {
-  const spinner = btn.querySelector('.spinner');
-  const btnText = btn.querySelector('.btnText');
-
-  spinner.classList.remove('hidden');
-  btnText.innerHTML = 'Please wait...';
-};
-
-const refreshBtn = (btn) => {
-  btn.querySelector('.spinner').classList.add('hidden');
-  const btnText = btn.querySelector('.btnText');
-  btnText.innerHTML = '';
-};
-
-const btnTextDisplay = (btn, text) => {
-  const btnText = btn.querySelector('.btnText');
-  btnText.innerHTML = text;
-};
 
 const displayResponse = (response, btn, text) => {
   refreshBtn(btn);
   if (response.status === 'error' || response.errorData) {
-    alertBox.classList.remove('hidden');
-    alertText.innerHTML = response.message || Object
-      .values(response.errorData.errorMessages);
+    errorResponse(response, loginDiv);
     btnTextDisplay(btn, text);
   } else {
-    alertBox.classList.remove('bg-danger', 'hidden');
-    alertBox.classList.add('bg-success');
-    alertText.innerHTML = response.message;
-
+    successResponse(response, loginDiv);
     localStorage.setItem('token', response.token);
     localStorage.setItem('name', response.name);
 
@@ -57,8 +29,9 @@ const displayResponse = (response, btn, text) => {
 };
 
 regForm.addEventListener('submit', (event) => {
+  localStorage.setItem('email', elemById('regEmail').value);
   event.preventDefault();
-  refresh();
+  refresh(loginDiv);
   btnActivity(regBtn);
 
   fetch(regUrl, {
@@ -83,8 +56,10 @@ regForm.addEventListener('submit', (event) => {
 });
 
 loginForm.addEventListener('submit', (event) => {
+  localStorage.setItem('email', elemById('loginEmail').value);
+
   event.preventDefault();
-  refresh();
+  refresh(loginDiv);
   btnActivity(loginBtn);
 
   fetch(loginUrl, {

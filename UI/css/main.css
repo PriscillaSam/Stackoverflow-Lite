@@ -109,7 +109,10 @@
 .btn-default:hover{
     background-color: black;
 }
-
+.btn:disabled{
+    background-color: rgb(143, 140, 140);
+    cursor:text;
+}
 .banner{
     background-image: url('../img/13.jpg');
     background-size: cover;

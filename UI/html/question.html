@@ -52,12 +52,23 @@
           </div>
             
             <div class="mt-2" id="answers">
+                <div id="new-answer" class="fadeIn">
+
+                </div>
             </div>
             <h4 class="display-4 text-primary mb-1"> <i class="fa fa-reply mr-1"></i>Your Answer</h4> 
             <div class="">
-                <form>
-                    <textarea name="" id="" cols="20" class="form-input" rows="7" placeholder="enter your response"></textarea>
-                    <button class="btn btn-success mt-1 w-20"> Submit</button>
+                <form id="answer-form">
+                    <div class="alert hidden fadeIn bg-danger">
+                        <p class="text-center alertText"></p>
+                    </div> 
+                    <textarea name="" id="answer-input" cols="20" class="form-input" rows="7" placeholder="enter your response" required></textarea>
+                    <button type="submit" class="btn btn-success mt-1 w-20" id="answer-btn" disabled>
+                        <span class="hidden spinner">
+                            <i class="fa fa-spin fa-spinner fa-lg fa-fw"></i>
+                        </span>
+                        <span class="btnText">Submit</span>
+                    </button>
                     <p><a href="account.html" class="text-success"> <i class="fa fa-sign-in fa-fw"></i>Log in</a> to post your answer.</p>
                 </form>
             </div>           
@@ -100,17 +111,24 @@
         <section class="">
                 <h4 class="display-4 text-primary mb-0 fadeIn"> <i class="fa fa-edit fa-fw"></i><strong>Ask a question</strong></h4>
                 <h3 class="display-3 mt-0 text-sm">Be descriptive. Be concise. Be clear.</h3>
-                <div class="alert hidden fadeIn bg-danger">
-                    <p class="text-center" id="alert-text"></p>
-                </div>      
-                <div >
+                     
+                <div>
                     <form id="question-form">
+                        <div class="alert hidden fadeIn bg-danger">
+                            <p class="text-center alertText"></p>
+                        </div> 
                         <div class="input-area">
                             <textarea name="" id="question-input" cols="30" rows="10" class="form-input" placeholder="type your question here..." required></textarea>
                         </div>
                         <div class="input-area right">
-                            <button class="btn btn-success btn-sm" type="submit" id="question-btn"></span><i class="fa fa-share fa-fw"></i>Post Question</button>
+                            <button type="submit" class="btn btn-success" id="question-btn">
+                                <span class="hidden spinner">
+                                    <i class="fa fa-spin fa-spinner fa-lg fa-fw"></i>
+                                </span>
+                                <span class="btnText"><i class="fa fa-share fa-fw"></i>Post Question</span>
+                            </button>
                         </div>
+                       
                     </form>
                 </div>         
             </section>
