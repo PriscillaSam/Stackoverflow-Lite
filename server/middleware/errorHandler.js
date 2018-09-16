@@ -9,29 +9,27 @@ import validator from 'express-validation';
  * @returns {object} Error object
  */
 const errorHandler = (err, req, res, next) => {
-  if (err instanceof validator.ValidationError) {
-    let fields = [];
-    let messages = [];
-    const errorMessages = {};
+  let fields = [];
+  let messages = [];
+  const errorMessages = {};
 
-    err.errors.forEach((error) => {
-      fields = [...fields, ...error.field];
-      messages = [...messages, ...error.messages];
-    });
+  err.errors.forEach((error) => {
+    fields = [...fields, ...error.field];
+    messages = [...messages, ...error.messages];
+  });
 
-    messages = messages.map(msg => msg.replace('"', '').replace('"', ''));
-    fields.forEach((field, index) => {
-      errorMessages[field] = messages[index];
-    });
+  messages = messages.map(msg => msg.replace('"', '').replace('"', ''));
+  fields.forEach((field, index) => {
+    errorMessages[field] = messages[index];
+  });
 
-    return res.status(400).json({
-      errorData: {
-        status: err.statusText,
-        errorMessages,
+  return res.status(400).json({
+    errorData: {
+      status: err.statusText,
+      errorMessages,
 
-      },
-    });
-  }
+    },
+  });
 };
 
 export default errorHandler;

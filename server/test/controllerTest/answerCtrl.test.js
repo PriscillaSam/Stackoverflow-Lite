@@ -152,6 +152,32 @@ describe('PUT api/v1/questions/:questionId/answers/:answerId', () => {
         done();
       });
   });
+  let janeToken;
+  before((done) => {
+    chai.request(app)
+      .post('/api/v1/auth/login')
+      .send(users.jane)
+      .end((err, res) => {
+        if (err) done(err);
+        janeToken = res.body.token;
+        done();
+      });
+  });
+  it(`should accept answer if question already has
+   a previously accepted answer`, (done) => {
+    chai.request(app)
+      .put('/api/v1/questions/3/answers/6')
+      .set('Authorization', janeToken)
+      .end((err, res) => {
+        if (err) done(err);
+        expect(res).to.have.status(200);
+        expect(res.body.message).to.deep
+          .equals('your have accepted this answer');
+
+        expect(res.body).to.have.keys('status', 'message', 'acceptedAnswer');
+        done();
+      });
+  });
 
   it('should return an error if user does not provide an answer', (done) => {
     chai.request(app)

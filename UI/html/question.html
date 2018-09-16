@@ -135,6 +135,37 @@
         </div>
 
 </div>
+<!-- update answer modal -->
+<div class="modal hidden" id="update-modal">    
+        <div class="modal-body slideInUp confirmBox p-2" >
+            <a href="" class="close cl-modal">
+                <span>&times;</span>
+            </a>  
+            <section class="">
+                    <h4 class="display-4 text-primary fadeIn"> <i class="fa fa-edit fa-fw"></i><strong>Update your answer</strong></h4>                         
+                    <div>
+                        <form id="update-form">
+                            <div class="alert hidden fadeIn bg-danger">
+                                <p class="text-center alertText"></p>
+                            </div> 
+                            <div class="input-area">
+                                <textarea name="" id="update-input" cols="30" rows="10" class="form-input" required></textarea>
+                            </div>
+                            <div class="input-area right">
+                                <button type="submit" class="btn btn-success" id="update-btn">
+                                    <span class="hidden spinner">
+                                        <i class="fa fa-spin fa-spinner fa-lg fa-fw"></i>
+                                    </span>
+                                    <span class="btnText"><i class="fa fa-upload mr-1"></i>Save</span>
+                                </button>
+                            </div>
+                           
+                        </form>
+                    </div>         
+                </section>
+            </div>
+    
+    </div>
 <!-- modal -->
 <div class="modal hidden" id="accept-modal">
     <div class="modal-body confirmBox slideInUp p-2" id="accept-box">
@@ -165,6 +196,7 @@
 <script src="../../client_side/helpers/templates.js"></script>
 <script src="../../client_side/getQuestion.js"></script>
 <script src="../js/accept.js"></script>
+<script src="../../client_side/updateAnswer.js"></script>
 
 </body>
 </html>

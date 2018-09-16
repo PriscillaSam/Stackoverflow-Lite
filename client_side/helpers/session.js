@@ -5,9 +5,11 @@ if (localStorage.getItem('token')) {
   [...logoutBtn].forEach((btn) => {
     btn.classList.replace('hidden', 'd-inline');
     btn.addEventListener('click', () => {
-      localStorage.removeItem('name');
-      localStorage.removeItem('token');
-      localStorage.removeItem('email');
+      Object.keys(localStorage).forEach((key) => {
+        if (key !== 'questionId') {
+          localStorage.removeItem(key);
+        }
+      });
     });
   });
   const name = localStorage.getItem('name');

@@ -44,6 +44,7 @@ class User {
                   status: 'success',
                   message: `Hi ${newUser.name}. Welcome to Stackoverflow-Lite`,
                   name: newUser.name,
+                  id: newUser.id,
                   token,
                 });
               });
@@ -79,6 +80,7 @@ class User {
                   status: 'success',
                   message: `Welcome back ${name}. Login successful`,
                   name,
+                  id,
                   token,
                 });
               }

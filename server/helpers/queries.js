@@ -136,7 +136,8 @@ const answerQueries = {
         COALESCE((SELECT COUNT (v.id) FROM votes v 
         WHERE v.answerid = a.id 
         AND v.vote = 0 GROUP BY a.id),0) as downvotes,
-        a.createdat
+        a.createdat,
+        a.isaccepted
 
         FROM answers a 
         JOIN users u ON u.id = a.userid
@@ -191,6 +192,16 @@ const answerQueries = {
       WHERE a.id = $1
       RETURNING *`,
       values: [answerId, value],
+    };
+  },
+  checkAccepted(questionId) {
+    return {
+      text: `
+      SELECT id
+      FROM answers
+      WHERE questionid = $1 AND isaccepted = TRUE
+      `,
+      values: [questionId],
     };
   },
 

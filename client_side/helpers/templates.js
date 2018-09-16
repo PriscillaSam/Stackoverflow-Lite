@@ -45,21 +45,53 @@ const questionCard = (question, elem) => {
 };
 
 
-const answerCard = (answer, questionUser, div) => {
+const createAcceptButton = (liAccept) => {
+  const aAccept = create('a');
+
+  aAccept.setAttribute('href', '');
+  aAccept.setAttribute('class', 'js-accept');
+  aAccept.innerHTML = '<i class="fa fa-square-o fa-fw"></i>';
+  aAccept.onclick = event => acceptAnswer(event, aAccept);
+
+  liAccept.innerHTML = 'accept this answer';
+  liAccept.insertBefore(aAccept, liAccept.childNodes[0]);
+  console.log(liAccept);
+};
+
+const createVoteButtons = (answer, ul) => {
+  const liUpvotes = create('li');
+  const aUpvote = create('a');
+  const liDownvotes = create('li');
+  const aDownvote = create('a');
+
+  aUpvote.setAttribute('href', '');
+  aUpvote.setAttribute('title', 'upvote answer');
+  aUpvote.setAttribute('data-id', answer.id);
+  aUpvote.innerHTML = '<i class="fa fa-thumbs-o-up fa-fw"></i>';
+
+  liUpvotes.innerHTML = answer.upvotes;
+  liUpvotes.insertBefore(aUpvote, liUpvotes.childNodes[0]);
+
+  aDownvote.setAttribute('href', '');
+  aDownvote.setAttribute('title', 'downvote answer');
+  aDownvote.setAttribute('data-id', answer.id);
+  aDownvote.innerHTML = '<i class="fa fa-thumbs-o-down fa-fw"></i>';
+
+  liDownvotes.innerHTML = answer.downvotes;
+  liDownvotes.insertBefore(aDownvote, liDownvotes.childNodes[0]);
+  ul.appendChild(liUpvotes);
+  ul.appendChild(liDownvotes);
+};
+
+const answerCard = (answer, askerId, div) => {
   const answers = elemById(div);
   const p = create('p');
   const a = create('a');
   const h3 = create('h3');
   const ul = create('ul');
   const liTime = create('li');
-  const liUpvotes = create('li');
-  const aUpvote = create('a');
-  const container = create('div');
-
-  const liDownvotes = create('li');
-  const aDownvote = create('a');
-
   const liAccept = create('li');
+  const container = create('div');
 
   p.classList.add('lead', 'mb-0');
   p.innerHTML = answer.answer;
@@ -79,47 +111,41 @@ const answerCard = (answer, questionUser, div) => {
   liTime.innerHTML = `answered ${answer.createdat}`;
   ul.appendChild(liTime);
 
-  aUpvote.setAttribute('href', '');
-  aUpvote.setAttribute('title', 'upvote answer');
-  aUpvote.setAttribute('data-id', answer.id);
-  aUpvote.innerHTML = '<i class="fa fa-thumbs-o-up fa-fw"></i>';
+  const userId = parseInt(localStorage.getItem('userId'), 10);
 
-  liUpvotes.innerHTML = answer.upvotes;
-  liUpvotes.insertBefore(aUpvote, liUpvotes.childNodes[0]);
-
-  aDownvote.setAttribute('href', '');
-  aDownvote.setAttribute('title', 'downvote answer');
-  aDownvote.setAttribute('data-id', answer.id);
-  aDownvote.innerHTML = '<i class="fa fa-thumbs-o-down fa-fw"></i>';
-
-  liDownvotes.innerHTML = answer.downvotes;
-  liDownvotes.insertBefore(aDownvote, liDownvotes.childNodes[0]);
-
-  ul.appendChild(liTime);
-  ul.appendChild(liUpvotes);
-  ul.appendChild(liDownvotes);
-
-  const user = localStorage.getItem('name');
-
-  if (answer.isaccepted) {
-    liAccept.innerHTML = `
-    <span class="badge badge-dark text-success">accepted answer</span>`;
-    ul.appendChild(liAccept);
-  } else if (user === questionUser && !answer.isaccepted) {
-    const aAccept = create('a');
-
-    aAccept.setAttribute('href', '');
-    aAccept.setAttribute('class', 'js-accept');
-    aAccept.innerHTML = '<i class="fa fa-square-o fa-fw"></i>';
-    aAccept.onclick = event => acceptAnswer(event);
-
-    liAccept.innerHTML = 'accept this answer';
-    liAccept.insertBefore(aAccept, liAccept.childNodes[0]);
-
-    ul.appendChild(liAccept);
+  if (userId !== answer.userid) {
+    createVoteButtons(answer, ul);
   }
 
-  container.setAttribute('class', 'box');
+  if (userId === answer.userid) {
+    const liEdit = create('li');
+    const aEdit = create('a');
+    liEdit.innerHTML = 'Edit';
+
+    aEdit.classList.add('js-edit');
+    aEdit.setAttribute('href', '');
+    aEdit.innerHTML = '<i class="fa fa-edit fa-fw"></i>';
+    aEdit.onclick = event => editAnswer(event, aEdit);
+
+    liEdit.insertBefore(aEdit, liEdit.childNodes[0]);
+    ul.appendChild(liEdit);
+  }
+
+  if (answer.isaccepted) {
+    liAccept.id = 'prev-accepted';
+    liAccept.innerHTML = `
+    <span class="badge badge-dark">
+      <i class="fa fa-lg fa-check"></i>
+    </span>
+ `;
+  } else if (userId === askerId && !answer.isaccepted) {
+    createAcceptButton(liAccept, answer.id);
+  }
+
+  ul.appendChild(liAccept);
+  ul.setAttribute('data-id', answer.id);
+
+  container.classList.add('fadeIn', 'box');
   container.appendChild(p);
   container.appendChild(h3);
   container.appendChild(ul);

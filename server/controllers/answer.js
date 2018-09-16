@@ -103,15 +103,26 @@ class Answer {
                 }
 
                 if (questionObj.userid === userId && !answer) {
-                  client.query(answerQueries
-                    .updateAnswer(answerId, 'isaccepted', true))
-                    .then((acceptRes) => {
-                      const [acceptedAnswer] = acceptRes.rows;
-                      return res.status(200).json({
-                        status: 'success',
-                        message: 'your have accepted this answer',
-                        acceptedAnswer,
-                      });
+                  client.query(answerQueries.checkAccepted(questionId))
+                    .then((prevAccepted) => {
+                      let acceptedId;
+                      const [accepted] = prevAccepted.rows;
+                      if (accepted) {
+                        client.query(answerQueries
+                          .updateAnswer(accepted.id, 'isaccepted', false));
+                        acceptedId = accepted.id;
+                      }
+                      client.query(answerQueries
+                        .updateAnswer(answerId, 'isaccepted', true))
+                        .then((acceptRes) => {
+                          const [acceptedAnswer] = acceptRes.rows;
+                          acceptedAnswer.prevAccepted = acceptedId || '';
+                          return res.status(200).json({
+                            status: 'success',
+                            message: 'your have accepted this answer',
+                            acceptedAnswer,
+                          });
+                        });
                     });
                 }
               });
