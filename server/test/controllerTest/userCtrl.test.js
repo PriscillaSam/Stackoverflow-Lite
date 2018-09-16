@@ -29,7 +29,8 @@ describe('POST api/v1/auth/signup', () => {
         if (err) done(err);
         expect(res).to.have.status(201);
         expect(res).to.be.an('object');
-        expect(res.body).to.have.keys('status', 'message', 'token', 'name');
+        expect(res.body).to.have
+          .keys('status', 'message', 'token', 'name', 'id');
         expect(res.body.status).to.deep.equals('success');
         expect(res.body.message).to.deep
           .equals('Hi Sam-Iduh Priscilla. Welcome to Stackoverflow-Lite');
@@ -47,7 +48,8 @@ describe('POST api/v1/auth/login', () => {
         if (err) done(err);
         expect(res).to.have.status(200);
         expect(res).to.be.an('object');
-        expect(res.body).to.have.keys('status', 'message', 'token', 'name');
+        expect(res.body).to.have
+          .keys('status', 'message', 'token', 'name', 'id');
         expect(res.body.status).to.deep.equals('success');
         expect(res.body.message).to.deep
           .equals('Welcome back Priscilla Doe. Login successful');

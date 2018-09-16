@@ -20,6 +20,7 @@ const displayResponse = (response, btn, text) => {
     successResponse(response, loginDiv);
     localStorage.setItem('token', response.token);
     localStorage.setItem('name', response.name);
+    localStorage.setItem('userId', response.id);
 
     btnTextDisplay(btn, 'Redirecting...');
     setTimeout(() => {

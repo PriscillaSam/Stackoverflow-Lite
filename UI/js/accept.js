@@ -1,13 +1,22 @@
-const confirmBox = document.getElementById('accept-box');
 const acceptBtns = document.getElementsByClassName('js-accept');
 const closeModal = document.getElementsByClassName('cl-modal');
-const confirmBtn = document.getElementById('confirm');
+
 
 const questionModalToggle = document.getElementsByClassName('js-question');
 const questionModal = document.getElementById('question-modal');
 
 const acceptModal = document.getElementById('accept-modal');
 const accept = document.getElementById('accept-link');
+
+const updateModal = document.getElementById('update-modal');
+const editLink = document.getElementsByClassName('js-edit');
+
+const showUpdateModal = () => {
+    [...editLink].forEach(btn => {
+        event.preventDefault();
+        updateModal.classList.remove('hidden');
+});
+};
 
 
 [...questionModalToggle].forEach(btn => {
@@ -21,11 +30,6 @@ const accept = document.getElementById('accept-link');
   
 });
 });
-
-const acceptAnswer = (event) => {
-    event.preventDefault();
-    acceptModal.classList.remove('hidden');
-};
 
 
 [...closeModal].forEach(btn => {
@@ -44,16 +48,4 @@ const acceptAnswer = (event) => {
     });
 });
 
-confirmBtn.addEventListener('click', (event) => {        
-    event.preventDefault();
-    confirmBox.classList.add('slideOutDown');
 
-    setTimeout(() => {
-        setTimeout(() => {
-            confirmBox.closest('.modal').classList.add('hidden');
-            confirmBox.classList.remove('slideOutDown');
-        },500);
-        accept.innerHTML = '<li><span class="badge badge-dark text-success">accepted answer</span></li>';
-
-    });
-});

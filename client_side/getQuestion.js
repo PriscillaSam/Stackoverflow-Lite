@@ -17,23 +17,22 @@ fetch(getUrl, {
     const body = response.questionObj;
     questionDiv.innerHTML = `
     <h4 class="display-4 text-primary mb-0 fadeIn">
-     <i class="fa fa-edit"></i> 
+     <i class="fa fa-unsorted"></i> 
      <strong>${body.question}</strong>
     </h4>            
     <p class="ml-2 mt-0">
       <span class="mr-1">asked ${body.createdat}</span>
       <span>
-      <i class="fa fa-user-o fa-fw"></i>
-      <span id="asker">${body.name}</span>
+      <i class="fa fa-user-o fa-fw"></i>${body.name}
       </span>
       <span class="text-success">
         <i class="fa fa-comments-o fa-fw"></i>${body.answers.length} answers
       </span>
     </p>
   `;
-    localStorage.setItem('questionUser', body.name);
+    localStorage.setItem('askerId', body.userid);
     body.answers.forEach((answer) => {
-      answerCard(answer, body.name, 'answers');
+      answerCard(answer, body.userid, 'answers');
     });
   });
 
@@ -65,10 +64,11 @@ answerForm.addEventListener('submit', (event) => {
         errorResponse(response, answerForm);
       } else {
         successResponse(response, answerForm);
-        response.newAnswer.email = localStorage.getItem('email');
-        const asker = elemById('asker').innerHTML;
-        response.newAnswer.name = localStorage.getItem('name');
-        answerCard(response.newAnswer, asker, 'new-answer');
+        const answer = response.newAnswer;
+        answer.email = localStorage.getItem('email');
+        const askerId = localStorage.getItem('askerId');
+        answer.name = localStorage.getItem('name');
+        answerCard(answer, askerId, 'new-answer');
 
         setTimeout(() => {
           refresh(answerForm);

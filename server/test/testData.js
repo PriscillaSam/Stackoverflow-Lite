@@ -7,6 +7,10 @@ const users = {
     email: 'priscilla@gmail.com',
     password: 'password',
   },
+  jane: {
+    email: 'jane.doe@gmailcom',
+    password: 'password',
+  },
   micheal: {
     email: 'micheal.doe@gmailcom',
     password: 'password',
