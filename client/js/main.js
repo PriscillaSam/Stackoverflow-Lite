@@ -22,6 +22,7 @@ const enlarge = (input) => {
 
 signupToggle.addEventListener('click', (event) => {
     event.preventDefault();
+    refresh(container);
     setTimeout(() => {
         loginSection.classList.add('hidden','fadeOut');
         signupSection.classList.remove('hidden','fadeOut');
@@ -33,6 +34,7 @@ signupToggle.addEventListener('click', (event) => {
 });
 
 loginToggle.addEventListener('click', (event) => {
+    refresh(container);
     event.preventDefault();
     signupSection.classList.add('fadeOut');
     setTimeout(() => {
