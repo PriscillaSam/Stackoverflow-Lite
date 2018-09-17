@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Recently Asked Questions</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/style.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/main.css" />
+    <!-- <link rel="stylesheet" href="../assets/font-awesome/css/font-awesome.min.css"> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body class="bg-light">
+    <nav class="bg-dark shadow fadeInDown">
+            <div class="d-i-block">
+                    <ul>
+                       <li class="hidden nav-toggle">
+                            <a class="btn text-success" href="#">
+                                <i class="fa fa-align-justify fa-lg"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+        <div class="d-i-block md-100">
+            <h1 class="display-3 mt-0">
+                <a href="home.html">StackOverflow-<span class="brand-span">LITE</span></a>
+            </h1>
+        </div>
+      
+        <div class="d-i-block collapse">
+            <ul class="nav-collapse">       
+                <li class="d-inline mr-3 user">
+                    <a class="btn btn-success" href="account.html">Sign up</a>
+                </li>        
+                <li class="d-inline mr-3">
+                    <a href="" id="" class="text-success p-large js-question">Ask a question</a>
+                </li> 
+                <li class="mr-3 hidden logout-btn">
+                    <a href="account.html" class="text-success">
+                        <i class="fa fa-power-off fa-lg" title="Log Out"></i>
+                    </a>
+                </li>    
+            </ul>
+        </div>     
+    </nav> 
+    <div class="container">
+        <div class="content-container mt-2" >
+            <section class="w-20 aside">
+                <ul>
+                    <li><i class="fa fa-clock-o mr-1 text-success"></i>Date
+                    <ul class="mt-1">
+                        <li><a href="#">Yesterday<span class="badge badge-dark">200</span></a></li>
+                        <li><a href="#">Last Week<span class="badge badge-success">4k</span></a></li>
+                        <li><a href="#"> 1 month ago<span class="badge badge-dark">20k</span></a></li>
+                        <li><a href="#"> A year ago<span class="badge badge-success">40k</span></a></li>
+                    </ul>
+                    </li>
+                    <li class="mt-2"><i class="fa fa-tags text-success mr-1"></i> Tags
+                    <ul class="mt-1">
+                        <li><a href="#">Science<span class="badge badge-dark">200</span></a></li>
+                        <li><a href="#"> Art<span class="badge badge-success">200</span></a></li>
+                        <li><a href="#"> Music<span class="badge badge-dark">200</span></a></li>
+                        <li><a href="#"> Relationships<span class="badge badge-success">2k</span></a></li>
+                    </ul>
+                    </li>
+                    <li class="mt-2"><a href="#"><i class="fa fa-bar-chart-o text-success mr-1"></i> Most Answered</a></li>
+                </ul>
+            </section>
+            <section class="w-70">
+                <h3 class="display-3 text-primary">Recently Asked / Questions</h3>
+                <div class="w-70" id="questions">
+                    <div class="box">
+                        <form>
+                            <div class="d-i-block w-90">
+                                <input type="text" class="form-input" placeholder="search questions - enter keywords">
+                            </div>
+                            <button class="btn"><i class="fa fa-search"></i></button>
+                        </form>
+                    </div>                                            
+                </div>
+            </section>
+            </div>
+    </div>
+
+   
+   
+<!-- side navigation. Show on small screens -->
+<nav class="hidden" id="nav-sm">
+    <a href="" class="close nav-toggle">
+        <span class="">&times;</span>
+    </a>
+    <ul>
+        <li class="mt-2">
+            <a href="account.html" class="text-primary user"> <i class="fa fa-user-o fa-lg text-success mr-1 "></i>Sign up</a>
+        </li>       
+        <li class="mt-2">
+            <a href="" class="text-primary js-question" ><i class="fa fa-edit fa-lg text-success mr-1"></i>Ask a question</a>
+        </li>
+        <li class="mt-2">
+            <a href="account.html" class="text-primary logout-btn hidden">
+                <i class="fa fa-power-off fa-lg mr-1 text-success"></i>
+                Log out
+            </a>
+        </li> 
+      
+    </ul>
+   
+    <ul>
+        <li class="display-3 mb-1">Filter Questions</li>
+        <li><i class="fa fa-clock-o mr-1 text-success"></i>Date
+        <ul class="mt-1">
+            <li><a href="#" class="text-primary">Yesterday<span class="badge badge-dark">200</span></a></li>
+            <li><a href="#" class="text-primary">Last Week<span class="badge badge-success">4k</span></a></li>
+            <li><a href="#" class="text-primary"> 1 month ago<span class="badge badge-dark">20k</span></a></li>
+            <li><a href="#" class="text-primary"> A year ago<span class="badge badge-success">40k</span></a></li>
+        </ul>
+        </li>
+        <li class="mt-2"><i class="fa fa-tags text-success mr-1"></i> Tags
+        <ul class="mt-1">
+            <li><a href="#" class="text-primary">Science<span class="badge badge-dark">200</span></a></li>
+            <li><a href="#" class="text-primary"> Art<span class="badge badge-success">200</span></a></li>
+            <li><a href="#" class="text-primary"> Music<span class="badge badge-dark">200</span></a></li>
+            <li><a href="#" class="text-primary"> Relationships<span class="badge badge-success">2k</span></a></li>
+        </ul>
+        </li>
+        <li class="mt-2"><a href="#" class="text-primary"><i class="fa fa-bar-chart-o text-success mr-1"></i> Most Answered</a></li>
+    </ul>
+    </div>
+</nav>
+<footer class="bg-dark foot">
+    <div class="p-2">
+        <p class="text-center text-success mb-0 mt-0 display-3">&copy;Stackoverflow-Lite 2018</p>
+    </div>
+</footer>
+
+<script src="../fetchScripts/helpers/functions.js"></script>
+<script src="../js/app.js"></script>
+<script src="../fetchScripts/helpers/templates.js"></script>
+<script src="../fetchScripts/helpers/session.js"></script>
+<script src="../fetchScripts/questions.js"></script>
+
+</body>
+</html>

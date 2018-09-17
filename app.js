@@ -30,5 +30,5 @@ app.listen(port, () => {
   console.log(`Port started on ${port}`);
 });
 
-
+app.use('/', express.static('client'));
 export default app;

@@ -149,6 +149,14 @@ h2,
     background-color: #fff;
 }
 
+.bg-danger{
+    background-color: rgba(243, 142, 142, 0.8)
+}
+
+.bg-success{
+    background-color: rgba(189, 243, 212, 0.8);
+}
+
 .bg-dark{
     background-color: black;
 }

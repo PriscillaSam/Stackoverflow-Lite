@@ -5,10 +5,8 @@ const regBtn = elemById('regBtn');
 const loginBtn = elemById('loginBtn');
 
 
-// const regUrl = 'https://so-lite.herokuapp.com/api/v1/auth/signup';
-// const regUrl = 'https://so-lite.herokuapp.com/api/v1/auth/login';
-const regUrl = 'http://localhost:3000/api/v1/auth/signup';
-const loginUrl = 'http://localhost:3000/api/v1/auth/login';
+const regUrl = 'https://so-lite.herokuapp.com/api/v1/auth/signup';
+const loginUrl = 'https://so-lite.herokuapp.com/api/v1/auth/login';
 
 
 const displayResponse = (response, btn, text) => {

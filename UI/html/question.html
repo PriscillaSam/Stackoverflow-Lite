@@ -12,92 +12,107 @@
 
 <body class="bg-light">
     <nav class="bg-dark shadow fadeInDown">
-        <div class="d-i-block">
-                <ul>
-                    <li class="hidden nav-toggle">
-                        <a class="btn text-success" href="#">
-                            <i class="fa fa-align-justify fa-lg"></i>
-                        </a>
-                    </li>
-                </ul>
+                <div class="d-i-block">
+                        <ul>
+                           <li class="hidden nav-toggle">
+                                <a class="btn text-success" href="#">
+                                    <i class="fa fa-align-justify fa-lg"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+            <div class="d-i-block md-100">
+                <h1 class="display-3 mt-0">
+                    <a href="home.html">StackOverflow-<span class="brand-span">LITE</span></a>
+                </h1>
             </div>
-        <div class="d-i-block md-100">
-            <h1 class="display-3 mt-0">
-                <a href="home.html">StackOverflow-<span class="brand-span">LITE</span></a>
-            </h1>
-        </div>
-        
-        <div class="d-i-block collapse">
-            <ul class="nav-collapse"> 
-                <li class="d-inline mr-3 user">
-                    <a class="btn btn-success" href="account.html">Sign up</a>
-                </li>        
-                <li class="d-inline mr-3">
-                    <a href="" id="" class="text-success p-large js-question">Ask a question</a>
-                </li> 
-                <li class="mr-3 hidden logout-btn">
-                    <a href="account.html" class="text-success">
-                        <i class="fa fa-power-off fa-lg" title="Log Out"></i>
-                    </a>
-                </li>           
-                
-            </ul>
-        </div>     
+          
+            <div class="d-i-block collapse">
+                <ul class="nav-collapse"> 
+                    <li class="d-inline mr-3">
+                        <a href="profile.html" class=""> <i class="fa fa-user-o mr-1"></i>Hi Priscilla</a>
+                    </li>        
+                    <li class="d-inline mr-3">
+                        <a href="" id="" class="text-success p-large js-question">Ask a question</a>
+                    </li>           
+                   
+                </ul>
+            </div>     
     </nav> 
 
 <div class="container">
     <div class="content-container">
+      
         <section class="w-70">
-          <div id="question-section">
-          </div>
+          <h4 class="display-4 text-primary mb-0 fadeIn"> <i class="fa fa-edit"></i> <strong>What is the quickest way to die?</strong></h4>            
+            <p class="ml-2 mt-0"><span class="mr-1">asked 3 hours ago</span><span><i class="fa fa-user-o fa-fw"></i>Tayo</span>
+            <span class="text-success"><i class="fa fa-comments-o fa-fw"></i>2 answers</span>
+            </p>
             
-            <div class="mt-2" id="answers">
-                <div id="new-answer" class="fadeIn">
+            
+            <div class="answers mt-2">                
+                <div class="box">
+                    <p class="lead mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, aut. 
+                        Cumque obcaecati quo dolores laudantium possimus illum quia ullam laboriosam...</p>
+                    <a href="" class="text-success">Read more <i class="fa fa-angle-double-right"></i></a>
+                    <h3 class="display-3 mb-0"><i class="fa fa-user-o text-success"></i> <span class="mr-1">Kent Baker</span>
+                    <span class="text-primary"><i class="fa fa-envelope-o fa-fw text-success"></i><span class=""><a href="" class="text-primary">kent.baker@gmail.com</a></span></span>
+                    </h3>
+                    <ul>
+                        <li>answered 5 mins ago</li>
+                        <li><a href="" title="downvote answer"><i class="fa fa-thumbs-o-down fa-fw"></i></a>0</li>
+                        <li><a href="" title="upvote answer"><i class="fa fa-thumbs-o-up fa-fw"></i></a>20</li>
+                        <li><a href="" ><i class="fa fa-square-o fa-fw js-accept"></i></a>accept this answer</li>
 
+                    </ul>
                 </div>
+                <div class="box">
+                        <p class="lead mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, aut. 
+                            Cumque obcaecati quo dolores laudantium possimus illum quia ullam laboriosam...</p>
+                        <a href="" class="text-success">Read more <i class="fa fa-angle-double-right"></i></a>
+                        <h3 class="display-3 mb-0"><i class="fa fa-user-o text-success"></i> <span class="mr-1">Kent Baker</span>
+                        <span class="text-primary"><i class="fa fa-envelope-o fa-fw text-success js-accept"></i><span class=""><a href="" class="text-primary">kent.baker@gmail.com</a></span></span>
+                        </h3>
+                        <ul>
+                            <li>answered 5 mins ago</li>
+                            <li><a href="" title="downvote answer"><i class="fa fa-thumbs-o-down fa-fw"></i></a>0</li>
+                            <li><a href="" title="upvote answer"><i class="fa fa-thumbs-o-up fa-fw"></i></a>20</li>
+                            <li id="accept-link"><a href="" ><i class="fa fa-square-o fa-fw js-accept"></i></a>accept this answer</li>
+
+                        </ul>
+                    </div>
             </div>
             <h4 class="display-4 text-primary mb-1"> <i class="fa fa-reply mr-1"></i>Your Answer</h4> 
             <div class="">
-                <form id="answer-form">
-                    <div class="alert hidden fadeIn bg-danger">
-                        <p class="text-center alertText"></p>
-                    </div> 
-                    <textarea name="" id="answer-input" cols="20" class="form-input" rows="7" placeholder="enter your response" required></textarea>
-                    <button type="submit" class="btn btn-success mt-1 w-20" id="answer-btn" disabled>
-                        <span class="hidden spinner">
-                            <i class="fa fa-spin fa-spinner fa-lg fa-fw"></i>
-                        </span>
-                        <span class="btnText">Submit</span>
-                    </button>
+                <form>
+                    <textarea name="" id="" cols="20" class="form-input" rows="7" placeholder="enter your response"></textarea>
+                    <button class="btn btn-success mt-1 w-20"> Submit</button>
                     <p><a href="account.html" class="text-success"> <i class="fa fa-sign-in fa-fw"></i>Log in</a> to post your answer.</p>
+
                 </form>
             </div>           
+
         </section>
 
-        <section>        
+        <section>
         </section>
     </div>    
 
 
 <!-- side navigation. Show on small screens -->
 <nav class="hidden" id="nav-sm">
-    <a href="" class="close nav-toggle">
-        <span class="">&times;</span>
-    </a>
-    <ul>              
-        <li class="mt-2">
-            <a href="account.html" class="text-primary user"> <i class="fa fa-user-o fa-lg text-success mr-1 "></i>Sign up</a>
-        </li>       
-        <li class="mt-2">
-            <a href="" class="text-primary js-question" ><i class="fa fa-edit fa-lg text-success mr-1"></i>Ask a question</a>
-        </li>
-        <li class="mt-2">
-            <a href="account.html" class="text-primary logout-btn hidden">
-                <i class="fa fa-power-off fa-lg mr-1 text-success"></i>
-                Log out
-            </a>
-        </li>           
-    </ul>    
+        <a href="" class="close nav-toggle">
+            <span class="">&times;</span>
+        </a>
+        <ul>              
+            <li class="mt-2">
+                <a href="profile.html" class="text-primary"> <i class="fa fa-user-o fa-lg text-success mr-1 "></i>Hi Priscilla</a>
+            </li>       
+            <li class="mt-2">
+                <a href="" class="text-primary js-question" ><i class="fa fa-edit fa-lg text-success mr-1"></i>Ask a question</a>
+            </li>
+            
+        </ul>    
 </nav>
 
 </div>
@@ -105,67 +120,26 @@
 <div class="modal hidden" id="question-modal">    
     <div class="modal-body slideInUp confirmBox p-2" >
         <a href="" class="close cl-modal">
-            <span>&times;</span>
-        </a>
+            <span class="">&times;</span>
+        </a>     
         
-        <section class="">
+        <section class="" >
                 <h4 class="display-4 text-primary mb-0 fadeIn"> <i class="fa fa-edit fa-fw"></i><strong>Ask a question</strong></h4>
-                <h3 class="display-3 mt-0 text-sm">Be descriptive. Be concise. Be clear.</h3>
-                     
-                <div>
-                    <form id="question-form">
-                        <div class="alert hidden fadeIn bg-danger">
-                            <p class="text-center alertText"></p>
-                        </div> 
+                <h3 class="display-3 mt-0 text-sm">Be descriptive. Be concise. Be clear.</h3>      
+                <div >
+                    <form>
                         <div class="input-area">
-                            <textarea name="" id="question-input" cols="30" rows="10" class="form-input" placeholder="type your question here..." required></textarea>
+                            <textarea name="" id="" cols="30" rows="10" class="form-input" placeholder="type your question here..."></textarea>
                         </div>
                         <div class="input-area right">
-                            <button type="submit" class="btn btn-success" id="question-btn">
-                                <span class="hidden spinner">
-                                    <i class="fa fa-spin fa-spinner fa-lg fa-fw"></i>
-                                </span>
-                                <span class="btnText"><i class="fa fa-share fa-fw"></i>Post Question</span>
-                            </button>
+                            <button class="btn btn-success btn-sm" type="submit"><i class="fa fa-share fa-fw"></i>Post Question</button>
                         </div>
-                       
                     </form>
                 </div>         
             </section>
         </div>
 
 </div>
-<!-- update answer modal -->
-<div class="modal hidden" id="update-modal">    
-        <div class="modal-body slideInUp confirmBox p-2" >
-            <a href="" class="close cl-modal">
-                <span>&times;</span>
-            </a>  
-            <section class="">
-                    <h4 class="display-4 text-primary fadeIn"> <i class="fa fa-edit fa-fw"></i><strong>Update your answer</strong></h4>                         
-                    <div>
-                        <form id="update-form">
-                            <div class="alert hidden fadeIn bg-danger">
-                                <p class="text-center alertText"></p>
-                            </div> 
-                            <div class="input-area">
-                                <textarea name="" id="update-input" cols="30" rows="10" class="form-input" required></textarea>
-                            </div>
-                            <div class="input-area right">
-                                <button type="submit" class="btn btn-success" id="update-btn">
-                                    <span class="hidden spinner">
-                                        <i class="fa fa-spin fa-spinner fa-lg fa-fw"></i>
-                                    </span>
-                                    <span class="btnText"><i class="fa fa-upload mr-1"></i>Save</span>
-                                </button>
-                            </div>
-                           
-                        </form>
-                    </div>         
-                </section>
-            </div>
-    
-    </div>
 <!-- modal -->
 <div class="modal hidden" id="accept-modal">
     <div class="modal-body confirmBox slideInUp p-2" id="accept-box">
@@ -187,16 +161,8 @@
     <div class="p-2">
         <p class="text-center text-success mb-0 mt-0 display-3">&copy;Stackoverflow-Lite 2018</p>
     </div>
-</footer>
- 
+</footer> 
 <script src="../js/app.js"></script>
-<script src="../../client_side/helpers/functions.js"></script>
-<script src="../../client_side/helpers/session.js"></script>
-<script src="../../client_side/postQuestion.js"></script>
-<script src="../../client_side/helpers/templates.js"></script>
-<script src="../../client_side/getQuestion.js"></script>
-<script src="../js/accept.js"></script>
-<script src="../../client_side/updateAnswer.js"></script>
-
+<script src="../js/accept.js"></script> 
 </body>
 </html>
