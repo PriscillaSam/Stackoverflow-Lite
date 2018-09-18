@@ -1,7 +1,7 @@
 const elemById = id => document.getElementById(id);
 const elemByClass = className => document.getElementsByClassName(className);
 const create = elem => document.createElement(elem);
-
+const baseUrl = 'https://so-lite.herokuapp.com/api/v1';
 
 const btnActivity = (btn) => {
   const spinner = btn.querySelector('.spinner');

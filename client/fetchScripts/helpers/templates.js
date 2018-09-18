@@ -14,7 +14,6 @@ const questionCard = (question, elem) => {
   const ul = create('ul');
   const liTime = create('li');
   const liAns = create('li');
-  const liUser = create('li');
   const container = create('div');
 
   h3.classList.add('mb-0', 'mt-0', 'display-3');
@@ -33,8 +32,21 @@ const questionCard = (question, elem) => {
   liAns.innerHTML = `<i class="fa fa-comments-o fa-fw"></i>${question.answers}`;
   ul.appendChild(liAns);
 
-  liUser.innerHTML = `<i class="fa fa-user-o fa-fw"></i>${question.name}`;
-  ul.appendChild(liUser);
+  if (question.name) {
+    const liUser = create('li');
+    liUser.innerHTML = `<i class="fa fa-user-o fa-fw"></i>${question.name}`;
+    ul.appendChild(liUser);
+  } else {
+    const liDelete = create('li');
+    const aDelete = create('a');
+
+    aDelete.setAttribute('href', ' ');
+    aDelete.innerHTML = '<i class="fa fa-trash-o fa-fw"></i>';
+    aDelete.onclick = event => deleteQuestion(event);
+
+    liDelete.appendChild(aDelete);
+    ul.appendChild(liDelete);
+  }
 
   container.setAttribute('class', 'box');
 

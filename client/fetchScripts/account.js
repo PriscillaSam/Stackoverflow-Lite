@@ -5,8 +5,8 @@ const regBtn = elemById('regBtn');
 const loginBtn = elemById('loginBtn');
 
 
-const regUrl = 'https://so-lite.herokuapp.com/api/v1/auth/signup';
-const loginUrl = 'https://so-lite.herokuapp.com/api/v1/auth/login';
+const regUrl = `${baseUrl}/auth/signup`;
+const loginUrl = `${baseUrl}/auth/login`;
 
 
 const displayResponse = (response, btn, text) => {
@@ -22,7 +22,7 @@ const displayResponse = (response, btn, text) => {
 
     btnTextDisplay(btn, 'Redirecting...');
     setTimeout(() => {
-      window.location.replace('../html/profile.html');
+      window.location.replace('./profile.html');
     }, 2000);
   }
 };

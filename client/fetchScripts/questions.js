@@ -1,3 +1,3 @@
-const url = 'https://so-lite.herokuapp.com/api/v1/questions';
+const url = `${baseUrl}/questions`;
 
 getQuestions(url, 'all', 'questions');

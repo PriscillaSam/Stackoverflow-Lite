@@ -16,6 +16,7 @@ router.get('/questions', Question.getQuestions);
 router.get('/questions/:id', validator.validateId, Question.getQuestion);
 
 router.use(auth.verifyToken);
+router.get('/users/profile', User.profile);
 router.get('/users/questions', Question.getUserQuestions);
 router.post('/questions/', validator.validateQuestion, Question.postQuestion);
 

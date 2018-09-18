@@ -24,6 +24,25 @@ const userQueries = {
       values: [email],
     };
   },
+  /**
+   * Get user profile query method
+   * @param {number} userId Id of user
+   * @returns {object} Get user profile query object
+   */
+  getUserProfile(userId) {
+    return {
+      text: `
+        SELECT
+          id as userid,
+          COALESCE((SELECT COUNT (a.id) FROM answers a 
+          WHERE a.userid = $1 GROUP BY a.userid),0) as answers
+
+          FROM users
+          WHERE id = $1 
+      `,
+      values: [userId],
+    };
+  },
 };
 const questionQueries = {
   /**
@@ -80,10 +99,12 @@ const questionQueries = {
       text: `
       SELECT id,
       question,
+      createdat,
       COALESCE((SELECT COUNT (a.id) FROM answers a 
       WHERE a.questionid = q.id GROUP BY q.id),0) as answers
       FROM questions q
       WHERE userid = $1
+      ORDER BY answers DESC
       `,
       values: [id],
     };
@@ -97,7 +118,7 @@ const questionQueries = {
   postQuestion(question, userId) {
     return {
       text: `INSERT into questions(question, userid) 
-      VALUES($1, $2) RETURNING id, question`,
+      VALUES($1, $2) RETURNING id, question, createdat`,
       values: [question, userId],
     };
   },
@@ -194,6 +215,11 @@ const answerQueries = {
       values: [answerId, value],
     };
   },
+  /**
+   * Check if a question has a previously accepted answer
+   * @param {number} questionId Id of question to check
+   * @returns {object} Query object
+   */
   checkAccepted(questionId) {
     return {
       text: `

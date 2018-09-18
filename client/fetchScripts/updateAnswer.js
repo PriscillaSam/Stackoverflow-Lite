@@ -7,7 +7,7 @@ let answerId;
 
 const preferAnswer = (link) => {
   const updateUrl = `
-  https://so-lite.herokuapp.com/api/v1/questions/${questionId}/answers/${answerId}
+ ${baseUrl}/questions/${questionId}/answers/${answerId}
 `;
   fetch(updateUrl, {
     method: 'PUT',
@@ -56,7 +56,7 @@ const acceptAnswer = (event, link) => {
 const updateBtnText = '<i class="fa fa-upload mr-1"></i>Save';
 const updateAnswer = (answerDiv) => {
   const updateUrl = `
-  https://so-lite.herokuapp.com/api/v1/questions/${questionId}/answers/${answerId}
+  ${baseUrl}/questions/${questionId}/answers/${answerId}
 `;
   fetch(updateUrl, {
     method: 'PUT',

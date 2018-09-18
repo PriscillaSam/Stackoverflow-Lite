@@ -4,8 +4,8 @@ const questionId = localStorage.getItem('questionId');
 const answerBtn = elemById('answer-btn');
 const newAnswerDiv = elemById('new-answer');
 
-const getUrl = `https://so-lite.herokuapp.com/api/v1/questions/${questionId}`;
-const postUrl = `https://so-lite.herokuapp.com/api/v1/questions/${questionId}/answers`;
+const getUrl = `${baseUrl}/questions/${questionId}`;
+const postUrl = `${baseUrl}/questions/${questionId}/answers`;
 
 
 fetch(getUrl, {
