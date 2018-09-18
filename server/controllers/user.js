@@ -90,6 +90,45 @@ class User {
           });
       });
   }
-}
 
+  /**
+   * Get user profile
+   * @param {object} req Request object
+   * @param {object} res Response object
+   * @returns {object} User activity history on the platform
+   */
+  static profile(req, res) {
+    const { userId } = req.body;
+
+    pool.connect()
+      .then((client) => {
+        client.release();
+        client.query(queries.userQueries.getUserProfile(userId))
+          .then((response) => {
+            const [details] = response.rows;
+            client.query(queries.questionQueries.getUserQuestions(userId))
+              .then((userQuestions) => {
+                const questions = userQuestions.rows;
+                details.asked = questions.length;
+                const recent = [...questions];
+                recent.sort((q1, q2) => q1.createdat < q2.createdat);
+
+                if (questions.length < 5) {
+                  details.mostAnswered = questions
+                    .filter(q => q.answers !== '0');
+                  details.recent = recent;
+                } if (questions.length > 5) {
+                  details.mostAnswered = questions
+                    .filter(q => q.answers !== '0').splice(0, 5);
+                  details.recent = recent.splice(0, 5);
+                }
+
+                res.status(200).json(
+                  details,
+                );
+              });
+          });
+      });
+  }
+}
 export default User;

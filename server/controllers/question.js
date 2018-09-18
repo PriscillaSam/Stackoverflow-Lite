@@ -76,6 +76,7 @@ class Question {
           .then((response) => {
             client.release();
             const [postedQuestion] = response.rows;
+            postedQuestion.answers = 0;
             return res.status(201).json({
               status: 'success',
               message: 'Your question has been posted',

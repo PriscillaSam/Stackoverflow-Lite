@@ -6,6 +6,8 @@ import users from '../testData';
 chai.use(chaiHttp);
 const { expect } = chai;
 
+let userToken;
+let askerToken;
 
 describe('POST api/v1/auth/signup', () => {
   it('should return an error if user already exists', (done) => {
@@ -43,16 +45,17 @@ describe('POST api/v1/auth/login', () => {
   it('should login user if user exists', (done) => {
     chai.request(app)
       .post('/api/v1/auth/login')
-      .send(users.priscilla)
+      .send(users.jane)
       .end((err, res) => {
         if (err) done(err);
+        userToken = res.body.token;
         expect(res).to.have.status(200);
         expect(res).to.be.an('object');
         expect(res.body).to.have
           .keys('status', 'message', 'token', 'name', 'id');
         expect(res.body.status).to.deep.equals('success');
         expect(res.body.message).to.deep
-          .equals('Welcome back Priscilla Doe. Login successful');
+          .equals('Welcome back Janet Doe. Login successful');
         done();
       });
   });
@@ -85,6 +88,42 @@ describe('POST api/v1/auth/login', () => {
         expect(res).to.be.an('object');
         expect(res.body).to.have.keys('status', 'message');
         expect(res.body.status).to.deep.equals('error');
+        done();
+      });
+  });
+});
+
+describe('GET api/v1/users/profile', () => {
+  it('should return status 200 if user has less than 5 questions', (done) => {
+    chai.request(app)
+      .get('/api/v1/users/profile')
+      .set('Authorization', userToken)
+      .end((err, res) => {
+        if (err) done(err);
+        expect(res).to.have.status(200);
+        expect(res.body).to.haveOwnProperty('mostAnswered');
+        done();
+      });
+  });
+
+  before((done) => {
+    chai.request(app)
+      .post('/api/v1/auth/login')
+      .send(users.micheal)
+      .end((err, res) => {
+        if (err) done(err);
+        askerToken = res.body.token;
+        done();
+      });
+  });
+  it('should return status 200 if user has more than 5 questions', (done) => {
+    chai.request(app)
+      .get('/api/v1/users/profile')
+      .set('Authorization', askerToken)
+      .end((err, res) => {
+        if (err) done(err);
+        expect(res).to.have.status(200);
+        expect(res.body).to.haveOwnProperty('mostAnswered').lengthOf(4);
         done();
       });
   });
