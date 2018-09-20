@@ -42,7 +42,10 @@ const questionCard = (question, elem) => {
 
     aDelete.setAttribute('href', ' ');
     aDelete.innerHTML = '<i class="fa fa-trash-o fa-fw"></i>';
-    aDelete.onclick = event => deleteQuestion(event);
+    aDelete.setAttribute('data-id', question.id);
+    aDelete.setAttribute('class', 'js-delete');
+
+    aDelete.onclick = event => deleteQuestion(event, aDelete);
 
     liDelete.appendChild(aDelete);
     ul.appendChild(liDelete);
