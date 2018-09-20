@@ -3,6 +3,7 @@ const pAsked = elemById('asked');
 const pAnswered = elemById('answered');
 const noRecent = elemById('no-recent');
 const noAnswered = elemById('no-answered');
+const delBtns = elemByClass('js-delete');
 
 fetch(profileUrl, {
   method: 'GET',
@@ -31,7 +32,35 @@ fetch(profileUrl, {
     }
   });
 
-const deleteQuestion = (event) => {
+let questionId;
+
+const deleteQuestion = (event, link) => {
   event.preventDefault();
   modal.classList.remove('hidden');
+  questionId = link.getAttribute('data-id');
+};
+
+const deleteConfirmed = () => {
+  const delUrl = `${baseUrl}/questions/${questionId}`;
+
+  fetch(delUrl, {
+    method: 'DELETE',
+    headers: {
+      Authorization: token,
+    },
+  })
+    .then(response => response.json())
+    .then(() => {
+      deleteNotif.classList.remove('hidden');
+      [...delBtns].forEach((btn) => {
+        if (btn.getAttribute('data-id') === questionId) {
+          setTimeout(() => {
+            btn.closest('.box').classList.add('fadeOut');
+          }, 1000);
+          setTimeout(() => {
+            btn.closest('.box').classList.add('hidden');
+          }, 2000);
+        }
+      });
+    });
 };
