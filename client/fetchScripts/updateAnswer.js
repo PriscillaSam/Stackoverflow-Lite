@@ -28,25 +28,27 @@ const preferAnswer = (link) => {
         console.log(previous);
         if (previous) {
           previous.removeAttribute('id');
-          createAcceptLink(previous);
+          createAcceptButton(previous);
           console.log(previous);
         }
         console.log(link.parentNode);
         link.parentNode.id = 'prev-accepted';
         link.closest('li').innerHTML = `
           <span class="badge badge-dark">
-            <i class="fa fa-lg fa-check"></i>
+            <i class="fa fa-lg fa-star"></i>
           </span>
         `;
       });
     });
 };
 
+const getAnswerId = link => link.closest('ul').getAttribute('data-id');
+
+
 const acceptAnswer = (event, link) => {
   event.preventDefault();
-  answerId = link.closest('ul').getAttribute('data-id');
   acceptModal.classList.remove('hidden');
-
+  answerId = getAnswerId(link);
   confirmBtn.addEventListener('click', (e) => {
     e.preventDefault();
     preferAnswer(link);
