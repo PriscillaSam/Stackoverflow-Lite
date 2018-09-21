@@ -26,7 +26,7 @@ const questionCard = (question, elem) => {
 
   h3.appendChild(a);
 
-  liTime.innerHTML = question.createdat;
+  liTime.innerHTML = formatTime(question.createdat);
   ul.appendChild(liTime);
 
   liAns.innerHTML = `<i class="fa fa-comments-o fa-fw"></i>${question.answers}`;
@@ -73,7 +73,7 @@ const createAcceptButton = (liAccept) => {
   console.log(liAccept);
 };
 
-const createVoteButtons = (answer, ul) => {
+const createVoteButtons = (answer, voteDiv) => {
   const liUpvotes = create('li');
   const aUpvote = create('a');
   const liDownvotes = create('li');
@@ -81,7 +81,8 @@ const createVoteButtons = (answer, ul) => {
 
   aUpvote.setAttribute('href', '');
   aUpvote.setAttribute('title', 'upvote answer');
-  aUpvote.setAttribute('data-id', answer.id);
+  aUpvote.setAttribute('class', 'upvote');
+  aUpvote.onclick = event => voteAnswer(event, aUpvote, 1);
   aUpvote.innerHTML = '<i class="fa fa-thumbs-o-up fa-fw"></i>';
 
   liUpvotes.innerHTML = answer.upvotes;
@@ -89,13 +90,15 @@ const createVoteButtons = (answer, ul) => {
 
   aDownvote.setAttribute('href', '');
   aDownvote.setAttribute('title', 'downvote answer');
-  aDownvote.setAttribute('data-id', answer.id);
+  aDownvote.setAttribute('class', 'downvote');
+  aDownvote.onclick = event => voteAnswer(event, aUpvote, 0);
   aDownvote.innerHTML = '<i class="fa fa-thumbs-o-down fa-fw"></i>';
 
   liDownvotes.innerHTML = answer.downvotes;
   liDownvotes.insertBefore(aDownvote, liDownvotes.childNodes[0]);
-  ul.appendChild(liUpvotes);
-  ul.appendChild(liDownvotes);
+
+  voteDiv.appendChild(liUpvotes);
+  voteDiv.appendChild(liDownvotes);
 };
 
 const answerCard = (answer, askerId, div) => {
@@ -123,13 +126,17 @@ const answerCard = (answer, askerId, div) => {
   </span>
   `;
 
-  liTime.innerHTML = `answered ${answer.createdat}`;
+  liTime.innerHTML = `answered ${formatTime(answer.createdat)}`;
   ul.appendChild(liTime);
 
   const userId = parseInt(localStorage.getItem('userId'), 10);
 
   if (userId !== answer.userid) {
-    createVoteButtons(answer, ul);
+    const voteDiv = create('div');
+    voteDiv.setAttribute('class', 'd-inline');
+
+    createVoteButtons(answer, voteDiv);
+    ul.appendChild(voteDiv);
   }
 
   if (userId === answer.userid) {
@@ -150,11 +157,11 @@ const answerCard = (answer, askerId, div) => {
     liAccept.id = 'prev-accepted';
     liAccept.innerHTML = `
     <span class="badge badge-dark">
-      <i class="fa fa-lg fa-check"></i>
+      <i class="fa fa-lg fa-star"></i>
     </span>
  `;
   } else if (userId === askerId && !answer.isaccepted) {
-    createAcceptButton(liAccept, answer.id);
+    createAcceptButton(liAccept);
   }
 
   ul.appendChild(liAccept);

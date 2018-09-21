@@ -20,7 +20,7 @@ fetch(getUrl, {
      <strong>${body.question}</strong>
     </h4>            
     <p class="ml-2 mt-0">
-      <span class="mr-1">asked ${body.createdat}</span>
+      <span class="mr-1">asked ${formatTime(body.createdat)}</span>
       <span>
       <i class="fa fa-user-o fa-fw"></i>${body.name}
       </span>

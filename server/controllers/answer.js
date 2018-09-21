@@ -135,7 +135,7 @@ class Answer {
    * @param {object} req Request Object
    * @param {object} res Response Object
    * @returns {object} Object with status,
-   * message and optionally voted answer object for a new vote
+   * message and the voted answer object
    */
   static voteAnswer(req, res) {
     const answerId = req.params.id;
@@ -207,20 +207,27 @@ class Answer {
                   client.query(voteQueries.voteAnswer(values))
                     .then((newVoteRes) => {
                       const [newvote] = newVoteRes.rows;
-                      answer.upvotes = newvote.upvotes;
-                      answer.downvotes = newvote.downvotes;
-                      if (newvote.vote === 0) {
-                        return res.status(201).json({
-                          status: 'success',
-                          message: 'you have downvoted this answer',
-                          answer,
+                      client.query(voteQueries.getAnswerVotes(answerId))
+                        .then((voteRespons) => {
+                          const votes = voteRespons.rows;
+                          answer.upvotes = votes
+                            .filter(v => v.vote === 1).length;
+                          answer.downvotes = votes
+                            .filter(v => v.vote === 0).length;
+
+                          if (newvote.vote === 0) {
+                            return res.status(201).json({
+                              status: 'success',
+                              message: 'you have downvoted this answer',
+                              answer,
+                            });
+                          }
+                          return res.status(201).json({
+                            status: 'success',
+                            message: 'you have upvoted this answer',
+                            answer,
+                          });
                         });
-                      }
-                      return res.status(201).json({
-                        status: 'success',
-                        message: 'you have upvoted this answer',
-                        answer,
-                      });
                     });
                 }
               });
