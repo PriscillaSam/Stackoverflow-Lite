@@ -30,6 +30,30 @@ describe('GET api/v1/questions', () => {
         done();
       });
   });
+  it('should return a message if the query does not match any questions',
+    (done) => {
+      chai.request(app).get('/api/v1/questions')
+        .query({ question: 'Who are you?' })
+        .end((err, res) => {
+          if (err) done(err);
+          expect(res.body).to.haveOwnProperty('message');
+          expect(res).to.have.status(200);
+          done();
+        });
+    });
+  it('should return an array of questions if the query matches any questions',
+    (done) => {
+      chai.request(app).get('/api/v1/questions')
+        .query({ question: 'cooking skill?' })
+        .end((err, res) => {
+          if (err) done(err);
+          expect(res).to.have.status(200);
+          expect(res.body).to.have.keys('status', 'message', 'questions');
+          expect(res.body.questions).to.be.an('array');
+          expect(res.body.questions).to.have.lengthOf(1);
+          done();
+        });
+    });
 });
 
 

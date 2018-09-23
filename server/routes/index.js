@@ -12,7 +12,7 @@ const router = express.Router();
 router.post('/auth/signup', validator.validateSignUp, User.register);
 router.post('/auth/login', validator.validateLogin, User.login);
 
-router.get('/questions', Question.getQuestions);
+router.get('/questions', Question.search, Question.getQuestions);
 router.get('/questions/:id', validator.validateId, Question.getQuestion);
 
 router.use(auth.verifyToken);
@@ -23,7 +23,7 @@ router.post('/questions/', validator.validateQuestion, Question.postQuestion);
 router.delete('/questions/:id',
   validator.validateDelete, Question.deleteQuestion);
 
-router.post('/questions/:id/answers/',
+router.post('/questions/:questionId/answers/',
   validator.validatePostAnswer, Answer.postAnswer);
 
 router.put('/questions/:questionId/answers/:answerId',

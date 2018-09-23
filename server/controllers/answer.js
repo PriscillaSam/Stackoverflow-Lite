@@ -16,7 +16,7 @@ class Answer {
    * or error object if question or answer does not exist
    */
   static postAnswer(req, res) {
-    const questionId = parseInt(req.params.id, 10);
+    const questionId = parseInt(req.params.questionId, 10);
     const { userId, answer } = req.body;
 
     pool.connect()
