@@ -47,7 +47,7 @@ describe('POST api/v1/questions/:questionId/answers', () => {
         expect(res).to.have.status(201);
         expect(res.body.status).to.deep.equals('success');
         expect(res.body.message).to.deep.equals('Your answer has been posted');
-        expect(res.body).to.have.keys('status', 'newAnswer', 'message');
+        expect(res.body).to.have.keys('status', 'new_answer', 'message');
         done();
       });
   });
@@ -132,7 +132,7 @@ describe('PUT api/v1/questions/:questionId/answers/:answerId', () => {
         if (err) done(err);
         expect(res).to.have.status(200);
         expect(res.body.message).to.deep.equals('you have updated your answer');
-        expect(res.body).to.have.keys('status', 'message', 'updatedAnswer');
+        expect(res.body).to.have.keys('status', 'message', 'updated_answer');
         done();
       });
   });
@@ -148,10 +148,11 @@ describe('PUT api/v1/questions/:questionId/answers/:answerId', () => {
         expect(res.body.message).to.deep
           .equals('your have accepted this answer');
 
-        expect(res.body).to.have.keys('status', 'message', 'acceptedAnswer');
+        expect(res.body).to.have.keys('status', 'message', 'accepted_answer');
         done();
       });
   });
+
   let janeToken;
   before((done) => {
     chai.request(app)
@@ -174,7 +175,7 @@ describe('PUT api/v1/questions/:questionId/answers/:answerId', () => {
         expect(res.body.message).to.deep
           .equals('your have accepted this answer');
 
-        expect(res.body).to.have.keys('status', 'message', 'acceptedAnswer');
+        expect(res.body).to.have.keys('status', 'message', 'accepted_answer');
         done();
       });
   });
@@ -204,7 +205,7 @@ describe('PUT api/v1/questions/:questionId/answers/:answerId', () => {
         if (err) done(err);
         expect(res).to.have.status(200);
         expect(res.body.message).to.deep.equals('you have updated your answer');
-        expect(res.body).to.have.keys('status', 'message', 'updatedAnswer');
+        expect(res.body).to.have.keys('status', 'message', 'updated_answer');
         done();
       });
   });

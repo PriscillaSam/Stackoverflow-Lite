@@ -24,10 +24,10 @@ fetch(profileUrl, {
     }
     if (response.recent.length !== 0) {
       createContent(response.recent, 'all', 'recent');
-      if (response.mostAnswered.length === 0) {
+      if (response.most_answered.length === 0) {
         noAnswered.classList.remove('hidden');
       } else {
-        createContent(response.mostAnswered, 'all', 'most-answered');
+        createContent(response.most_answered, 'all', 'most-answered');
       }
     }
   });

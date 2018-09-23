@@ -51,7 +51,7 @@ form.addEventListener('submit', (event) => {
         setTimeout(() => {
           refresh(form);
           elemById('question-input').value = '';
-          if (newQuestion) appendQuestion(response.newQuestion);
+          if (newQuestion) appendQuestion(response.new_question);
 
           const modal = elemById('question-modal');
           if (modal) modal.querySelector('.cl-modal').click();

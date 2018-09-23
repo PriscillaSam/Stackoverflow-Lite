@@ -38,7 +38,7 @@ class Answer {
                 return res.status(201).json({
                   status: 'success',
                   message: 'Your answer has been posted',
-                  newAnswer,
+                  new_answer: newAnswer,
                 });
               });
           });
@@ -71,18 +71,18 @@ class Answer {
                 if (!existingAnswer) {
                   return errors.notFound(res, 'answer');
                 }
-                if (existingAnswer.questionid !== questionId) {
+                if (existingAnswer.question_id !== questionId) {
                   return res.status(409).json({
                     status: 'error',
                     message:
                     'Bad request. This answer belongs to another question.',
                   });
                 }
-                if (userId !== existingAnswer.userid
-                  && userId !== questionObj.userid) {
+                if (userId !== existingAnswer.user_id
+                  && userId !== questionObj.user_id) {
                   return errors.unauthorized(res);
                 }
-                if (existingAnswer.userid === userId) {
+                if (existingAnswer.user_id === userId) {
                   if (answer) {
                     client.query(answerQueries
                       .updateAnswer(answerId, 'answer', answer))
@@ -91,10 +91,10 @@ class Answer {
                         return res.status(200).json({
                           status: 'success',
                           message: 'you have updated your answer',
-                          updatedAnswer,
+                          updated_answer: updatedAnswer,
                         });
                       });
-                  } else if (questionObj.userid !== userId) {
+                  } else if (questionObj.user_id !== userId) {
                     return res.status(400).json({
                       status: 'error',
                       message: 'the answer field is required',
@@ -102,25 +102,25 @@ class Answer {
                   }
                 }
 
-                if (questionObj.userid === userId && !answer) {
+                if (questionObj.user_id === userId && !answer) {
                   client.query(answerQueries.checkAccepted(questionId))
                     .then((prevAccepted) => {
                       let acceptedId;
                       const [accepted] = prevAccepted.rows;
                       if (accepted) {
                         client.query(answerQueries
-                          .updateAnswer(accepted.id, 'isaccepted', false));
+                          .updateAnswer(accepted.id, 'is_accepted', false));
                         acceptedId = accepted.id;
                       }
                       client.query(answerQueries
-                        .updateAnswer(answerId, 'isaccepted', true))
+                        .updateAnswer(answerId, 'is_accepted', true))
                         .then((acceptRes) => {
                           const [acceptedAnswer] = acceptRes.rows;
                           acceptedAnswer.prevAccepted = acceptedId || '';
                           return res.status(200).json({
                             status: 'success',
                             message: 'your have accepted this answer',
-                            acceptedAnswer,
+                            accepted_answer: acceptedAnswer,
                           });
                         });
                     });
@@ -150,7 +150,7 @@ class Answer {
             if (!answer) {
               return errors.notFound(res, 'answer');
             }
-            if (answer.userid === userId) {
+            if (answer.user_id === userId) {
               return res.status(403).json({
                 status: 'error',
                 message: 'you cannot vote your answer',

@@ -34,8 +34,8 @@ const preferAnswer = (link) => {
         console.log(link.parentNode);
         link.parentNode.id = 'prev-accepted';
         link.closest('li').innerHTML = `
-          <span class="badge badge-dark">
-            <i class="fa fa-lg fa-star"></i>
+          <span class="">
+            <i class="fa fa-star"></i>
           </span>
         `;
       });
@@ -56,6 +56,7 @@ const acceptAnswer = (event, link) => {
 };
 
 const updateBtnText = '<i class="fa fa-upload mr-1"></i>Save';
+
 const updateAnswer = (answerDiv) => {
   const updateUrl = `
   ${baseUrl}/questions/${questionId}/answers/${answerId}
@@ -78,7 +79,7 @@ const updateAnswer = (answerDiv) => {
         errorResponse(response, updateForm);
       } else {
         successResponse(response, updateForm);
-        answerDiv.innerHTML = response.updatedAnswer.answer;
+        answerDiv.innerHTML = response.updated_answer.answer;
         setTimeout(() => {
           refresh(updateForm);
           elemById('update-modal').querySelector('.cl-modal').click();

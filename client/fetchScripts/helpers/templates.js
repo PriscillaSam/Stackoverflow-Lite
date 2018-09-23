@@ -26,7 +26,7 @@ const questionCard = (question, elem) => {
 
   h3.appendChild(a);
 
-  liTime.innerHTML = formatTime(question.createdat);
+  liTime.innerHTML = formatTime(question.created_at);
   ul.appendChild(liTime);
 
   liAns.innerHTML = `<i class="fa fa-comments-o fa-fw"></i>${question.answers}`;
@@ -65,12 +65,13 @@ const createAcceptButton = (liAccept) => {
 
   aAccept.setAttribute('href', '');
   aAccept.setAttribute('class', 'js-accept');
-  aAccept.innerHTML = '<i class="fa fa-square-o fa-fw"></i>';
+  aAccept.setAttribute('title', 'prefer answer');
+
+  aAccept.innerHTML = '<i class="fa fa-star-o fa-fw"></i>';
   aAccept.onclick = event => acceptAnswer(event, aAccept);
 
-  liAccept.innerHTML = 'accept this answer';
+  liAccept.innerHTML = '';
   liAccept.insertBefore(aAccept, liAccept.childNodes[0]);
-  console.log(liAccept);
 };
 
 const createVoteButtons = (answer, voteDiv) => {
@@ -126,12 +127,12 @@ const answerCard = (answer, askerId, div) => {
   </span>
   `;
 
-  liTime.innerHTML = `answered ${formatTime(answer.createdat)}`;
+  liTime.innerHTML = `answered ${formatTime(answer.created_at)}`;
   ul.appendChild(liTime);
 
   const userId = parseInt(localStorage.getItem('userId'), 10);
 
-  if (userId !== answer.userid) {
+  if (userId !== answer.user_id) {
     const voteDiv = create('div');
     voteDiv.setAttribute('class', 'd-inline');
 
@@ -139,7 +140,7 @@ const answerCard = (answer, askerId, div) => {
     ul.appendChild(voteDiv);
   }
 
-  if (userId === answer.userid) {
+  if (userId === answer.user_id) {
     const liEdit = create('li');
     const aEdit = create('a');
     liEdit.innerHTML = 'Edit';
@@ -153,14 +154,14 @@ const answerCard = (answer, askerId, div) => {
     ul.appendChild(liEdit);
   }
 
-  if (answer.isaccepted) {
+  if (answer.is_accepted) {
     liAccept.id = 'prev-accepted';
     liAccept.innerHTML = `
-    <span class="badge badge-dark">
-      <i class="fa fa-lg fa-star"></i>
+    <span>
+      <i class="fa fa-star"></i>
     </span>
  `;
-  } else if (userId === askerId && !answer.isaccepted) {
+  } else if (userId === askerId && !answer.is_accepted) {
     createAcceptButton(liAccept);
   }
 

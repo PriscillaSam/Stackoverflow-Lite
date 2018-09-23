@@ -20,6 +20,6 @@ const getVotes = () => {
 };
 
 const seedVotes = `
-INSERT INTO votes (userid, answerid, vote) VALUES ${getVotes()}`;
+INSERT INTO votes (user_id, answer_id, vote) VALUES ${getVotes()}`;
 
 export default seedVotes;

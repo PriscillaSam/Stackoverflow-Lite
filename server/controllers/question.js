@@ -22,7 +22,7 @@ class Question {
             client.release();
             res.status(200).json({
               status: 'success',
-              message: 'questions successfully gotten',
+              message: 'Questions successfully retrieved',
               questions: response.rows,
             });
           });
@@ -53,8 +53,8 @@ class Question {
                 questionObj.answers = answers;
                 res.status(200).json({
                   status: 'success',
-                  message: 'question has been successfully gotten',
-                  questionObj,
+                  message: 'Question has been retrieved successfully',
+                  question_details: questionObj,
                 });
               });
           });
@@ -80,7 +80,7 @@ class Question {
             return res.status(201).json({
               status: 'success',
               message: 'Your question has been posted',
-              newQuestion: postedQuestion,
+              new_question: postedQuestion,
             });
           });
       });
@@ -104,7 +104,7 @@ class Question {
             if (!questionObj) {
               return errors.notFound(res, 'question');
             }
-            if (userId !== questionObj.userid) {
+            if (userId !== questionObj.user_id) {
               return errors.unauthorized(res);
             }
             client.query(questionQueries.deleteQuestion(questionId))
@@ -113,8 +113,8 @@ class Question {
                 const [question] = deleted.rows;
                 return res.status(200).json({
                   status: 'success',
-                  message: 'your question has been deleted',
-                  deletedQuestion: question.question,
+                  message: 'Your question has been deleted',
+                  deleted_question: question.question,
                 });
               });
           });
@@ -138,7 +138,7 @@ class Question {
             const questions = response.rows;
             return res.status(200).json({
               status: 'success',
-              message: 'your questions have been retrieved successfully',
+              message: 'Your questions have been retrieved successfully',
               questions,
             });
           });

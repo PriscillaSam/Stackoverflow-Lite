@@ -17,7 +17,7 @@ router.get('/questions/:id', validator.validateId, Question.getQuestion);
 
 router.use(auth.verifyToken);
 router.get('/users/profile', User.profile);
-router.get('/users/questions', Question.getUserQuestions);
+router.get('/user/questions', Question.getUserQuestions);
 router.post('/questions/', validator.validateQuestion, Question.postQuestion);
 
 router.delete('/questions/:id',

@@ -13,14 +13,14 @@ fetch(getUrl, {
 })
   .then(response => response.json())
   .then((response) => {
-    const body = response.questionObj;
+    const body = response.question_details;
     questionDiv.innerHTML = `
     <h4 class="display-4 text-primary mb-0 fadeIn">
      <i class="fa fa-unsorted"></i> 
      <strong>${body.question}</strong>
     </h4>            
     <p class="ml-2 mt-0">
-      <span class="mr-1">asked ${formatTime(body.createdat)}</span>
+      <span class="mr-1">asked ${formatTime(body.created_at)}</span>
       <span>
       <i class="fa fa-user-o fa-fw"></i>${body.name}
       </span>
@@ -29,9 +29,9 @@ fetch(getUrl, {
       </span>
     </p>
   `;
-    localStorage.setItem('askerId', body.userid);
+    localStorage.setItem('askerId', body.user_id);
     body.answers.forEach((answer) => {
-      answerCard(answer, body.userid, 'answers');
+      answerCard(answer, body.user_id, 'answers');
     });
   });
 
@@ -63,10 +63,12 @@ answerForm.addEventListener('submit', (event) => {
         errorResponse(response, answerForm);
       } else {
         successResponse(response, answerForm);
-        const answer = response.newAnswer;
-        answer.email = localStorage.getItem('email');
+        const answer = response.new_answer;
         const askerId = localStorage.getItem('askerId');
+
+        answer.email = localStorage.getItem('email');
         answer.name = localStorage.getItem('name');
+
         answerCard(answer, askerId, 'new-answer');
 
         setTimeout(() => {

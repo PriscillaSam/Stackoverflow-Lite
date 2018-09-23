@@ -32,7 +32,6 @@ class User {
 
             const passHash = encrypt.hashString(password);
 
-
             client.query(queries.userQueries.createUser(name, email, passHash))
               .then((user) => {
                 const [newUser] = user.rows;
@@ -43,8 +42,8 @@ class User {
                 return res.status(201).json({
                   status: 'success',
                   message: `Hi ${newUser.name}. Welcome to Stackoverflow-Lite`,
+                  user_id: newUser.id,
                   name: newUser.name,
-                  id: newUser.id,
                   token,
                 });
               });
@@ -70,7 +69,7 @@ class User {
               const [existingUser] = response.rows;
 
               const passwordMatches = encrypt
-                .matchString(password, existingUser.passhash);
+                .matchString(password, existingUser.password_hash);
 
               if (passwordMatches) {
                 const { id, name } = existingUser;
@@ -79,8 +78,8 @@ class User {
                 return res.status(200).json({
                   status: 'success',
                   message: `Welcome back ${name}. Login successful`,
+                  user_id: id,
                   name,
-                  id,
                   token,
                 });
               }
@@ -111,14 +110,14 @@ class User {
                 const questions = userQuestions.rows;
                 details.asked = questions.length;
                 const recent = [...questions];
-                recent.sort((q1, q2) => q1.createdat < q2.createdat);
+                recent.sort((q1, q2) => q1.created_at < q2.created_at);
 
                 if (questions.length < 5) {
-                  details.mostAnswered = questions
+                  details.most_answered = questions
                     .filter(q => q.answers !== '0');
                   details.recent = recent;
                 } if (questions.length > 5) {
-                  details.mostAnswered = questions
+                  details.most_answered = questions
                     .filter(q => q.answers !== '0').splice(0, 5);
                   details.recent = recent.splice(0, 5);
                 }
