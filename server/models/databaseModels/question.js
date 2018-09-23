@@ -14,6 +14,8 @@ const getQUestions = () => {
 };
 
 const seedQuestion = `
-INSERT INTO questions (question, user_id) VALUES ${getQUestions()}`;
+INSERT INTO questions (question, user_id) VALUES ${getQUestions()};
+UPDATE questions q1
+SET question_tokens = to_tsvector(q1.question)`;
 
 export default seedQuestion;

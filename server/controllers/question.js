@@ -72,10 +72,11 @@ class Question {
 
     pool.connect()
       .then((client) => {
+        client.release();
         client.query(questionQueries.postQuestion(question, userId))
           .then((response) => {
-            client.release();
             const [postedQuestion] = response.rows;
+            client.query(questionQueries.updateQuestion(postedQuestion.id));
             postedQuestion.answers = 0;
             return res.status(201).json({
               status: 'success',
@@ -139,6 +140,39 @@ class Question {
             return res.status(200).json({
               status: 'success',
               message: 'Your questions have been retrieved successfully',
+              questions,
+            });
+          });
+      });
+  }
+
+  /**
+   * Search questions on the platform
+   * @param {object} req Request object
+   * @param {object} res Response Object
+   * @param {object} next Next middleware
+   * @returns {object} Questions containing the search parameters
+   */
+  static search(req, res, next) {
+    const { question } = req.query;
+    if (!question) return next();
+
+    const searchString = question.split(' ').join(' & ');
+
+    pool.connect()
+      .then((client) => {
+        client.release();
+        client.query(questionQueries.searchQuestions(searchString))
+          .then((response) => {
+            const questions = response.rows;
+            if (questions.length === 0) {
+              return res.status(200).json({
+                message: 'Sorry, no questions match your search.',
+              });
+            }
+            return res.status(200).json({
+              status: 'success',
+              message: 'Questions found successfully',
               questions,
             });
           });

@@ -21,7 +21,7 @@ const validator = {
   }),
   validatePostAnswer: validate({
     params: {
-      id: numJoi,
+      questionId: numJoi,
     },
     body: {
       answer: stringJoi,

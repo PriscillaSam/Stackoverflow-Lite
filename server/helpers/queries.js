@@ -123,6 +123,20 @@ const questionQueries = {
     };
   },
   /**
+   * Update question query function
+   * @param {number} id Question id
+   * @returns {object} Update question query object
+   */
+  updateQuestion(id) {
+    return {
+      text: `
+      UPDATE questions q1
+      SET question_tokens = to_tsvector(q1.question)
+      WHERE q1.id = $1`,
+      values: [id],
+    };
+  },
+  /**
    * Delete question query function
    * @param {number} id Question id
    * @returns {object} Delete Question query object
@@ -131,6 +145,21 @@ const questionQueries = {
     return {
       text: 'DELETE FROM questions WHERE id = $1 RETURNING question;',
       values: [id],
+    };
+  },
+  /**
+   * Search question query function
+   * @param {string} searchString Search string
+   * @returns {object} Search question query object
+   */
+  searchQuestions(searchString) {
+    return {
+      text: `
+      SELECT id,
+      question
+      FROM questions 
+      WHERE question_tokens @@ to_tsquery($1)`,
+      values: [searchString],
     };
   },
 };
