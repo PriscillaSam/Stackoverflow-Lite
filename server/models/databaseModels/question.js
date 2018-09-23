@@ -14,6 +14,6 @@ const getQUestions = () => {
 };
 
 const seedQuestion = `
-INSERT INTO questions (question, userid) VALUES ${getQUestions()}`;
+INSERT INTO questions (question, user_id) VALUES ${getQUestions()}`;
 
 export default seedQuestion;

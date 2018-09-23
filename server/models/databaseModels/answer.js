@@ -25,7 +25,7 @@ const getAnswers = () => {
 
 const seedAnswer = `
 INSERT INTO answers
-(userid, answer, questionId, isaccepted) 
+(user_id, answer, question_id, is_accepted) 
 VALUES ${getAnswers()}`;
 
 export default seedAnswer;

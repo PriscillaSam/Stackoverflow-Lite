@@ -8,7 +8,7 @@ const userQueries = {
    */
   createUser(name, email, passHash) {
     return {
-      text: `INSERT into users(name, email, passHash) 
+      text: `INSERT into users(name, email, password_hash) 
       VALUES($1, $2, $3) RETURNING id, name, email`,
       values: [name, email, passHash],
     };
@@ -20,7 +20,7 @@ const userQueries = {
    */
   getUser(email) {
     return {
-      text: 'SELECT id, name, email, passHash FROM users WHERE email = $1',
+      text: 'SELECT id, name, email, password_hash FROM users WHERE email = $1',
       values: [email],
     };
   },
@@ -33,9 +33,9 @@ const userQueries = {
     return {
       text: `
         SELECT
-          id as userid,
+          id as user_id,
           COALESCE((SELECT COUNT (a.id) FROM answers a 
-          WHERE a.userid = $1 GROUP BY a.userid),0) as answers
+          WHERE a.user_id = $1 GROUP BY a.user_id),0) as answers
 
           FROM users
           WHERE id = $1 
@@ -54,15 +54,15 @@ const questionQueries = {
     SELECT 
      q.id,
      question, 
-     q.createdat, 
-     u.id as userid,
+     q.created_at, 
+     u.id as user_id,
      name,
      COALESCE((SELECT COUNT (a.id) FROM answers a 
-     WHERE a.questionid = q.id GROUP BY q.id),0) as answers
+     WHERE a.question_id = q.id GROUP BY q.id),0) as answers
 
     FROM questions q 
-    JOIN users u ON u.id = q.userid
-    ORDER BY createdat DESC
+    JOIN users u ON u.id = q.user_id
+    ORDER BY created_at DESC
 
     `;
     return query;
@@ -78,11 +78,11 @@ const questionQueries = {
     SELECT
       q.id,
       question,
-      q.createdat,
-      u.id as userId,
+      q.created_at,
+      u.id as user_id,
       name
     FROM questions q
-    JOIN users u ON u.id = q.userid
+    JOIN users u ON u.id = q.user_id
     WHERE q.id = $1
     ;
     `,
@@ -99,11 +99,11 @@ const questionQueries = {
       text: `
       SELECT id,
       question,
-      createdat,
+      created_at,
       COALESCE((SELECT COUNT (a.id) FROM answers a 
-      WHERE a.questionid = q.id GROUP BY q.id),0) as answers
+      WHERE a.question_id = q.id GROUP BY q.id),0) as answers
       FROM questions q
-      WHERE userid = $1
+      WHERE user_id = $1
       ORDER BY answers DESC
       `,
       values: [id],
@@ -117,8 +117,8 @@ const questionQueries = {
    */
   postQuestion(question, userId) {
     return {
-      text: `INSERT into questions(question, userid) 
-      VALUES($1, $2) RETURNING id, question, createdat`,
+      text: `INSERT into questions(question, user_id) 
+      VALUES($1, $2) RETURNING id, question, created_at`,
       values: [question, userId],
     };
   },
@@ -147,23 +147,23 @@ const answerQueries = {
         SELECT 
         a.id, 
         answer,
-        u.id as userid,
+        u.id as user_id,
         u.name,
         u.email,
         COALESCE((SELECT COUNT (v.id) FROM votes v 
-        WHERE v.answerid = a.id 
+        WHERE v.answer_id = a.id 
         AND v.vote = 1 GROUP BY a.id),0) as upvotes,
 
         COALESCE((SELECT COUNT (v.id) FROM votes v 
-        WHERE v.answerid = a.id 
+        WHERE v.answer_id = a.id 
         AND v.vote = 0 GROUP BY a.id),0) as downvotes,
-        a.createdat,
-        a.isaccepted
+        a.created_at,
+        a.is_accepted
 
         FROM answers a 
-        JOIN users u ON u.id = a.userid
-        WHERE a.questionid = $1 
-        ORDER BY createdat DESC
+        JOIN users u ON u.id = a.user_id
+        WHERE a.question_id = $1 
+        ORDER BY created_at DESC
         `,
       values: [id],
     };
@@ -178,9 +178,9 @@ const answerQueries = {
   postAnswer(userId, questionId, answer) {
     return {
       text: `
-      INSERT into answers(userid, questionid, answer, isaccepted) 
+      INSERT into answers(user_id, question_id, answer, is_accepted) 
       VALUES($1, $2, $3, $4) 
-      RETURNING id, answer, userid, isaccepted, createdat
+      RETURNING id, answer, user_id, is_accepted, created_at
       `,
       values: [userId, questionId, answer, false],
     };
@@ -193,7 +193,7 @@ const answerQueries = {
   getAnswer(id) {
     return {
       text: `
-      SELECT id, answer, questionid, userid 
+      SELECT id, answer, question_id, user_id 
       FROM answers a WHERE a.id = $1`,
       values: [id],
     };
@@ -225,7 +225,7 @@ const answerQueries = {
       text: `
       SELECT id
       FROM answers
-      WHERE questionid = $1 AND isaccepted = TRUE
+      WHERE question_id = $1 AND is_accepted = TRUE
       `,
       values: [questionId],
     };
@@ -243,16 +243,16 @@ const voteQueries = {
     return {
       text: `
       INSERT INTO votes
-      (answerid, userid, vote)
+      (answer_id, user_id, vote)
       VALUES ($1, $2, $3)
       RETURNING vote,
       COALESCE((SELECT COUNT (v.id) FROM votes v 
-      WHERE v.answerid = $1 
-      AND v.vote = 1 GROUP BY answerid),0) as upvotes,
+      WHERE v.answer_id = $1 
+      AND v.vote = 1 GROUP BY answer_id),0) as upvotes,
 
       COALESCE((SELECT COUNT (v.id) FROM votes v 
-      WHERE v.answerid = $1
-      AND v.vote = 0 GROUP BY answerid),0) as downvotes
+      WHERE v.answer_id = $1
+      AND v.vote = 0 GROUP BY answer_id),0) as downvotes
       `,
       values: array,
     };
@@ -269,7 +269,7 @@ const voteQueries = {
       SELECT v.id,
       v.vote
       FROM votes v
-      WHERE v.answerid = $1 AND v.userid = $2
+      WHERE v.answer_id = $1 AND v.user_id = $2
       `,
       values: [answerId, userId],
     };
@@ -296,7 +296,7 @@ const voteQueries = {
       text: `
       SELECT vote
       FROM votes
-      WHERE answerid = $1
+      WHERE answer_id = $1
       `,
       values: [id],
     };

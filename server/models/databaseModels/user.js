@@ -15,6 +15,6 @@ const getUsers = () => {
 };
 
 const seedUser = `
-INSERT INTO users (name, email, passhash) VALUES ${getUsers()}`;
+INSERT INTO users (name, email, password_hash) VALUES ${getUsers()}`;
 
 export default seedUser;

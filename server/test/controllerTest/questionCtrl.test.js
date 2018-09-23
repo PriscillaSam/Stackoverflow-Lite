@@ -49,19 +49,18 @@ describe('GET api/v1/questions/:id', () => {
   });
 
   it('should return status code 200 if question exists', (done) => {
-    chai.request(app)
-      .get('/api/v1/questions/1')
+    chai.request(app).get('/api/v1/questions/1')
       .end((err, res) => {
         if (err) done(err);
         expect(res).to.have.status(200);
-        expect(res.body).to.have.property('questionObj');
+        expect(res.body).to.have.property('question_details');
         expect(res.body.status).to.deep.equals('success');
-        expect(res.body.questionObj).to.haveOwnProperty('answers').to.be
+        expect(res.body.question_details).to.haveOwnProperty('answers').to.be
           .an('array');
-        expect(res.body.questionObj.question).to.deep
+        expect(res.body.question_details.question).to.deep
           .equals('Why is programming hard?');
         expect(res.body.message).to.deep
-          .equal('question has been successfully gotten');
+          .equal('Question has been retrieved successfully');
         done();
       });
   });
@@ -103,7 +102,7 @@ describe('POST api/v1/questions', () => {
       .end((err, res) => {
         if (err) done(err);
         expect(res).to.have.status(201);
-        expect(res.body).to.have.property('newQuestion');
+        expect(res.body).to.have.property('new_question');
         expect(res.body.status).to.deep.equals('success');
         done();
       });
@@ -158,8 +157,8 @@ describe('DELETE api/v1/question/:id', () => {
         expect(res).to.have.status(200);
         expect(res.body.status).to.deep.equals('success');
         expect(res.body.message).to.deep
-          .equals('your question has been deleted');
-        expect(res.body).to.have.property('deletedQuestion');
+          .equals('Your question has been deleted');
+        expect(res.body).to.have.property('deleted_question');
         done();
       });
   });
@@ -179,7 +178,7 @@ describe('DELETE api/v1/question/:id', () => {
   });
 });
 
-describe('GET api/v1/questions', () => {
+describe('GET api/v1/user/questions', () => {
   before((done) => {
     chai.request(app)
       .post('/api/v1/auth/login')
@@ -193,7 +192,7 @@ describe('GET api/v1/questions', () => {
 
   it('should return status 200 if request was successful', (done) => {
     chai.request(app)
-      .get('/api/v1/users/questions')
+      .get('/api/v1/user/questions')
       .set('Authorization', askerToken)
       .end((err, res) => {
         if (err) done(err);
@@ -204,13 +203,13 @@ describe('GET api/v1/questions', () => {
   });
   it('should get all the questions for a user', (done) => {
     chai.request(app)
-      .get('/api/v1/users/questions')
+      .get('/api/v1/user/questions')
       .set('Authorization', askerToken)
       .end((err, res) => {
         if (err) done(err);
         expect(res.body.questions).to.be.an('array');
         expect(res.body.message).to.be.deep
-          .equals('your questions have been retrieved successfully');
+          .equals('Your questions have been retrieved successfully');
         expect(res.body.questions).to.have.lengthOf(6);
         done();
       });
