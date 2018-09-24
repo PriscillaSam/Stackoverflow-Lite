@@ -34,12 +34,22 @@ fetch(profileUrl, {
 
 let questionId;
 
+/**
+ * Displays question delete confirmation modal
+ * @param {event} event Event
+ * @param {element} link Html a element
+ * @returns {*} Nothing
+ */
 const deleteQuestion = (event, link) => {
   event.preventDefault();
   modal.classList.remove('hidden');
   questionId = link.getAttribute('data-id');
 };
 
+/**
+ * Performs question delete operation
+ * @returns {*} Nothing
+ */
 const deleteConfirmed = () => {
   const delUrl = `${baseUrl}/questions/${questionId}`;
 

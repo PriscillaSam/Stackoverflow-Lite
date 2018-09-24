@@ -9,43 +9,34 @@ const acceptModal = document.getElementById('accept-modal');
 const accept = document.getElementById('accept-link');
 
 const updateModal = document.getElementById('update-modal');
-const editLink = document.getElementsByClassName('js-edit');
 
-const showUpdateModal = () => {
-    [...editLink].forEach(btn => {
-        event.preventDefault();
-        updateModal.classList.remove('hidden');
-});
-};
+const showUpdateModal = () => updateModal.classList.remove('hidden');
 
 
-[...questionModalToggle].forEach(btn => {
-    btn.addEventListener('click', (event) => {
-        event.preventDefault();
+[...questionModalToggle].forEach((btn) => {
+  btn.addEventListener('click', (event) => {
+    event.preventDefault();
     if (!localStorage.getItem('token')) {
-        window.location.replace('../html/account.html');
+      window.location.replace('./account.html');
     } else {
-        questionModal.classList.remove('hidden'); 
+      questionModal.classList.remove('hidden');
     }
-  
-});
-});
-
-
-[...closeModal].forEach(btn => {
-    btn.addEventListener('click', (event) => {
-        const parent = btn.closest('.confirmBox');
-        event.preventDefault();
-        setTimeout(() => {
-            parent.classList.add('slideOutDown');
-        }, 50);
-       
-        parent.classList.remove('slideInUp');
-        setTimeout(() => {
-            btn.closest('.modal').classList.add('hidden');
-            parent.classList.replace('slideOutDown', 'slideInUp');
-        }, 400);
-    });
+  });
 });
 
 
+[...closeModal].forEach((btn) => {
+  btn.addEventListener('click', (event) => {
+    const parent = btn.closest('.confirmBox');
+    event.preventDefault();
+    setTimeout(() => {
+      parent.classList.add('slideOutDown');
+    }, 50);
+
+    parent.classList.remove('slideInUp');
+    setTimeout(() => {
+      btn.closest('.modal').classList.add('hidden');
+      parent.classList.replace('slideOutDown', 'slideInUp');
+    }, 400);
+  });
+});

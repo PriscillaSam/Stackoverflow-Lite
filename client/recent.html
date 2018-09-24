@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
-<body class="bg-light">
+<body class="bg-light" >
     <nav class="bg-dark shadow fadeInDown">
             <div class="d-i-block">
                     <ul>
@@ -42,7 +42,7 @@
             </ul>
         </div>     
     </nav> 
-    <div class="container">
+    <div class="container h-500">
         <div class="content-container mt-2" >
             <section class="w-20 aside">
                 <ul>
@@ -67,14 +67,25 @@
             </section>
             <section class="w-70">
                 <h3 class="display-3 text-primary">Recently Asked / Questions</h3>
-                <div class="w-70" id="questions">
+                <div class="w-70">
                     <div class="box">
-                        <form>
+                        <form id="search-form">
                             <div class="d-i-block w-90">
-                                <input type="text" class="form-input" placeholder="search questions - enter keywords">
+                                <input type="text" class="form-input" placeholder="search questions - enter keywords" id="search-input">
                             </div>
-                            <button class="btn"><i class="fa fa-search"></i></button>
+                            <button type="submit" class="btn btn-success" id="search-btn">
+                                <span class="spinner hidden">
+                                    <i class="fa fa-spin fa-spinner fa-lg"></i>
+                                </span>
+                                <span class="btnText"><i class="fa fa-search fa-lg"></i></span>        
+                            </button> 
                         </form>
+                    </div>
+                    <div id="no-results">
+
+                    </div>
+                    <div id="questions">
+
                     </div>                                            
                 </div>
             </section>
@@ -137,6 +148,7 @@
 <script src="./fetchScripts/helpers/templates.js"></script>
 <script src="./fetchScripts/helpers/session.js"></script>
 <script src="./fetchScripts/questions.js"></script>
+<script src="./fetchScripts/search.js"></script>
 
 </body>
 </html>

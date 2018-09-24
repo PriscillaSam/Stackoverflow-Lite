@@ -5,6 +5,13 @@
     overflow: hidden;
 }
 
+.h-500{
+    min-height:500px;
+}
+
+.h-550{
+    min-height: 515px
+}
 .container{
     width: 80%;
     margin: 0 auto;

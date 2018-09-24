@@ -5,6 +5,11 @@ const updateInput = elemById('update-input');
 const updateBtn = elemById('update-btn');
 let answerId;
 
+/**
+ * Performs operation to set an answer as preferred
+ * @param {element} link Html a element
+ * @returns {*} Nothing
+ */
 const preferAnswer = (link) => {
   const updateUrl = `
  ${baseUrl}/questions/${questionId}/answers/${answerId}
@@ -42,9 +47,20 @@ const preferAnswer = (link) => {
     });
 };
 
+/**
+ * Get answer id from answer card
+ * @param {element} link Html a element
+ * @returns {*} Nothing
+ */
 const getAnswerId = link => link.closest('ul').getAttribute('data-id');
 
 
+/**
+ * Displays modal to mark an answer as preferred
+ * @param {event} event Event
+ * @param {element} link Html a element
+ * @returns {*} Nothing
+ */
 const acceptAnswer = (event, link) => {
   event.preventDefault();
   acceptModal.classList.remove('hidden');
@@ -57,6 +73,11 @@ const acceptAnswer = (event, link) => {
 
 const updateBtnText = '<i class="fa fa-upload mr-1"></i>Save';
 
+/**
+ * Performs operation to update an answer
+ * @param {element} answerDiv Html div element
+ * @returns {*} Nothing
+ */
 const updateAnswer = (answerDiv) => {
   const updateUrl = `
   ${baseUrl}/questions/${questionId}/answers/${answerId}
@@ -88,6 +109,12 @@ const updateAnswer = (answerDiv) => {
     });
 };
 
+/**
+ * Display modal to update an answer
+ * @param {event} event Event
+ * @param {*} link Html a element
+ * @returns {*} Nothing
+ */
 const editAnswer = (event, link) => {
   event.preventDefault();
   showUpdateModal();

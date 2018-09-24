@@ -1,3 +1,8 @@
+/**
+ * Get and set question id for fetch operation
+ * @param {element} elem Html a element
+ * @returns {*} Nothing
+ */
 const getId = (elem) => {
   const id = elem.getAttribute('data-id');
   if (localStorage.getItem('questionId')) {
@@ -6,7 +11,12 @@ const getId = (elem) => {
   localStorage.setItem('questionId', id);
 };
 
-
+/**
+ * Template to create question cards
+ * @param {object} question Question object
+ * @param {string} elem Id selector of div to apend questions to
+ * @returns {*} Nothing
+ */
 const questionCard = (question, elem) => {
   const section = elemById(elem);
   const h3 = create('h3');
@@ -59,7 +69,11 @@ const questionCard = (question, elem) => {
   section.appendChild(container);
 };
 
-
+/**
+ * Create button to accept an answer on answer card
+ * @param {element} liAccept Html a element
+ * @returns {*} Nothing
+ */
 const createAcceptButton = (liAccept) => {
   const aAccept = create('a');
 
@@ -74,6 +88,12 @@ const createAcceptButton = (liAccept) => {
   liAccept.insertBefore(aAccept, liAccept.childNodes[0]);
 };
 
+/**
+ * Create upvote and downvote buttons on answer cards
+ * @param {object} answer Answer object
+ * @param {element} voteDiv Html div element
+ * @returns {*} Nothing
+ */
 const createVoteButtons = (answer, voteDiv) => {
   const liUpvotes = create('li');
   const aUpvote = create('a');
@@ -102,6 +122,13 @@ const createVoteButtons = (answer, voteDiv) => {
   voteDiv.appendChild(liDownvotes);
 };
 
+/**
+ * Create answer cards
+ * @param {object} answer Answer object
+ * @param {number} askerId User Id of question owner
+ * @param {element} div Html div element to append answer cards to
+ * @returns {*} Nothing
+ */
 const answerCard = (answer, askerId, div) => {
   const answers = elemById(div);
   const p = create('p');
