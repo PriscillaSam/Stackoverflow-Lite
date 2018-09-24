@@ -3,6 +3,11 @@ const elemByClass = className => document.getElementsByClassName(className);
 const create = elem => document.createElement(elem);
 const baseUrl = 'http://localhost:3000/api/v1';
 
+/**
+ * Displays spinner on button during fetch operation
+ * @param {element} btn Html Button
+ * @returns {nothing} Nothing
+ */
 const btnActivity = (btn) => {
   const spinner = btn.querySelector('.spinner');
   const btnText = btn.querySelector('.btnText');
@@ -11,37 +16,76 @@ const btnActivity = (btn) => {
   btnText.innerHTML = 'Please wait...';
 };
 
+/**
+ * Hides spinner on button after fetch operation
+ * @param {element} btn Html Button
+ * @returns {nothing} Nothing
+ */
 const refreshBtn = (btn) => {
   btn.querySelector('.spinner').classList.add('hidden');
   const btnText = btn.querySelector('.btnText');
   btnText.innerHTML = '';
 };
 
+/**
+ * Resets button to original state after fetch operation
+ * @param {element} btn Html Button
+ * @param {string} text Text to set on the button
+ * @returns {nothing} Nothing
+ */
 const btnTextDisplay = (btn, text) => {
   const btnText = btn.querySelector('.btnText');
   btnText.innerHTML = text;
 };
 
+/**
+ * Get's the element with class alert in the parent node
+ * @param {element} div Html div element
+ * @returns {element} Html div element
+ */
 const getAlertBox = (div) => {
   const alertBox = div.querySelector('.alert');
   return alertBox;
 };
 
+/**
+ * Get's the p element with class alertText in the parent node
+ * @param {element} div Html div element
+ * @returns {element} Html p element
+ */
 const getAlertText = (div) => {
   const alertText = div.querySelector('.alertText');
   return alertText;
 };
+
+/**
+ * Hides alert box and reset text on alert box
+ * @param {element} div Html div element
+ * @returns {nothing} Nothing
+ */
 const refresh = (div) => {
   getAlertBox(div).classList.add('hidden', 'bg-danger');
   getAlertText(div).innerHTML = '';
 };
 
+/**
+ * Display's response errors on alert box
+ * @param {object} response Fetch error response object
+ * @param {element} div Html element
+ * @returns {nothing} Nothing
+ */
 const errorResponse = (response, div) => {
   getAlertBox(div).classList.remove('hidden');
   getAlertText(div).innerHTML = response.message || Object
     .values(response.errorData.errorMessages);
 };
 
+/**
+ * Display's fetch success response on alert box
+ * @param {object} response Fetch success response object
+ * @param {element} div Html element
+ * @returns {nothing} Nothing
+ */
 const successResponse = (response, div) => {
   const alertBox = getAlertBox(div);
   alertBox.classList.remove('bg-danger', 'hidden');
@@ -75,6 +119,13 @@ const createContent = (questions, count, elem) => {
   });
 };
 
+/**
+ * Get questions from the API endpoint via fetch API
+ * @param {string} urL API endpoint URL
+ * @param {Number} count Number of questions to display
+ * @param {Element} elem Html element to append question card to
+ * @returns {*} Nothing
+ */
 const getQuestions = (urL, count, elem) => {
   fetch(urL, {
     method: 'GET',
@@ -86,6 +137,11 @@ const getQuestions = (urL, count, elem) => {
     });
 };
 
+/**
+ * Formats time displyed on UI templates
+ * @param {element} time DateTime as string
+ * @returns {string} Formatted time
+ */
 const formatTime = (time) => {
   const formatted = Date.parse(time);
   const now = new Date(formatted + 3600000);

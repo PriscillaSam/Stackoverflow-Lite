@@ -1,6 +1,13 @@
 const upvoteBtns = elemByClass('upvote');
 const downvoteBtns = elemByClass('downvote');
 
+/**
+ * Performs operation to vote an answer
+ * @param {event} event Event
+ * @param {element} link Html a element
+ * @param {number} vote Votestatus (0 or 1)
+ * @returns {*} Nothing
+ */
 const voteAnswer = (event, link, vote) => {
   event.preventDefault();
   answerId = getAnswerId(link);

@@ -11,6 +11,11 @@ const url = `${baseUrl}/questions`;
 const btnText = `
 <i class="fa fa-share fa-fw"></i>Post Question`;
 
+/**
+ * Appends new question after post is successful
+ * @param {object} question Question object re
+ * @returns {*} Nothing
+ */
 const appendQuestion = (question) => {
   const noRecent = elemById('no-recent');
   if (noRecent) {
@@ -23,6 +28,7 @@ const appendQuestion = (question) => {
   }
   questionCard(question, 'new-question');
 };
+
 
 form.addEventListener('submit', (event) => {
   event.preventDefault();

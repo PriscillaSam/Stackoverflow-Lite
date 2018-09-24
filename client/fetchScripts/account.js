@@ -9,6 +9,13 @@ const regUrl = `${baseUrl}/auth/signup`;
 const loginUrl = `${baseUrl}/auth/login`;
 
 
+/**
+ * Displays signup and login response on alert box
+ * @param {object} response API response object
+ * @param {element} btn Html element
+ * @param {string} text Text to display on button
+ * @returns {nothing} Noting
+ */
 const displayResponse = (response, btn, text) => {
   refreshBtn(btn);
   if (response.status === 'error' || response.errorData) {
@@ -16,6 +23,7 @@ const displayResponse = (response, btn, text) => {
     btnTextDisplay(btn, text);
   } else {
     successResponse(response, loginDiv);
+
     localStorage.setItem('token', response.token);
     localStorage.setItem('name', response.name);
     localStorage.setItem('userId', response.user_id);

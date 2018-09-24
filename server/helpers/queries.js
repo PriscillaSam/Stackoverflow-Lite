@@ -155,9 +155,16 @@ const questionQueries = {
   searchQuestions(searchString) {
     return {
       text: `
-      SELECT id,
-      question
-      FROM questions 
+      SELECT q.id,
+      question, 
+      q.created_at, 
+      u.id as user_id,
+      name,
+      COALESCE((SELECT COUNT (a.id) FROM answers a 
+      WHERE a.question_id = q.id GROUP BY q.id),0) as answers
+
+      FROM questions q
+      JOIN users u ON u.id = q.user_id
       WHERE question_tokens @@ to_tsquery($1)`,
       values: [searchString],
     };
