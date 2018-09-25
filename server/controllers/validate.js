@@ -17,7 +17,7 @@ class Validate {
    * or calls the next middleware function is answer exists
    */
   static checkAnswerExist(req, res, next) {
-    const { answerId, id } = req.params;
+    const { answerId, id, questionId } = req.params;
 
     pool.connect().then((client) => {
       client.release();
@@ -26,6 +26,15 @@ class Validate {
           const [answer] = response.rows;
           if (!answer) {
             return errors.notFound(res, 'answer');
+          }
+          if (questionId) {
+            if (answer.question_id !== parseInt(questionId, 10)) {
+              return res.status(409).json({
+                status: 'error',
+                message:
+                'Bad request. This answer belongs to another question.',
+              });
+            }
           }
           req.body.existingAnswer = answer;
           next();

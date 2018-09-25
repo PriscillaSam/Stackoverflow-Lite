@@ -30,5 +30,32 @@ class Comment {
         });
     });
   }
+
+  /**
+ * Get all the comments for an answer
+ * @param {object} req Request Object
+ * @param {object} res Response Object
+ * @returns {object} Object containing an array of comments
+ */
+  static getComments(req, res) {
+    const { answerId } = req.params;
+    pool.connect().then((client) => {
+      client.query(commentQueries.getComments(answerId))
+        .then((response) => {
+          const comments = response.rows;
+          if (comments.length === 0) {
+            return res.status(200).json({
+              message:
+                'No comments for this answer yet. Be the first to post one.',
+            });
+          }
+          return res.status(200).json({
+            status: 'success',
+            message: 'Comments retrieved',
+            comments,
+          });
+        });
+    });
+  }
 }
 export default Comment;

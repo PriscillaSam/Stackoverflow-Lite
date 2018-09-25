@@ -51,13 +51,6 @@ class Answer {
 
     pool.connect().then((client) => {
       client.release();
-      if (existingAnswer.question_id !== questionId) {
-        return res.status(409).json({
-          status: 'error',
-          message:
-                    'Bad request. This answer belongs to another question.',
-        });
-      }
       if (userId !== existingAnswer.user_id
                   && userId !== existingQuestion.user_id) {
         return errors.unauthorized(res);

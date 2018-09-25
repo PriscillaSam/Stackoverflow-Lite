@@ -29,7 +29,13 @@ router.get('/questions/:id',
   Validate.checkQuestionExists,
   Question.getQuestion);
 
+router.get('/questions/:questionId/answers/:answerId/comments',
+  Validate.checkQuestionExists,
+  Validate.checkAnswerExist,
+  Comment.getComments);
+
 router.use(auth.verifyToken);
+
 router.get('/users/profile',
   User.profile);
 
@@ -52,14 +58,14 @@ router.post('/questions/:questionId/answers/',
 
 router.put('/questions/:questionId/answers/:answerId',
   validator.validateUpdateAnswer,
-  Validate.checkAnswerExist,
   Validate.checkQuestionExists,
+  Validate.checkAnswerExist,
   Answer.updateAnswer);
 
 router.post('/questions/:questionId/answers/:answerId/comments',
   validator.validateComment,
-  Validate.checkAnswerExist,
   Validate.checkQuestionExists,
+  Validate.checkAnswerExist,
   Comment.postComment);
 
 router.use(checkStatus);
