@@ -54,6 +54,15 @@ const validator = {
       password: joi.string().required(),
     },
   }),
+  validateComment: validate({
+    params: {
+      questionId: numJoi,
+      answerId: numJoi,
+    },
+    body: {
+      comment: stringJoi,
+    },
+  }),
 };
 
 export default validator;
