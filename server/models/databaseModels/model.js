@@ -41,7 +41,23 @@ user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
 answer_id INTEGER REFERENCES answers(id) ON DELETE CASCADE);
 `;
 
-const query = `${userQuery} ${questionQuery} ${answerQUery} ${voteQuery}`;
+const commentQuery = `
+DROP TABLE IF EXISTS comments; 
+CREATE TABLE comments(id SERIAL PRIMARY KEY, 
+comment TEXT NOT NULL, 
+created_at TIMESTAMP NOT NULL DEFAULT NOW(), 
+updated_at TIMESTAMP NOT NULL DEFAULT NOW(), 
+user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+answer_id INTEGER REFERENCES answers(id) ON DELETE CASCADE);
+`;
+
+const query = `
+  ${userQuery} 
+  ${questionQuery} 
+  ${answerQUery} 
+  ${voteQuery} 
+  ${commentQuery}
+`;
 
 (async () => {
   const client = await pool.connect();

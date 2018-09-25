@@ -117,7 +117,7 @@ const questionQueries = {
    */
   postQuestion(question, userId) {
     return {
-      text: `INSERT into questions(question, user_id) 
+      text: `INSERT INTO questions(question, user_id) 
       VALUES($1, $2) RETURNING id, question, created_at`,
       values: [question, userId],
     };
@@ -339,9 +339,29 @@ const voteQueries = {
   },
 };
 
+const commentQueries = {
+  /**
+   * Post comment query function
+   * @param {string} comment New comment to add
+   * @param {number} userId User ID
+   * @param {number} answerId Answer ID
+   * @returns {object} Post comment query object
+   */
+  postComment(comment, userId, answerId) {
+    return {
+      text: `
+        INSERT INTO comments(comment, user_id, answer_id)
+        VALUES($1, $2, $3)
+        RETURNING id, comment, user_id, created_at, answer_id
+      `,
+      values: [comment, userId, answerId],
+    };
+  },
+};
 export default {
   userQueries,
   questionQueries,
   answerQueries,
   voteQueries,
+  commentQueries,
 };

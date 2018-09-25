@@ -15,18 +15,17 @@ class Question {
    * @returns {object} List of questions
    */
   static getQuestions(req, res) {
-    pool.connect()
-      .then((client) => {
-        client.query(questionQueries.getQuestions())
-          .then((response) => {
-            client.release();
-            res.status(200).json({
-              status: 'success',
-              message: 'Questions successfully retrieved',
-              questions: response.rows,
-            });
+    pool.connect().then((client) => {
+      client.query(questionQueries.getQuestions())
+        .then((response) => {
+          client.release();
+          res.status(200).json({
+            status: 'success',
+            message: 'Questions successfully retrieved',
+            questions: response.rows,
           });
-      });
+        });
+    });
   }
 
   /**
@@ -37,28 +36,21 @@ class Question {
    */
   static getQuestion(req, res) {
     const questionId = parseInt(req.params.id, 10);
+    const { existingQuestion } = req.body;
 
-    pool.connect()
-      .then((client) => {
-        client.query(questionQueries.getQuestion(questionId))
-          .then((response) => {
-            client.release();
-            const [questionObj] = response.rows;
-            if (!questionObj) {
-              return errors.notFound(res, 'question');
-            }
-            client.query(answerQueries.getQuestionAnswers(questionId))
-              .then((answerResponse) => {
-                const answers = answerResponse.rows;
-                questionObj.answers = answers;
-                res.status(200).json({
-                  status: 'success',
-                  message: 'Question has been retrieved successfully',
-                  question_details: questionObj,
-                });
-              });
+    pool.connect().then((client) => {
+      client.release();
+      client.query(answerQueries.getQuestionAnswers(questionId))
+        .then((answerResponse) => {
+          const answers = answerResponse.rows;
+          existingQuestion.answers = answers;
+          res.status(200).json({
+            status: 'success',
+            message: 'Question has been retrieved successfully',
+            question_details: existingQuestion,
           });
-      });
+        });
+    });
   }
 
   /**
@@ -70,21 +62,20 @@ class Question {
   static postQuestion(req, res) {
     const { userId, question } = req.body;
 
-    pool.connect()
-      .then((client) => {
-        client.release();
-        client.query(questionQueries.postQuestion(question, userId))
-          .then((response) => {
-            const [postedQuestion] = response.rows;
-            client.query(questionQueries.updateQuestion(postedQuestion.id));
-            postedQuestion.answers = 0;
-            return res.status(201).json({
-              status: 'success',
-              message: 'Your question has been posted',
-              new_question: postedQuestion,
-            });
+    pool.connect().then((client) => {
+      client.release();
+      client.query(questionQueries.postQuestion(question, userId))
+        .then((response) => {
+          const [postedQuestion] = response.rows;
+          client.query(questionQueries.updateQuestion(postedQuestion.id));
+          postedQuestion.answers = 0;
+          return res.status(201).json({
+            status: 'success',
+            message: 'Your question has been posted',
+            new_question: postedQuestion,
           });
-      });
+        });
+    });
   }
 
   /**
@@ -95,55 +86,46 @@ class Question {
    */
   static deleteQuestion(req, res) {
     const questionId = parseInt(req.params.id, 10);
-    const { userId } = req.body;
+    const { userId, existingQuestion } = req.body;
 
-    pool.connect()
-      .then((client) => {
-        client.query(questionQueries.getQuestion(questionId))
-          .then((response) => {
-            const [questionObj] = response.rows;
-            if (!questionObj) {
-              return errors.notFound(res, 'question');
-            }
-            if (userId !== questionObj.user_id) {
-              return errors.unauthorized(res);
-            }
-            client.query(questionQueries.deleteQuestion(questionId))
-              .then((deleted) => {
-                client.release();
-                const [question] = deleted.rows;
-                return res.status(200).json({
-                  status: 'success',
-                  message: 'Your question has been deleted',
-                  deleted_question: question.question,
-                });
-              });
+    pool.connect().then((client) => {
+      if (userId !== existingQuestion.user_id) {
+        return errors.unauthorized(res);
+      }
+      client.query(questionQueries.deleteQuestion(questionId))
+        .then((deleted) => {
+          client.release();
+          const [question] = deleted.rows;
+          return res.status(200).json({
+            status: 'success',
+            message: 'Your question has been deleted',
+            deleted_question: question.question,
           });
-      });
+        });
+    });
   }
 
   /**
-   * Get all questions asked by user
+   * Get all questions asked by a user
    * @param {object} req Request object
    * @param {object} res Response object
-   * @returns {object} Array of user questions
+   * @returns {object} Array of user's questions
    */
   static getUserQuestions(req, res) {
     const { userId } = req.body;
 
-    pool.connect()
-      .then((client) => {
-        client.release();
-        client.query(questionQueries.getUserQuestions(userId))
-          .then((response) => {
-            const questions = response.rows;
-            return res.status(200).json({
-              status: 'success',
-              message: 'Your questions have been retrieved successfully',
-              questions,
-            });
+    pool.connect().then((client) => {
+      client.release();
+      client.query(questionQueries.getUserQuestions(userId))
+        .then((response) => {
+          const questions = response.rows;
+          return res.status(200).json({
+            status: 'success',
+            message: 'Your questions have been retrieved successfully',
+            questions,
           });
-      });
+        });
+    });
   }
 
   /**
@@ -159,24 +141,23 @@ class Question {
 
     const searchString = question.split(' ').join(' & ');
 
-    pool.connect()
-      .then((client) => {
-        client.release();
-        client.query(questionQueries.searchQuestions(searchString))
-          .then((response) => {
-            const questions = response.rows;
-            if (questions.length === 0) {
-              return res.status(200).json({
-                message: 'Sorry, no questions match your search.',
-              });
-            }
+    pool.connect().then((client) => {
+      client.release();
+      client.query(questionQueries.searchQuestions(searchString))
+        .then((response) => {
+          const questions = response.rows;
+          if (questions.length === 0) {
             return res.status(200).json({
-              status: 'success',
-              message: 'Questions found successfully',
-              questions,
+              message: 'Sorry, no questions match your search.',
             });
+          }
+          return res.status(200).json({
+            status: 'success',
+            message: 'Questions found successfully',
+            questions,
           });
-      });
+        });
+    });
   }
 }
 
