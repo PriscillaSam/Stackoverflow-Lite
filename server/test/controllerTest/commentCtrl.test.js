@@ -48,7 +48,7 @@ describe(`POST ${apiUrl} `, () => {
         done();
       });
   });
-  it('should return a success message', (done) => {
+  it('should return a success message if post is successful', (done) => {
     chai.request(app)
       .post(apiUrl.replace(':questionId', '1').replace(':answerId', '1'))
       .set('Authorization', userToken)
@@ -60,6 +60,57 @@ describe(`POST ${apiUrl} `, () => {
         expect(res.body.new_comment).to.be.an('object');
         expect(res.body.new_comment).to.have
           .keys('id', 'user_id', 'comment', 'created_at', 'answer_id');
+        done();
+      });
+  });
+});
+
+describe(`GET ${apiUrl} `, () => {
+  it('should return an error if question is not found', (done) => {
+    chai.request(app)
+      .get(apiUrl.replace(':questionId', '30').replace(':answerId', '3'))
+      .end((err, res) => {
+        if (err) done(err);
+        expect(res).to.have.status(404);
+        expect(res.body).to.have.property('status').to.be.equals('error');
+        expect(res.body).to.have.property('message').to.be
+          .equals('this question does not exist');
+        done();
+      });
+  });
+  it('should return an error if answer is not found', (done) => {
+    chai.request(app)
+      .get(apiUrl.replace(':questionId', '3').replace(':answerId', '30'))
+      .end((err, res) => {
+        if (err) done(err);
+        expect(res).to.have.status(404);
+        expect(res.body).to.have.property('status').to.be.equals('error');
+        expect(res.body).to.have.property('message').to.be
+          .equals('this answer does not exist');
+        done();
+      });
+  });
+  it('should return a success message if answer has no comments', (done) => {
+    chai.request(app)
+      .get(apiUrl.replace(':questionId', '1').replace(':answerId', '2'))
+      .end((err, res) => {
+        if (err) done(err);
+        expect(res).to.have.status(200);
+        expect(res.body).to.have.keys('message');
+        expect(res.body.message).to.be.deep
+          .equals('No comments for this answer yet. Be the first to post one.');
+        done();
+      });
+  });
+
+  it('should return a success message if answer has comments', (done) => {
+    chai.request(app)
+      .get(apiUrl.replace(':questionId', '1').replace(':answerId', '1'))
+      .end((err, res) => {
+        if (err) done(err);
+        expect(res).to.have.status(200);
+        expect(res.body).to.have.keys('status', 'message', 'comments');
+        expect(res.body.comments).to.be.an('array').to.have.lengthOf(1);
         done();
       });
   });

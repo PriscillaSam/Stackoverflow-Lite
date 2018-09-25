@@ -357,6 +357,26 @@ const commentQueries = {
       values: [comment, userId, answerId],
     };
   },
+  /**
+   * Get comments query function
+   * @param {number} answerId ID of answer to get comments for
+   * @returns {object} Get comments query object
+   */
+  getComments(answerId) {
+    return {
+      text: `
+      SELECT c.id, 
+      comment, 
+      user_id,
+      u.name, 
+      c.created_at
+      FROM comments c
+      JOIN users u ON u.id = user_id
+      WHERE answer_id = $1
+      `,
+      values: [answerId],
+    };
+  },
 };
 export default {
   userQueries,
