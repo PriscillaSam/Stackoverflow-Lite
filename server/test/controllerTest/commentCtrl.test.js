@@ -96,7 +96,7 @@ describe(`GET ${apiUrl} `, () => {
       .end((err, res) => {
         if (err) done(err);
         expect(res).to.have.status(200);
-        expect(res.body).to.have.keys('message');
+        expect(res.body).to.have.keys('message', 'answer');
         expect(res.body.message).to.be.deep
           .equals('No comments for this answer yet. Be the first to post one.');
         done();
