@@ -15,7 +15,7 @@ if (localStorage.getItem('token')) {
   const name = localStorage.getItem('name');
   [...userName].forEach((user) => {
     user.innerHTML = `
-      <a href="profile.html"><i class="fa fa-user-o mr-1"></i>Hi ${name}</a>
+      <a href="profile.html"><i class="far fa-user mr-1"></i>Hi ${name}</a>
   `;
   });
 }

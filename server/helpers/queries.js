@@ -193,6 +193,9 @@ const answerQueries = {
         COALESCE((SELECT COUNT (v.id) FROM votes v 
         WHERE v.answer_id = a.id 
         AND v.vote = 0 GROUP BY a.id),0) as downvotes,
+
+        COALESCE((SELECT COUNT (c.id) FROM comments c 
+        WHERE c.answer_id = a.id GROUP BY a.id),0) as comments,
         a.created_at,
         a.is_accepted
 
@@ -229,8 +232,18 @@ const answerQueries = {
   getAnswer(id) {
     return {
       text: `
-      SELECT id, answer, question_id, user_id 
-      FROM answers a WHERE a.id = $1`,
+      SELECT a.id, 
+      answer, 
+      question_id, 
+      user_id, 
+      u.name, 
+      a.created_at, 
+      is_accepted
+    
+      FROM answers a 
+      JOIN users u ON user_id = u.id
+      WHERE a.id = $1
+      `,
       values: [id],
     };
   },

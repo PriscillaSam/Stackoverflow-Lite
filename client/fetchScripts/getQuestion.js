@@ -2,6 +2,7 @@ const questionDiv = elemById('question-section');
 const answerForm = elemById('answer-form');
 const questionId = localStorage.getItem('questionId');
 const answerBtn = elemById('answer-btn');
+const commentBtn = elemById('comment-btn');
 const newAnswerDiv = elemById('new-answer');
 
 const getUrl = `${baseUrl}/questions/${questionId}`;
@@ -16,16 +17,16 @@ fetch(getUrl, {
     const body = response.question_details;
     questionDiv.innerHTML = `
     <h4 class="display-4 text-primary mb-0 fadeIn">
-     <i class="fa fa-unsorted"></i> 
+     <i class="fas fa-sort"></i> 
      <strong>${body.question}</strong>
     </h4>            
     <p class="ml-2 mt-0">
       <span class="mr-1">asked ${formatTime(body.created_at)}</span>
-      <span>
-      <i class="fa fa-user-o fa-fw"></i>${body.name}
+      <span class="mr-1">
+      <i class="far fa-user fa-fw"></i>${body.name}
       </span>
       <span class="text-success">
-        <i class="fa fa-comments-o fa-fw"></i>${body.answers.length} answers
+        <i class="far fa-comments fa-fw"></i>${body.answers.length} answers
       </span>
     </p>
   `;
@@ -37,6 +38,7 @@ fetch(getUrl, {
 
 if (localStorage.getItem('token')) {
   answerBtn.removeAttribute('disabled');
+  commentBtn.removeAttribute('disabled');
 }
 
 answerForm.addEventListener('submit', (event) => {

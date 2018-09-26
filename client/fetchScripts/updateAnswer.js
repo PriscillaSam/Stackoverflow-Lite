@@ -118,8 +118,7 @@ const updateAnswer = (answerDiv) => {
 const editAnswer = (event, link) => {
   event.preventDefault();
   showUpdateModal();
-  const ul = link.closest('ul');
-  answerId = ul.getAttribute('data-id');
+  answerId = getAnswerId(link);
 
   const answerDiv = link.closest('.box').querySelector('.lead');
   updateInput.innerHTML = answerDiv.innerHTML;

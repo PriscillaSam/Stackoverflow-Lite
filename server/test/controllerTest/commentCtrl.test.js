@@ -109,7 +109,8 @@ describe(`GET ${apiUrl} `, () => {
       .end((err, res) => {
         if (err) done(err);
         expect(res).to.have.status(200);
-        expect(res.body).to.have.keys('status', 'message', 'comments');
+        expect(res.body).to.have
+          .keys('status', 'message', 'comments', 'answer');
         expect(res.body.comments).to.be.an('array').to.have.lengthOf(1);
         done();
       });
