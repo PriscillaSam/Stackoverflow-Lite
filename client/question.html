@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="./css/style.css">
     <link rel="stylesheet" type="text/css" media="screen" href="./css/main.css" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
 </head>
 
 <body class="bg-light">
@@ -100,13 +102,58 @@
 </nav>
 
 </div>
+
+<!-- comments modal -->
+<div class="modal hidden" id="comments-modal">    
+    <div class="w-70 fadeIn p-2" id="comments-modal-body">
+        <a href="" class="close cl-modal">
+            <span>&times;</span>
+        </a>   
+        <section class="">
+            <h3 class="display-4 mb-0 text-primary mt-0"><Strong><i class="fas fa-edit"></i>Answer</Strong></h3>
+
+            <h3 class="display-4 text-primary mb-0 mt-0" id="comments-answer"></h3>
+            <p class="display-3" style="color:#aaa" id="answer-info"><p>
+            <h3 class="display-4 text-success" id="comments-count"></h3>
+            <div id="new-comment">
+            </div>
+            <div id="no-comment">
+            </div>
+            <div id="comments">            
+             
+            </div>
+
+                <div>
+                    <h3 class="display-4 text-success mb-1"><i class="far fa-comment-dots mr-1"></i>Say something</h3>
+
+                    <form id="comment-form">
+                        <div class="alert hidden fadeIn bg-danger">
+                            <p class="text-center alertText"></p>
+                        </div> 
+                        <div class="input-area">
+                            <textarea name="" id="comment-input" cols="30" rows="10" class="form-input" placeholder="type your comment here..." required></textarea>
+                        </div>
+                        <div class="input-area right">
+                            <button type="submit" class="btn btn-success" id="comment-btn" disabled>
+                                <span class="hidden spinner">
+                                    <i class="fa fa-spin fa-spinner fa-lg fa-fw"></i>
+                                </span>
+                                <span class="btnText"><i class="far fa-comment-alt mr-1"></i>Comment</span>
+                            </button>
+                        </div>
+                       
+                    </form>
+                </div>         
+            </section>
+        </div>
+
+</div>
 <!-- question modal -->
 <div class="modal hidden" id="question-modal">    
     <div class="modal-body slideInUp confirmBox p-2" >
         <a href="" class="close cl-modal">
             <span>&times;</span>
-        </a>
-        
+        </a>   
         <section class="">
                 <h4 class="display-4 text-primary mb-0 fadeIn"> <i class="fa fa-edit fa-fw"></i><strong>Ask a question</strong></h4>
                 <h3 class="display-3 mt-0 text-sm">Be descriptive. Be concise. Be clear.</h3>
@@ -197,6 +244,6 @@
 <script src="./js/accept.js"></script>
 <script src="./fetchScripts/updateAnswer.js"></script>
 <script src="fetchScripts/vote.js"></script>
-
+<script src="fetchScripts/comment.js"></script>
 </body>
 </html>

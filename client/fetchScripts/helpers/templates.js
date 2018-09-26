@@ -12,6 +12,27 @@ const getId = (elem) => {
 };
 
 /**
+ * Attach a mousein event to a html element
+ * @param {element} link Html element to attach mousein event to
+ * @returns {*} Nothing
+ */
+const mouseInEvent = (link) => {
+  link.onmouseover = () => {
+    link.querySelector('i').classList.replace('far', 'fas');
+  };
+};
+
+/**
+ * Attach a mouseover event to a html element
+ * @param {element} link Html element to attach mouseout event to
+ * @returns {*} Nothing
+ */
+const mouseOutEvent = (link) => {
+  link.onmouseout = () => {
+    link.querySelector('i').classList.replace('fas', 'far');
+  };
+};
+/**
  * Template to create question cards
  * @param {object} question Question object
  * @param {string} elem Id selector of div to apend questions to
@@ -39,19 +60,19 @@ const questionCard = (question, elem) => {
   liTime.innerHTML = formatTime(question.created_at);
   ul.appendChild(liTime);
 
-  liAns.innerHTML = `<i class="fa fa-comments-o fa-fw"></i>${question.answers}`;
+  liAns.innerHTML = `<i class="far fa-comments fa-fw"></i>${question.answers}`;
   ul.appendChild(liAns);
 
   if (question.name) {
     const liUser = create('li');
-    liUser.innerHTML = `<i class="fa fa-user-o fa-fw"></i>${question.name}`;
+    liUser.innerHTML = `<i class="far fa-user fa-fw"></i>${question.name}`;
     ul.appendChild(liUser);
   } else {
     const liDelete = create('li');
     const aDelete = create('a');
 
     aDelete.setAttribute('href', ' ');
-    aDelete.innerHTML = '<i class="fa fa-trash-o fa-fw"></i>';
+    aDelete.innerHTML = '<i class="far fa-trash-alt fa-fw"></i>';
     aDelete.setAttribute('data-id', question.id);
     aDelete.setAttribute('class', 'js-delete');
 
@@ -81,9 +102,11 @@ const createAcceptButton = (liAccept) => {
   aAccept.setAttribute('class', 'js-accept');
   aAccept.setAttribute('title', 'prefer answer');
 
-  aAccept.innerHTML = '<i class="fa fa-star-o fa-fw"></i>';
+  aAccept.innerHTML = '<i class="far fa-star fa-fw"></i>';
   aAccept.onclick = event => acceptAnswer(event, aAccept);
 
+  mouseInEvent(aAccept);
+  mouseOutEvent(aAccept);
   liAccept.innerHTML = '';
   liAccept.insertBefore(aAccept, liAccept.childNodes[0]);
 };
@@ -104,22 +127,75 @@ const createVoteButtons = (answer, voteDiv) => {
   aUpvote.setAttribute('title', 'upvote answer');
   aUpvote.setAttribute('class', 'upvote');
   aUpvote.onclick = event => voteAnswer(event, aUpvote, 1);
-  aUpvote.innerHTML = '<i class="fa fa-thumbs-o-up fa-fw"></i>';
+  aUpvote.innerHTML = '<i class="far fa-thumbs-up fa-fw"></i>';
 
   liUpvotes.innerHTML = answer.upvotes;
   liUpvotes.insertBefore(aUpvote, liUpvotes.childNodes[0]);
+  aUpvote.onmouseover = () => {
+    aUpvote.querySelector('i').classList.replace('far', 'fas');
+  };
+
+  mouseInEvent(aUpvote);
+  mouseOutEvent(aUpvote);
 
   aDownvote.setAttribute('href', '');
   aDownvote.setAttribute('title', 'downvote answer');
   aDownvote.setAttribute('class', 'downvote');
   aDownvote.onclick = event => voteAnswer(event, aUpvote, 0);
-  aDownvote.innerHTML = '<i class="fa fa-thumbs-o-down fa-fw"></i>';
+  aDownvote.innerHTML = '<i class="far fa-thumbs-down fa-fw"></i>';
+
+  mouseInEvent(aDownvote);
+  mouseOutEvent(aDownvote);
 
   liDownvotes.innerHTML = answer.downvotes;
   liDownvotes.insertBefore(aDownvote, liDownvotes.childNodes[0]);
 
   voteDiv.appendChild(liUpvotes);
   voteDiv.appendChild(liDownvotes);
+};
+
+/**
+ * Create edit button on answer cards
+ * @returns {element} Html link to edit answer
+ */
+const createEditButton = () => {
+  const liEdit = create('li');
+  const aEdit = create('a');
+  liEdit.innerHTML = 'Edit';
+
+  aEdit.classList.add('js-edit');
+  aEdit.setAttribute('href', '');
+  aEdit.innerHTML = '<i class="far fa-edit fa-fw"></i>';
+  aEdit.onclick = event => editAnswer(event, aEdit);
+
+  mouseInEvent(aEdit);
+  mouseOutEvent(aEdit);
+
+  liEdit.insertBefore(aEdit, liEdit.childNodes[0]);
+  return liEdit;
+};
+
+/**
+ * Create edit button on answer cards
+ * @param {object} answer Answer object
+ * @returns {element} Html link to comment an answer
+ */
+const createCommentsButton = (answer) => {
+  const aComments = create('a');
+  const liComments = create('li');
+
+  liComments.innerHTML = answer.comments;
+  aComments.setAttribute('title', 'view comments');
+
+  aComments.setAttribute('href', '');
+  aComments.onclick = event => showCommentModal(event, aComments);
+  aComments.innerHTML = '<i class="far fa-comment-alt fa-fw"></i>';
+
+  mouseInEvent(aComments);
+  mouseOutEvent(aComments);
+
+  liComments.insertBefore(aComments, liComments.childNodes[0]);
+  return liComments;
 };
 
 /**
@@ -132,7 +208,6 @@ const createVoteButtons = (answer, voteDiv) => {
 const answerCard = (answer, askerId, div) => {
   const answers = elemById(div);
   const p = create('p');
-  const a = create('a');
   const h3 = create('h3');
   const ul = create('ul');
   const liTime = create('li');
@@ -144,10 +219,10 @@ const answerCard = (answer, askerId, div) => {
 
   h3.classList.add('display-3', 'mb-0');
   h3.innerHTML = `
-  <i class="fa fa-user-o text-success"></i>
+  <i class="far fa-user text-success"></i>
   <span class="mr-1">${answer.name}</span>
   <span class="text-primary">
-  <i class="fa fa-envelope-o fa-fw text-success"></i>
+  <i class="far fa-envelope fa-fw text-success"></i>
   <span>
   <a href="mailto:${answer.email}" class="text-primary">${answer.email}</a>
   </span>
@@ -167,17 +242,11 @@ const answerCard = (answer, askerId, div) => {
     ul.appendChild(voteDiv);
   }
 
+  const liComments = createCommentsButton(answer);
+  ul.appendChild(liComments);
+
   if (userId === answer.user_id) {
-    const liEdit = create('li');
-    const aEdit = create('a');
-    liEdit.innerHTML = 'Edit';
-
-    aEdit.classList.add('js-edit');
-    aEdit.setAttribute('href', '');
-    aEdit.innerHTML = '<i class="fa fa-edit fa-fw"></i>';
-    aEdit.onclick = event => editAnswer(event, aEdit);
-
-    liEdit.insertBefore(aEdit, liEdit.childNodes[0]);
+    const liEdit = createEditButton();
     ul.appendChild(liEdit);
   }
 
@@ -185,7 +254,7 @@ const answerCard = (answer, askerId, div) => {
     liAccept.id = 'prev-accepted';
     liAccept.innerHTML = `
     <span>
-      <i class="fa fa-star"></i>
+      <i class="fas fa-star"></i>
     </span>
  `;
   } else if (userId === askerId && !answer.is_accepted) {

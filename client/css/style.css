@@ -231,3 +231,14 @@ textarea{
     max-height: 100%;
     overflow: auto;
 }
+
+#comments-modal-body{
+    background-color: white;
+    border-radius: 5px;
+    position: absolute;
+    top:50px;
+    bottom:50px;
+    left: 15%;
+    max-height: 100%;
+    overflow: auto;
+}

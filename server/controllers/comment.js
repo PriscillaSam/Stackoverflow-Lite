@@ -1,7 +1,7 @@
 import pool from '../config/db.config';
 import queries from '../helpers/queries';
 
-const { commentQueries } = queries;
+const { answerQueries, commentQueries } = queries;
 
 /*
  * Comment controller
@@ -39,6 +39,8 @@ class Comment {
  */
   static getComments(req, res) {
     const { answerId } = req.params;
+    const { existingAnswer } = req.body;
+
     pool.connect().then((client) => {
       client.query(commentQueries.getComments(answerId))
         .then((response) => {
@@ -47,11 +49,14 @@ class Comment {
             return res.status(200).json({
               message:
                 'No comments for this answer yet. Be the first to post one.',
+              answer: existingAnswer,
+
             });
           }
           return res.status(200).json({
             status: 'success',
             message: 'Comments retrieved',
+            answer: existingAnswer,
             comments,
           });
         });
