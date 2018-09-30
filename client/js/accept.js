@@ -27,16 +27,31 @@ const showUpdateModal = () => updateModal.classList.remove('hidden');
 
 [...closeModal].forEach((btn) => {
   btn.addEventListener('click', (event) => {
-    const parent = btn.closest('.confirmBox');
     event.preventDefault();
-    setTimeout(() => {
-      parent.classList.add('slideOutDown');
-    }, 50);
+    if (btn.closest('#comments-modal')) {
+      const parent = btn.closest('#comments-modal-body');
+      parent.classList.remove('fadeIn');
 
-    parent.classList.remove('slideInUp');
-    setTimeout(() => {
-      btn.closest('.modal').classList.add('hidden');
-      parent.classList.replace('slideOutDown', 'slideInUp');
-    }, 400);
+      setTimeout(() => {
+        parent.classList.add('fadeOut');
+      }, 50);
+
+      setTimeout(() => {
+        btn.closest('.modal').classList.add('hidden');
+        parent.classList.replace('fadeOut', 'fadeIn');
+      }, 500);
+    } else {
+      const parent = btn.closest('.confirmBox');
+
+      setTimeout(() => {
+        parent.classList.add('slideOutDown');
+      }, 50);
+
+      parent.classList.remove('slideInUp');
+      setTimeout(() => {
+        btn.closest('.modal').classList.add('hidden');
+        parent.classList.replace('slideOutDown', 'slideInUp');
+      }, 400);
+    }
   });
 });

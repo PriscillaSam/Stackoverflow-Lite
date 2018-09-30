@@ -125,8 +125,14 @@ li{
     color: #2E8B57;
 }
 
+.text-info{
+    color: #aaa;
+}
 .text-lg{
-    font-size: 18px;
+    font-size: 16px;
+}
+.text-sm{
+    font-size: 12px;
 }
 
 .display-1,
@@ -209,6 +215,14 @@ textarea{
 .badge-success{
     background-color: #fff;
     color: #2E8B57
+}
+.notif{
+    position: fixed;
+    z-index: 1;
+    top: 10%;
+    left:40%;
+    border-bottom-right-radius: 9px;
+    border-bottom-left-radius: 9px;
 }
 
 .modal{

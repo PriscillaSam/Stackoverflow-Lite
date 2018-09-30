@@ -123,29 +123,35 @@ const createVoteButtons = (answer, voteDiv) => {
   const liDownvotes = create('li');
   const aDownvote = create('a');
 
-  aUpvote.setAttribute('href', '');
-  aUpvote.setAttribute('title', 'upvote answer');
   aUpvote.setAttribute('class', 'upvote');
-  aUpvote.onclick = event => voteAnswer(event, aUpvote, 1);
   aUpvote.innerHTML = '<i class="far fa-thumbs-up fa-fw"></i>';
 
   liUpvotes.innerHTML = answer.upvotes;
   liUpvotes.insertBefore(aUpvote, liUpvotes.childNodes[0]);
-  aUpvote.onmouseover = () => {
-    aUpvote.querySelector('i').classList.replace('far', 'fas');
-  };
 
-  mouseInEvent(aUpvote);
-  mouseOutEvent(aUpvote);
-
-  aDownvote.setAttribute('href', '');
-  aDownvote.setAttribute('title', 'downvote answer');
   aDownvote.setAttribute('class', 'downvote');
-  aDownvote.onclick = event => voteAnswer(event, aUpvote, 0);
   aDownvote.innerHTML = '<i class="far fa-thumbs-down fa-fw"></i>';
 
-  mouseInEvent(aDownvote);
-  mouseOutEvent(aDownvote);
+
+  if (localStorage.getItem('token')) {
+    aDownvote.setAttribute('title', 'downvote answer');
+    aUpvote.setAttribute('title', 'upvote answer');
+
+    mouseInEvent(aUpvote);
+    mouseOutEvent(aUpvote);
+
+    mouseInEvent(aDownvote);
+    mouseOutEvent(aDownvote);
+
+    aUpvote.setAttribute('href', '');
+    aDownvote.setAttribute('href', '');
+
+    aUpvote.onclick = event => voteAnswer(event, aUpvote, 1);
+    aDownvote.onclick = event => voteAnswer(event, aUpvote, 0);
+  } else {
+    aUpvote.setAttribute('title', 'upvotes');
+    aDownvote.setAttribute('title', 'downvotes');
+  }
 
   liDownvotes.innerHTML = answer.downvotes;
   liDownvotes.insertBefore(aDownvote, liDownvotes.childNodes[0]);
