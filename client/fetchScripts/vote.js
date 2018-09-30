@@ -1,6 +1,7 @@
 const upvoteBtns = elemByClass('upvote');
 const downvoteBtns = elemByClass('downvote');
 
+
 /**
  * Performs operation to vote an answer
  * @param {event} event Event
@@ -25,11 +26,15 @@ const voteAnswer = (event, link, vote) => {
   })
     .then(response => response.json())
     .then((response) => {
-      if (response.status === 'error') alert(response.message);
-      else {
+      if (response.status === 'error') {
+        displayErrorNotification(response.message);
+      } else {
         const div = link.closest('div');
         div.innerHTML = '';
         createVoteButtons(response.answer, div);
       }
+    })
+    .catch((error) => {
+      displayErrorNotification(error);
     });
 };

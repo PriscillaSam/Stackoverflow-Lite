@@ -14,7 +14,7 @@ const loginUrl = `${baseUrl}/auth/login`;
  * @param {object} response API response object
  * @param {element} btn Html element
  * @param {string} text Text to display on button
- * @returns {nothing} Noting
+ * @returns {*} Nothing
  */
 const displayResponse = (response, btn, text) => {
   refreshBtn(btn);
@@ -58,7 +58,7 @@ regForm.addEventListener('submit', (event) => {
       displayResponse(body, regBtn, 'Create Account');
     })
     .catch((error) => {
-      console.log(error);
+      displayErrorNotification(error);
     });
 });
 
@@ -85,5 +85,8 @@ loginForm.addEventListener('submit', (event) => {
     })
     .catch((error) => {
       console.log(error);
+      refreshBtn(loginBtn);
+      btnTextDisplay(loginBtn, 'Welcome');
+      displayErrorNotification(error);
     });
 });

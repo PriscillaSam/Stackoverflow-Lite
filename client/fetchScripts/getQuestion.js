@@ -4,10 +4,10 @@ const questionId = localStorage.getItem('questionId');
 const answerBtn = elemById('answer-btn');
 const commentBtn = elemById('comment-btn');
 const newAnswerDiv = elemById('new-answer');
+const notifyLogin = elemByClass('notify-login');
 
 const getUrl = `${baseUrl}/questions/${questionId}`;
 const postUrl = `${baseUrl}/questions/${questionId}/answers`;
-
 
 fetch(getUrl, {
   method: 'GET',
@@ -20,7 +20,7 @@ fetch(getUrl, {
      <i class="fas fa-sort"></i> 
      <strong>${body.question}</strong>
     </h4>            
-    <p class="ml-2 mt-0">
+    <p class="mt-0">
       <span class="mr-1">asked ${formatTime(body.created_at)}</span>
       <span class="mr-1">
       <i class="far fa-user fa-fw"></i>${body.name}
@@ -34,11 +34,15 @@ fetch(getUrl, {
     body.answers.forEach((answer) => {
       answerCard(answer, body.user_id, 'answers');
     });
+  }).catch((error) => {
+    displayErrorNotification(error);
   });
+
 
 if (localStorage.getItem('token')) {
   answerBtn.removeAttribute('disabled');
   commentBtn.removeAttribute('disabled');
+  [...notifyLogin].forEach(a => a.classList.add('hidden'));
 }
 
 answerForm.addEventListener('submit', (event) => {
@@ -78,5 +82,8 @@ answerForm.addEventListener('submit', (event) => {
           elemById('answer-input').value = '';
         }, 2000);
       }
+    })
+    .catch((error) => {
+      displayErrorNotification(error);
     });
 });

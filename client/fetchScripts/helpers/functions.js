@@ -1,8 +1,33 @@
 const elemById = id => document.getElementById(id);
 const elemByClass = className => document.getElementsByClassName(className);
 const create = elem => document.createElement(elem);
-const baseUrl = 'https://so-lite.herokuapp.com/api/v1';
 
+const notif = elemById('notif');
+const notificationInfo = elemById('notif-info');
+
+const baseUrl = 'http://localhost:3000/api/v1';
+// const baseUrl = 'https://so-lite.herokuapp.com/api/v1';
+
+/**
+ * Display fetch error to user
+ * @param {string} error Error message from server
+ * @returns {*} Nothing
+ */
+const displayErrorNotification = (error) => {
+  notif.classList.remove('hidden');
+  notificationInfo.innerHTML = !(error instanceof TypeError)
+    ? error : 'Please check your internet connection';
+
+  setTimeout(() => {
+    notif.classList.add('fadeOut');
+  }, 3000);
+  setTimeout(() => {
+    notif.classList.add('hidden', 'fadeIn');
+    notif.classList.remove('fadeOut');
+  }, 4000);
+
+  notif.classList.remove('fadeIn');
+};
 /**
  * Displays spinner on button during fetch operation
  * @param {element} btn Html Button
@@ -134,6 +159,9 @@ const getQuestions = (urL, count, elem) => {
     .then((body) => {
       const { questions } = body;
       createContent(questions, count, elem);
+    })
+    .catch((error) => {
+      displayErrorNotification(error);
     });
 };
 
@@ -144,7 +172,9 @@ const getQuestions = (urL, count, elem) => {
  */
 const formatTime = (time) => {
   const formatted = Date.parse(time);
-  const now = new Date(formatted + 3600000);
+  const now = baseUrl === 'http://localhost:3000/api/v1'
+    ? new Date(formatted + 3600000)
+    : new Date(formatted);
 
   const difference = Math.floor((new Date() - now) / 1000);
 

@@ -20,7 +20,7 @@ const generateComments = (comments) => {
     string = ` ${string}
     <div class="shadow p-2 mt-2" style="border-radius: 5px;">
       <h3 class="display-3">${comment.comment}</h3>
-      <p class="display-3" style="color:#aaa">${comment.name}
+      <p class="display-3 text-info">${comment.name}
         <span class="text-success text-sm"> commented </span>
       ${formatTime(comment.created_at)}<p>
     </div>`;
@@ -63,7 +63,7 @@ const displayResponse = (response) => {
   } else {
     commentsCount.innerHTML = `
     <i class="far fa-comments  mr-1">
-    </i>${comments.length} Comments
+    </i>${comments.length} Comment${comments.length === 1 ? '' : 's'}
     `;
     commentsSection.innerHTML = generateComments(comments);
   }
@@ -143,7 +143,7 @@ ${baseUrl}/questions/${questionId}/answers/${answerId}/comments`;
         newCommentSection.innerHTML += `
         <div class="shadow fadeIn p-2 mt-2" style="border-radius: 5px;">
         <h3 class="display-3">${comment.comment}</h3>
-        <p class="display-3" style="color:#aaa">${comment.name}
+        <p class="display-3 text-info">${comment.name}
           <span class="text-success text-sm"> commented </span>
         ${formatTime(comment.created_at)}
         </p>

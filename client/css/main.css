@@ -322,6 +322,10 @@
     .w-40 .display-4{
         font-size: 1.2rem
     }
+    #comments-modal-body{
+        width: 80%;
+        left: 7%;
+    }
 }
 
 @media(max-width:970px){
@@ -399,10 +403,13 @@
     .w-50{
         width: 100%;
     }
-
-    .modal-body{
-        width: 70%;
-        left: 10%;
+    .w-90{
+        width: 83%;
+    }
+    .modal-body,
+    #comments-modal-body{
+        width: 80%;
+        left: 5%;
     }
   
 }
@@ -438,7 +445,7 @@
     }
 
  .box li{
-     margin-right: 0px;
+     margin-right: 5px;
      font-size: 14px;
  }
 
@@ -466,7 +473,7 @@
 @media (max-width:410px){   
   
     .text-sm{
-        font-size: 13px;
+        font-size: 12px;
     }
    #form-back{
        padding:0 20px
@@ -502,10 +509,6 @@
 
     .p-large{
         font-size: 13px
-    }
-
-    .box i{
-        font-size: 18px;
     }
 
     .md-100{

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="./css/style.css">
     <link rel="stylesheet" type="text/css" media="screen" href="./css/main.css" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
 </head>
 <body id="form-back">   
@@ -47,7 +47,9 @@
                     </form>
                 </div>
                 <div>
-                    <p class="text-center text-white text-lg">Already have an account? <a href="#" class="btn btn-sm btn-success" id="login-toggle">Login</a></p>
+                    <p class="text-center text-white text-lg">Already have an account? 
+                        <a href="#" class="btn btn-sm btn-success" id="login-toggle">Login</a>
+                    </p>
                 </div>
             </div>
             <div id="login" class="hidden">
@@ -74,11 +76,21 @@
                         </form>
                     </div>
                     <div>
-                        <p class="text-center text-white text-lg">Don't have an account? <a href="#" class="btn btn-sm btn-success" id="signup-toggle">Register</a></p>
+                        <p class="text-center text-white text-lg">Don't have an account? 
+                            <a href="#" class="btn btn-sm btn-success" id="signup-toggle">Register</a>
+                        </p>
                     </div>
             </div>
 
     </div>
+<!-- notification modal -->
+<!-- <div class="modal"> -->
+    <div class="notif bg-white p-1 fadeIn hidden" id="notif">
+        <p class="text-center text-info"><i class="fas fa-exclamation-circle fa-lg mr-1"></i><span id="notif-info"></span>
+        </p>
+    </div>
+<!-- </div> -->
+
     <script src="./fetchScripts/helpers/functions.js"></script>
     <script src="./fetchScripts/account.js"></script>
     <script src="./js/main.js"></script>
