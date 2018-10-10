@@ -2,7 +2,7 @@
   "name": "stackoverflow-lite",
   "version": "1.0.0",
   "engines" : { 
-    "node" :   "8.8.1"
+    "node" :   "8.12.0"
   },
   "description": "A platform for users to ask questions and give answers to asked questions.",
   "main": "app.js",

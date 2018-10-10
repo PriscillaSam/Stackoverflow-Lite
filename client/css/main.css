@@ -15,7 +15,14 @@
 .container{
     width: 80%;
     margin: 0 auto;
-    padding-bottom: 20px;
+    padding-bottom: 100px;
+}
+#wrap{
+    min-height: 100vh;
+}
+
+.pos-rel{
+    position: relative;
 }
 
 .hidden{
@@ -295,14 +302,14 @@
     color: #2E8B57
 }
 
-@media(min-width:1850px){
-    .foot{
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    left: 0;
+.foot{
+   position:absolute;
+   bottom:0;
+   width: 100%;
 }
 
+@media(min-width:1850px){
+ 
 .modal-body{
     bottom: 500px;
     animation: slideInUpLarge  1.5s ;
