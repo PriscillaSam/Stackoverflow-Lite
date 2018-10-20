@@ -9,6 +9,13 @@ const commentInput = elemById('comment-input');
 const newCommentSection = elemById('new-comment');
 const noComments = elemById('no-comment');
 
+/* Reset the comment divs
+ */
+const resetComments = () => {
+  newCommentSection.innerHTML = '';
+  noComments.innerHTML = '';
+  commentsSection.innerHTML = '';
+};
 /**
  * Generate comment cards
  * @param {object} comments Comment object
@@ -94,6 +101,7 @@ ${baseUrl}/questions/${questionId}/answers/${answerId}/comments`;
  */
 const showCommentModal = (event, link) => {
   event.preventDefault();
+  resetComments();
   commentModal.classList.remove('hidden');
 
   answerId = getAnswerId(link);
@@ -125,7 +133,7 @@ ${baseUrl}/questions/${questionId}/answers/${answerId}/comments`;
     .then((response) => {
       refreshBtn(commentBtn);
       btnTextDisplay(commentBtn,
-        '<i class="fa fa-share fa-fw"></i>Your Comment');
+        '<i class="far fa-comment-alt fa-fw"></i> Comment');
       if (response.errorData) {
         errorResponse(response, commentForm);
       } else {

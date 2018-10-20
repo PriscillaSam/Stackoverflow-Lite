@@ -27,6 +27,7 @@ class Answer {
           const [newAnswer] = postResponse.rows;
           newAnswer.upvotes = 0;
           newAnswer.downvotes = 0;
+          newAnswer.comments = 0;
 
           return res.status(201).json({
             status: 'success',
