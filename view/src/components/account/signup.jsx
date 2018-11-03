@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 
 class AuthForm extends Component {
-  render() { 
+  state = {
+    
+  }
+
+  render() {
     return (
       <div>
         <form method="POST" id="loginForm">

@@ -10,6 +10,13 @@ export default {
           loader: 'babel-loader',
         },
       },
+      {
+        test: /\.(jpeg|png|)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'file-loader',
+        },
+      },
     ],
   },
   entry: './view/src/index.jsx',

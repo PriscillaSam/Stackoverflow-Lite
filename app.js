@@ -17,8 +17,14 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(webpackdevmiddleware(webpack(config),
-  { publicPath: config.output.publicPath }));
+if (process.env.NODE_ENV !== 'test') {
+  app.use(webpackdevmiddleware(webpack(config),
+    { publicPath: config.output.publicPath }));
+
+  app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, './view/src/index.html'));
+  });
+}
 
 app.use(cleanStrings);
 
@@ -30,9 +36,6 @@ app.get('/api/v1', (req, res) => {
 });
 app.use('/api/v1', router);
 
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, './view/src/index.html'));
-});
 
 app.use(errorHandler);
 

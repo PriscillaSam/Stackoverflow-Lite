@@ -9,4 +9,4 @@ ReactDOM.render(
   <BrowserRouter history={BrowserHistory}>
     {Router}
   </BrowserRouter>, document.getElementById('index'),
-);
+  );
