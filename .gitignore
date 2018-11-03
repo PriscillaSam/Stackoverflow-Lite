@@ -1,7 +1,9 @@
 UI/assets
+UI/.DS_Store
 node_modules
 .coveralls.yml
 .nyc_output
 coverage
 .env
 package-lock.json
+.DS_Store
