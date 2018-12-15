@@ -5,8 +5,8 @@ const create = elem => document.createElement(elem);
 const notif = elemById('notif');
 const notificationInfo = elemById('notif-info');
 
-const baseUrl = 'http://localhost:3000/api/v1';
-// const baseUrl = 'https://so-lite.herokuapp.com/api/v1';
+// const baseUrl = 'http://localhost:3000/api/v1';
+const baseUrl = 'https://so-lite.herokuapp.com/api/v1';
 
 /**
  * Display fetch error to user
