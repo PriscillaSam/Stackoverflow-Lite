@@ -3,7 +3,7 @@ env:
     - CC_TEST_REPORTER_ID=a4181d45480e49e1776b262dba894df97b6592e0fde285fd78dd0aa16bfc87ca
 language: node_js
 node_js:
-  - "8"
+  - "stable"
 
 before_script:
  - psql -c 'create database stackoverflow_lite_test;' -U postgres

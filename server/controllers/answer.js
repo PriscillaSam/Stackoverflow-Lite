@@ -53,7 +53,7 @@ class Answer {
     pool.connect().then((client) => {
       client.release();
       if (userId !== existingAnswer.user_id
-        && userId !== existingQuestion.user_id) {
+                  && userId !== existingQuestion.user_id) {
         return errors.unauthorized(res);
       }
       if (existingAnswer.user_id === userId) {
@@ -130,13 +130,13 @@ class Answer {
                 return res.status(400).json({
                   status: 'error',
                   message:
-                    'this answer has been previously downvoted by you',
+                        'this answer has been previously downvoted by you',
                 });
               }
               return res.status(400).json({
                 status: 'error',
                 message:
-                  'this answer has been previously upvoted by you',
+                      'this answer has been previously upvoted by you',
               });
             }
             client
