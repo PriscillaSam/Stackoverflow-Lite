@@ -1,12 +1,18 @@
 {
-    "presets": ["env"],
-    "env":{
-      "test": {
-        "plugins": ["istanbul"]
-      }
-    },
-    "plugins": [
-      "transform-object-rest-spread",
-      "transform-async-to-generator"
-    ]
-  }
+  "presets": [
+    "env",
+    "react"
+  ],
+  "env": {
+    "test": {
+      "plugins": [
+        "istanbul"
+      ]
+    }
+  },
+  "plugins": [
+    "babel-plugin-transform-object-rest-spread",
+    "babel-plugin-transform-runtime",
+    "transform-class-properties"
+  ]
+}

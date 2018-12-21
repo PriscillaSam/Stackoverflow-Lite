@@ -8,62 +8,62 @@
     <link rel="stylesheet" type="text/css" media="screen" href="../css/main.css" />
 </head>
 <body id="form-back">   
-        <div class="center">        
-            <header class="mb-1">
-                <h1 class="brand text-center mb-0 fadeInDown">
-                    <a href="home.html">StackOverflow-<span class="brand-span">LITE</span></a>
-                </h1>
-            </header>
-            <div id="signup" >            
+    <div class="center">        
+        <header class="mb-1">
+            <h1 class="brand text-center mb-0 fadeInDown">
+                <a href="home.html">StackOverflow-<span class="brand-span">LITE</span></a>
+            </h1>
+        </header>
+        <div id="signup" >            
+            <div class="form-group">
+                    <h2 class="text-center text-primary mt-0 mb-0">REGISTER</h2>
+                        <hr class="form-rule">
+                <form method="POST" action="profile.html">
+                    <div class="input-area">
+                        <input type="text" placeholder="your name" class="form-input" autocomplete="name" required>
+                    </div>
+                    <div class="input-area">
+                        <input type="email" placeholder="your email" class="form-input" required autocomplete="email" >
+                    </div>
+                    <div class="input-area">
+                        <input type="password" placeholder="your password" class="form-input" required>
+                    </div>
+                    <div class="input-area">
+                        <input type="password" placeholder="confirm your password" class="form-input" required>
+                    </div>
+                    <div class="">
+                        <button type="submit" class="btn btn-success btn-block">Register</button>
+                    </div>
+                </form>
+            </div>
+            <div>
+                <p class="text-center text-white text-lg">Already have an account? <a href="#" class="btn btn-sm btn-success" id="login-toggle">Login</a></p>
+            </div>
+        </div>
+        <div id="login" class="hidden">
                 <div class="form-group">
-                        <h2 class="text-center text-primary mt-0 mb-0">REGISTER</h2>
+                        <h2 class="text-center text-primary mt-0 mb-0">LOG IN</h2>
                             <hr class="form-rule">
                     <form method="POST" action="profile.html">
-                        <div class="input-area">
-                            <input type="text" placeholder="your name" class="form-input" autocomplete="name" required>
-                        </div>
+                        
                         <div class="input-area">
                             <input type="email" placeholder="your email" class="form-input" required autocomplete="email" >
                         </div>
                         <div class="input-area">
                             <input type="password" placeholder="your password" class="form-input" required>
                         </div>
-                        <div class="input-area">
-                            <input type="password" placeholder="confirm your password" class="form-input" required>
-                        </div>
+                        
                         <div class="">
-                            <button type="submit" class="btn btn-success btn-block">Register</button>
+                            <button type="submit" class="btn btn-success btn-block">Welcome</button>
                         </div>
                     </form>
                 </div>
                 <div>
-                    <p class="text-center text-white text-lg">Already have an account? <a href="#" class="btn btn-sm btn-success" id="login-toggle">Login</a></p>
+                    <p class="text-center text-white text-lg">Don't have an account? <a href="#" class="btn btn-sm btn-success" id="signup-toggle">Register</a></p>
                 </div>
-            </div>
-            <div id="login" class="hidden">
-                    <div class="form-group">
-                            <h2 class="text-center text-primary mt-0 mb-0">LOG IN</h2>
-                                <hr class="form-rule">
-                        <form method="POST" action="profile.html">
-                           
-                            <div class="input-area">
-                                <input type="email" placeholder="your email" class="form-input" required autocomplete="email" >
-                            </div>
-                            <div class="input-area">
-                                <input type="password" placeholder="your password" class="form-input" required>
-                            </div>
-                           
-                            <div class="">
-                                <button type="submit" class="btn btn-success btn-block">Welcome</button>
-                            </div>
-                        </form>
-                    </div>
-                    <div>
-                        <p class="text-center text-white text-lg">Don't have an account? <a href="#" class="btn btn-sm btn-success" id="signup-toggle">Register</a></p>
-                    </div>
-            </div>
+        </div>
 
-    </div>
+</div>
     <script src="../js/main.js"></script>
 </body>
 </html>
