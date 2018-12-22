@@ -25,6 +25,8 @@
         "consistent-return":"off",
         "no-undef": "off",
         "no-underscore-dangle":"off",
-        "react/jsx-filename-extension": "off"
+        "react/jsx-filename-extension": "off",
+        "prefer-promise-reject-errors": "off",
+        "react/forbid-prop-types": "off"
     }
 }

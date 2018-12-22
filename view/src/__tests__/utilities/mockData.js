@@ -14,3 +14,18 @@ export const logIn = {
     error: '',
   },
 };
+
+export const questions = {
+  getQuestions: {
+    fetching: false,
+    questions: [
+      {
+        id: 1,
+      },
+      {
+        id: 2,
+      },
+    ],
+    error: null,
+  },
+};
