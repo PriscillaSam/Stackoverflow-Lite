@@ -44,10 +44,10 @@ class Signup extends Component {
         <div className="center">
           <header className="mb-1">
             <h1 className="brand text-center mb-0 fadeInDown">
-              <a href="home.html">
+              <Link to="/">
                 StackOverflow-
                 <span className="brand-span">LITE</span>
-              </a>
+              </Link>
             </h1>
           </header>
 

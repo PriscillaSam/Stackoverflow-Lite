@@ -1,6 +1,10 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import webpack from 'webpack';
+import webpackdevmiddleware from 'webpack-dev-middleware';
+import path from 'path';
+
 import router from './server/routes/index';
 import cleanStrings from './server/middleware/cleanStrings';
 import errorHandler from './server/middleware/errorHandler';
@@ -18,7 +22,6 @@ if (process.env.NODE_ENV === 'production') {
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 app.use(cleanStrings);
 
 app.get('/api/v1', (req, res) => {
@@ -29,6 +32,16 @@ app.get('/api/v1', (req, res) => {
 });
 
 app.use('/api/v1', router);
+
+if (process.env.NODE_ENV !== 'test') {
+  app.use(webpackdevmiddleware(webpack(config),
+    { publicPath: config.output.publicPath }));
+
+  app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, './view/src/index.html'));
+  });
+}
+
 
 app.use(errorHandler);
 
