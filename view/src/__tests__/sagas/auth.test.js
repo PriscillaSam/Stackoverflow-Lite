@@ -1,22 +1,29 @@
-import { takeLatest, call } from 'redux-saga/effects';
-import watchSignup, { signupSaga } from '../../sagas/signupSaga';
-
-import { SIGNUP_REQUEST, LOGIN_REQUEST } from '../../actionTypes/authActionTypes';
+import { takeLatest, call, put } from 'redux-saga/effects';
+import * as types from '../../actionTypes/authActionTypes';
 import { signUpApi, logInApi } from '../../api/auth';
 import watchLogin, { loginSaga } from '../../sagas/loginSaga';
+import watchSignup, { signupSaga } from '../../sagas/signupSaga';
+import mockAxios from '../../../__mocks__/mockAxios';
+import {
+  signupFailureAction, loginFailureAction,
+} from '../../actions/authActions';
+
+const error = {
+  response: {
+    data: {
+      status: 500,
+      message: 'Network Error',
+    },
+  },
+};
 
 
 describe('Signup saga', () => {
-  it('', () => {
-    const body = {
-      name: 'hello',
-      email: 'email',
-      password: 'password',
-      confirmPassword: 'password',
-    };
+  it('should execute signup saga', () => {
+    const body = {};
 
     const action = {
-      type: SIGNUP_REQUEST,
+      type: types.SIGNUP_REQUEST,
       body,
     };
 
@@ -25,28 +32,27 @@ describe('Signup saga', () => {
     const actual = iterator.next().value;
 
     expect(actual).toEqual(expectedOutput);
+    expect(iterator.throw(error).value)
+      .toEqual(put(signupFailureAction('Network Error')));
   });
 });
 
 describe('Watch signup saga', () => {
-  it('', () => {
+  it('should execute watch signup saga', () => {
     const iterator = watchSignup();
-    const expectedOutput = takeLatest(SIGNUP_REQUEST, signupSaga);
-    const actual = iterator.next().value;
 
-    expect(actual).toEqual(expectedOutput);
+    expect(iterator.next().value)
+      .toEqual(takeLatest(types.SIGNUP_REQUEST, signupSaga));
   });
 });
 
+
 describe('Login saga', () => {
-  it('', () => {
-    const payload = {
-      email: 'email',
-      password: 'password',
-    };
+  it('should execute login saga', () => {
+    const payload = {};
 
     const action = {
-      type: LOGIN_REQUEST,
+      type: types.LOGIN_REQUEST,
       payload,
     };
 
@@ -55,13 +61,15 @@ describe('Login saga', () => {
     const actual = iterator.next().value;
 
     expect(actual).toEqual(expectedOutput);
+    expect(iterator.throw(error).value)
+      .toEqual(put(loginFailureAction('Network Error')));
   });
 });
 
 describe('Watch login saga', () => {
-  it('', () => {
+  it('should execute watch login saga', () => {
     const iterator = watchLogin();
-    const expectedOutput = takeLatest(LOGIN_REQUEST, loginSaga);
+    const expectedOutput = takeLatest(types.LOGIN_REQUEST, loginSaga);
     const actual = iterator.next().value;
 
     expect(actual).toEqual(expectedOutput);

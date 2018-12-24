@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-
+import { getItem } from '../../utilities/storage';
 import '../../css/main.css';
 import '../../css/style.css';
 
@@ -36,6 +36,10 @@ export class Login extends Component {
   }
 
   render() {
+    if (getItem('token')) {
+      return <Redirect to="/" />;
+    }
+
     const {
       loggingIn, message, token, error,
     } = this.props;

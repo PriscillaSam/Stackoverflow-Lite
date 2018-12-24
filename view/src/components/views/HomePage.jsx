@@ -68,7 +68,7 @@ class HomePage extends Component {
               </div>
               <div>
                 <p className="d-i-block mr-1">
-                  <Link to="/" className="text-primary">
+                  <Link to="/questions" className="text-primary">
                     View full list
                     <i className="fa fa-fw fa-angle-double-right" />
                   </Link>

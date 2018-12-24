@@ -1,0 +1,21 @@
+import React from 'react';
+import { render, cleanup, fireEvent } from 'react-testing-library';
+import { BrowserRouter as Router } from 'react-router-dom';
+import QuestionPage from '../../components/views/Questions';
+import store from '../utilities/store';
+import { questions } from '../utilities/mockData';
+
+afterEach(cleanup);
+
+const questionsStore = store(questions);
+
+
+describe('Home page', () => {
+  it('should render without crashing', () => {
+    render(
+      <Router>
+        <QuestionPage store={questionsStore} />
+      </Router>,
+    );
+  });
+});

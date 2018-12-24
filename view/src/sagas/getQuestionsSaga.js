@@ -5,9 +5,9 @@ import {
 } from '../actions/getQuestionsActions';
 import { GET_QUESTIONS_REQUEST } from '../actionTypes/getQuestionsActionTypes';
 
-const getQuestions = () => axios.get(`${process.env.API_URL}/questions`);
+export const getQuestions = () => axios.get(`${process.env.API_URL}/questions`);
 
-function* questionsSaga() {
+export function* questionsSaga() {
   try {
     const { data } = yield call(getQuestions);
     yield put(getQuestionsSuccess(data.questions));
