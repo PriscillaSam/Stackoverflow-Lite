@@ -3,6 +3,7 @@ import { render, cleanup, fireEvent } from 'react-testing-library';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Signup from '../../components/account/signup';
 import Signin from '../../components/account/signin';
+import Logout from '../../components/account/logout';
 import store from '../utilities/store';
 import { signUp, logIn } from '../utilities/mockData';
 
@@ -54,5 +55,15 @@ describe('Login page', () => {
     const form = getByTestId('login-form');
     fireEvent.change(input, { target: { value: 'My email' } });
     fireEvent.submit(form);
+  });
+});
+
+describe('Logout component', () => {
+  it('should render without crashing', () => {
+    render(
+      <Router>
+        <Logout />
+      </Router>,
+    );
   });
 });

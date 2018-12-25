@@ -1,3 +1,4 @@
-import { getToken } from './storage';
+import { getItem } from './storage';
 
-export default () => getToken() !== null;
+const isLoggedIn = () => getItem('token') !== null;
+export default isLoggedIn;

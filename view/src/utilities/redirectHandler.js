@@ -1,9 +1,9 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { getToken } from './storage';
+import { getItem } from './storage';
 
 export default (component) => {
-  if (getToken()) {
+  if (getItem('token')) {
     return <Redirect to="/" />;
   }
   return component;

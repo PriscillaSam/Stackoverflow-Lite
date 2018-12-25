@@ -1,5 +1,11 @@
-export const setToken = (token) => {
-  localStorage.setItem('token', token);
+export const getItem = key => localStorage.getItem(key);
+
+export const clearCredentials = () => {
+  localStorage.clear();
 };
 
-export const getToken = () => localStorage.getItem('token');
+export default (details) => {
+  Object.keys(details).forEach((key) => {
+    localStorage.setItem(key, details[key]);
+  });
+};

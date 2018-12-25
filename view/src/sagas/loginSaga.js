@@ -1,7 +1,7 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
 import { LOGIN_REQUEST } from '../actionTypes/authActionTypes';
 import { logInApi } from '../api/auth';
-import { setToken } from '../utilities/storage';
+import saveUserCredentials from '../utilities/storage';
 import {
   loginFailureAction,
   loginSuccessAction,
@@ -10,7 +10,9 @@ import {
 export function* loginSaga(action) {
   try {
     const { data } = yield call(logInApi, action.payload);
-    setToken(data.token);
+    const { status, message, ...userDetails } = data;
+    saveUserCredentials(userDetails);
+
     yield put(loginSuccessAction(data));
   } catch (error) {
     yield put(loginFailureAction(error.response.data.message));

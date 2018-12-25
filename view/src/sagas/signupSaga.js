@@ -1,7 +1,7 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
 import { SIGNUP_REQUEST } from '../actionTypes/authActionTypes';
 import { signUpApi } from '../api/auth';
-import { setToken } from '../utilities/storage';
+import saveUserCredentials from '../utilities/storage';
 import {
   signupSuccessAction,
   signupFailureAction,
@@ -10,9 +10,12 @@ import {
 
 export function* signupSaga(action) {
   try {
-    const { data } = yield call(signUpApi, action.body);
-    setToken(data.token);
-    yield put(signupSuccessAction(data.message));
+    const {
+      data: { status, message, ...userDetails },
+    } = yield call(signUpApi, action.body);
+
+    saveUserCredentials(userDetails);
+    yield put(signupSuccessAction(message));
   } catch (error) {
     yield put(signupFailureAction(error.response.data.message));
   }

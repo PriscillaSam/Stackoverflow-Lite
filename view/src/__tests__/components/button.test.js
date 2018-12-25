@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, cleanup } from 'react-testing-library';
-import Button from '../../../../components/button';
+import Button from '../../components/button';
 
 afterEach(cleanup);
 
@@ -8,7 +8,7 @@ const props = {
   btnClassName: '',
   btnId: '',
   btnText: '',
-  onLoading: false,
+  onLoading: true,
 };
 
 describe('Button component', () => {

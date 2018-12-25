@@ -1,59 +1,37 @@
-import configureStore from 'redux-mock-store';
-import createSagaMiddleware from 'redux-saga';
-import mockAxios from '../../../__mocks__/mockAxios';
-import rootSaga from '../../sagas';
-import * as types from '../../actionTypes/getQuestionsActionTypes';
+import { takeLatest, call, put } from 'redux-saga/effects';
+import
+watchQuestions,
+{ questionsSaga, getQuestions } from '../../sagas/getQuestionsSaga';
+import {
+  GET_QUESTIONS_REQUEST,
+} from '../../actionTypes/getQuestionsActionTypes';
 
-const sagaMiddleware = createSagaMiddleware();
-const mockStore = configureStore([sagaMiddleware]);
+import {
+  getQuestionsFailure,
+} from '../../actions/getQuestionsActions';
 
-describe('Get comments watcher saga:', () => {
-  mockAxios.get.mockImplementationOnce(() => Promise.resolve({
-    data: {
-      status: 200,
-      message: 'success',
-      questions: [],
-    },
-  }));
+const error = {
+  status: 500,
+  message: 'Network Error',
+};
 
-  it('should execute get comments saga', () => {
-    const store = mockStore({});
-    sagaMiddleware.run(rootSaga);
-    const expectedActions = [
-      { type: types.GET_QUESTIONS_REQUEST },
-      { type: types.GET_QUESTIONS_SUCCESS, payload: [] },
-    ];
+describe('Get questions saga', () => {
+  it('should execute signup saga', () => {
+    const iterator = questionsSaga();
+    const expectedOutput = call(getQuestions);
+    const actual = iterator.next().value;
 
-    store.dispatch({ type: types.GET_QUESTIONS_REQUEST });
-
-    store.subscribe(() => {
-      const actions = store.getActions();
-      expect(actions).toEqual(expectedActions);
-    });
+    expect(actual).toEqual(expectedOutput);
+    expect(iterator.throw(error).value)
+      .toEqual(put(getQuestionsFailure('Network Error')));
   });
+});
 
+describe('Get questions watcher saga:', () => {
+  it('should execute watch signup saga', () => {
+    const iterator = watchQuestions();
 
-  it('should dispatch a failure action', (done) => {
-    const store = mockStore({});
-    sagaMiddleware.run(rootSaga);
-
-    const response = {
-      status: 500,
-      message: 'Network Error',
-    };
-    mockAxios.get.mockImplementationOnce(() => Promise.reject({ response }));
-
-    const expectedActions = [
-      { type: types.GET_QUESTIONS_REQUEST },
-      { type: types.GET_QUESTIONS_FAILURE, payload: 'Network Error' },
-    ];
-
-    store.dispatch({ type: types.GET_QUESTIONS_REQUEST });
-
-    store.subscribe(() => {
-      const actions = store.getActions();
-      expect(actions).toEqual(expectedActions);
-      done();
-    });
+    expect(iterator.next().value)
+      .toEqual(takeLatest(GET_QUESTIONS_REQUEST, questionsSaga));
   });
 });
