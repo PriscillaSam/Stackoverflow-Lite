@@ -91,7 +91,7 @@ export class Login extends Component {
                 <div>
                   <Button
                     btnClassName="btn btn-success btn-block"
-                    btnId="loginBtn"
+                    disabled={false}
                     btnText="Welcome"
                     type="submit"
                     onLoading={loggingIn}

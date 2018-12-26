@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 const Button = ({
-  btnClassName, btnId, btnText, onLoading,
+  btnClassName, btnText, onLoading, disabled,
 }) => (
-  <button type="submit" className={btnClassName} id={btnId}>
+  <button type="submit" className={btnClassName} disabled={disabled}>
     {onLoading
     && (
       <span className="spinner">
@@ -17,9 +17,9 @@ const Button = ({
 
 Button.propTypes = {
   btnClassName: PropTypes.string.isRequired,
-  btnId: PropTypes.string.isRequired,
   btnText: PropTypes.string.isRequired,
   onLoading: PropTypes.bool.isRequired,
+  disabled: PropTypes.bool.isRequired,
 };
 
 export default Button;

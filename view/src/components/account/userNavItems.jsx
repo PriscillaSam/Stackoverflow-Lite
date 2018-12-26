@@ -6,7 +6,7 @@ const UserNav = () => (
   <div>
     <li className="d-inline mr-3">
       <Link to="/profile">
-        <i className="fa fa-user-o mr-1" />
+        <i className="far fa-user mr-1" />
         Hi
         {` ${getItem('name').split(' ')[1]}`}
       </Link>

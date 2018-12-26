@@ -6,8 +6,8 @@ afterEach(cleanup);
 
 const props = {
   btnClassName: '',
-  btnId: '',
-  btnText: '',
+  btnText: 'Some text',
+  disabled: false,
   onLoading: true,
 };
 

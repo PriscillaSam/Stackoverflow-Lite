@@ -29,7 +29,7 @@ const NavBar = ({ isLoggedIn }) => (
       <ul className="nav-collapse">
         {!isLoggedIn
           ? (
-            <li className="d-inline mr-3 user">
+            <li className="d-inline mr-3">
               <Link className="btn btn-success" to="/account/signup">
                 Sign up
               </Link>
