@@ -1,8 +1,16 @@
 export const signUp = {
   signUp: {
     creating: false,
-    message: '',
+    message: 'message',
     error: '',
+  },
+};
+
+export const signUp2 = {
+  signUp: {
+    creating: false,
+    message: '',
+    error: 'error',
   },
 };
 
@@ -11,6 +19,15 @@ export const logIn = {
     loggingIn: false,
     token: '',
     message: '',
+    error: 'error',
+  },
+};
+
+export const logIn2 = {
+  logIn: {
+    loggingIn: false,
+    token: 'token',
+    message: 'message',
     error: '',
   },
 };
@@ -21,6 +38,7 @@ export const questions = {
     questions: [
       {
         id: 1,
+        name: 'Garry Doe',
       },
       {
         id: 2,
@@ -79,6 +97,58 @@ export const question2 = {
       user_id: 6,
       name: 'Garry Doe',
       answers: [],
+    },
+  },
+};
+
+export const userProfile = {
+  userProfile: {
+    fetching: false,
+    profile: {
+      user_id: 4,
+      answers: '1',
+      asked: 2,
+      most_answered: [
+        {
+          id: 3,
+          question: 'Why do we have seasons and weather?',
+          created_at: '2018-12-22T20:22:19.940Z',
+          answers: '6',
+        },
+        {
+          id: 2,
+          question: 'Cooking is a skill or inborn?',
+          created_at: '2018-12-22T20:22:19.940Z',
+          answers: '3',
+        },
+      ],
+      recent: [
+        {
+          id: 3,
+          question: 'Why do we have seasons and weather?',
+          created_at: '2018-12-22T20:22:19.940Z',
+          answers: '6',
+        },
+        {
+          id: 2,
+          question: 'Cooking is a skill or inborn?',
+          created_at: '2018-12-22T20:22:19.940Z',
+          answers: '3',
+        },
+      ],
+    },
+  },
+};
+
+export const userProfile2 = {
+  userProfile: {
+    fetching: false,
+    profile: {
+      user_id: 4,
+      answers: '1',
+      asked: 2,
+      most_answered: [],
+      recent: [],
     },
   },
 };

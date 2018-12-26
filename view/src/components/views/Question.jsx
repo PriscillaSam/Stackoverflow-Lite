@@ -56,13 +56,21 @@ class QuestionPage extends Component {
                     <div className="mt-2">
                       {
                         question.answers.length === 0
-                        && <p className="">Be the first to answer this question</p>
+                        && (
+                          <p className="">
+                            Be the first to answer this question
+                          </p>
+                        )
                       }
                       {
                         question.answers.length > 0
                         && question.answers
                           .map(answer => (
-                            <AnswerCard answer={answer} key={answer.id} />
+                            <AnswerCard
+                              answer={answer}
+                              userId={question.user_id.toString()}
+                              key={answer.id}
+                            />
                           ))
                       }
                     </div>

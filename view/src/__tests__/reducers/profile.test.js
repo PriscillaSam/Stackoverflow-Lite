@@ -1,11 +1,11 @@
-import * as types from '../../actionTypes/getQuestionActionTypes';
-import reducer from '../../reducers/singleQuestionReducer';
+import * as types from '../../actionTypes/profileActionTypes';
+import reducer from '../../reducers/profileReducer';
 
 
-describe('Single question reducer', () => {
+describe('User profile reducer', () => {
   const initialState = {
     fetching: false,
-    question: null,
+    profile: null,
     error: null,
   };
 
@@ -13,28 +13,28 @@ describe('Single question reducer', () => {
     expect(reducer(undefined, {})).toEqual(initialState);
   });
 
-  it('should update fetching to  true on request', () => {
+  it('should update fetching to true on request', () => {
     expect(reducer(undefined, {
-      type: types.GET_QUESTION_REQUEST,
+      type: types.GET_PROFILE,
     })).toEqual({
       ...initialState,
       fetching: true,
     });
   });
 
-  it('should update with question on success', () => {
+  it('should update with profile on success', () => {
     expect(reducer(undefined, {
-      type: types.GET_QUESTION_SUCCESS,
+      type: types.GET_PROFILE_SUCCESS,
       payload: {},
     })).toEqual({
       ...initialState,
-      question: {},
+      profile: {},
     });
   });
 
   it('should update error on failure', () => {
     expect(reducer(undefined, {
-      type: types.GET_QUESTION_FAILURE,
+      type: types.GET_PROFILE_FAILURE,
       payload: 'Bad Request',
     })).toEqual({
       ...initialState,
