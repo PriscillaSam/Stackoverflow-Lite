@@ -9,8 +9,7 @@ afterEach(cleanup);
 
 const questionsStore = store(questions);
 
-
-describe('Home page', () => {
+describe('Questions page', () => {
   it('should render without crashing', () => {
     render(
       <Router>

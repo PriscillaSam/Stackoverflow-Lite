@@ -6,6 +6,7 @@ import SignupPage from './components/account/signup';
 import LoginPage from './components/account/signin';
 import HomePage from './components/views/HomePage';
 import QuestionPage from './components/views/Questions';
+import SingleQuestionPage from './components/views/Question';
 import AuthChecker from './utilities/redirectHandler';
 import Logout from './components/account/logout';
 
@@ -19,6 +20,7 @@ export default (
       <Route exact path="/account/signup" component={signupOrRedirect} />
       <Route exact path="/account/login" component={loginOrRedirect} />
       <Route exact path="/questions" component={QuestionPage} />
+      <Route exact path="/questions/:id" component={SingleQuestionPage} />
       <Route exact path="/logout" component={Logout} />
     </Switch>
   </div>

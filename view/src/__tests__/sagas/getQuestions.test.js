@@ -16,7 +16,7 @@ const error = {
 };
 
 describe('Get questions saga', () => {
-  it('should execute signup saga', () => {
+  it('should execute saga to get questions', () => {
     const iterator = questionsSaga();
     const expectedOutput = call(getQuestions);
     const actual = iterator.next().value;
@@ -28,7 +28,7 @@ describe('Get questions saga', () => {
 });
 
 describe('Get questions watcher saga:', () => {
-  it('should execute watch signup saga', () => {
+  it('should execute watch saga', () => {
     const iterator = watchQuestions();
 
     expect(iterator.next().value)

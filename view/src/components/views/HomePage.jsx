@@ -23,12 +23,12 @@ class HomePage extends Component {
           <section className="banner fadeIn">
             <div className="overlay">
               <h1 className=" display-1 fadeInDown mt-0 mb-0">
-                <a href="home.html">
+                <Link to="/">
                   StackOverflow-
                   <span className="brand-span">
                     LITE
                   </span>
-                </a>
+                </Link>
               </h1>
               <div className="mt-0">
                 <h2 className="display-2 text-success  highlight mb-0">

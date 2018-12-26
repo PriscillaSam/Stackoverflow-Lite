@@ -13,11 +13,11 @@ const QuestionCard = ({ question }) => (
     <ul>
       <li>{timeFormatter(question.created_at)}</li>
       <li>
-        <i className="fa fa-comments-o fa-fw" />
+        <i className="far fa-comments fa-fw" />
         {question.answers}
       </li>
       <li>
-        <i className="fa fa-user-o fa-fw " />
+        <i className="far fa-user fa-fw " />
         {question.name}
       </li>
     </ul>
