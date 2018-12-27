@@ -5,18 +5,22 @@ import Signup from '../../components/account/signup';
 import Signin from '../../components/account/signin';
 import Logout from '../../components/account/logout';
 import store from '../utilities/store';
-import { signUp, logIn } from '../utilities/mockData';
+import {
+  signUp, signUp2, logIn, logIn2,
+} from '../utilities/mockData';
 
 afterEach(cleanup);
 
 const signupStore = store(signUp);
+const signupStore2 = store(signUp2);
 const loginStore = store(logIn);
+const loginStore2 = store(logIn2);
 
-describe('Sign page', () => {
+describe('Signup page', () => {
   it('should render without crashing', () => {
     render(
       <Router>
-        <Signup store={{ ...signupStore, message: 'message' }} />
+        <Signup store={signupStore2} />
       </Router>,
     );
   });
@@ -24,7 +28,7 @@ describe('Sign page', () => {
   it('should handle input change events', () => {
     const { getByTestId, getByPlaceholderText } = render(
       <Router>
-        <Signup store={{ ...signupStore, error: 'error' }} />
+        <Signup store={signupStore} />
       </Router>,
     );
 
@@ -37,6 +41,16 @@ describe('Sign page', () => {
 
 describe('Login page', () => {
   it('should render without crashing', () => {
+    localStorage.setItem('token', 'token');
+    render(
+      <Router>
+        <Signin store={loginStore} />
+      </Router>,
+    );
+    localStorage.clear();
+  });
+
+  it('should render without crashing', () => {
     render(
       <Router>
         <Signin store={loginStore} />
@@ -47,7 +61,7 @@ describe('Login page', () => {
   it('should handle input change events', () => {
     const { getByTestId, getByPlaceholderText } = render(
       <Router>
-        <Signin store={loginStore} />
+        <Signin store={loginStore2} />
       </Router>,
     );
 

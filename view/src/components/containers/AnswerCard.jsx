@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import timeFormatter from '../../utilities/timeFormatter';
+import { getItem } from '../../utilities/storage';
 
-const AnswerCard = ({ answer }) => (
+const AnswerCard = ({ answer, userId }) => (
   <div className="box">
     <p className="lead mb-0">{answer.answer}</p>
     <h3 className="display-3 mb-0">
@@ -13,7 +14,7 @@ const AnswerCard = ({ answer }) => (
       <span className="text-primary">
         <i className="far fa-envelope fa-fw text-success" />
         <span className="">
-          <a href="/m" className="text-primary">
+          <a href={`mailto:${answer.email}`} className="text-primary">
             {answer.email}
           </a>
         </span>
@@ -37,13 +38,14 @@ const AnswerCard = ({ answer }) => (
         {answer.upvotes}
       </li>
       <li>
-        <a href="/m">
-          {
-            answer.is_accepted
-              ? <i className="fas fa-star fa-fw fa-spin" />
-              : <i className="far fa-star fa-fw" />
-          }
-        </a>
+        {
+          answer.is_accepted
+          && <i className="fas fa-star fa-fw fa-spin" />
+        }
+        {
+          !answer.is_accepted && userId === getItem('user_id')
+          && <a href="/m"><i className="far fa-star fa-fw" /></a>
+        }
       </li>
     </ul>
   </div>
@@ -51,6 +53,7 @@ const AnswerCard = ({ answer }) => (
 
 AnswerCard.propTypes = {
   answer: PropTypes.object.isRequired,
+  userId: PropTypes.string.isRequired,
 };
 
 export default AnswerCard;
