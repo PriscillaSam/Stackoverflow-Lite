@@ -85,6 +85,22 @@ export const question = {
       ],
     },
   },
+  postAnswer: {
+    posting: false,
+    answers: [
+      {
+        id: 2,
+        answer: 'I love programming',
+        user_id: 3,
+        email: 'sami@gmail.com',
+        upvotes: '0',
+        downvotes: '0',
+        comments: '0',
+        created_at: '2018-12-22T20:22:19.940Z',
+        is_accepted: false,
+      },
+    ],
+  },
 };
 
 export const question2 = {
@@ -96,8 +112,13 @@ export const question2 = {
       created_at: '2018-12-22T20:22:19.940Z',
       user_id: 6,
       name: 'Garry Doe',
-      answers: [],
+      answers: [
+      ],
     },
+  },
+  postAnswer: {
+    posting: false,
+    answers: [],
   },
 };
 

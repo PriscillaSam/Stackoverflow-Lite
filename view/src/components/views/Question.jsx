@@ -8,18 +8,34 @@ import Footer from '../containers/Footer';
 import AnswerCard from '../containers/AnswerCard';
 import isLoggedIn from '../../utilities/auth';
 import { getQuestion } from '../../actions/getQuestionActions';
+import { postAnswer } from '../../actions/postAnswerActions';
 import timeFormatter from '../../utilities/timeFormatter';
 
 class QuestionPage extends Component {
-  state = {}
+  state = {
+    answer: '',
+  }
 
   componentDidMount() {
     const { match: { params: { id } }, fetchQuestion } = this.props;
     fetchQuestion(id);
   }
 
+  submitAnswer = (event) => {
+    event.preventDefault();
+    const { match: { params: { id } }, submitAnswer } = this.props;
+    const { answer } = this.state;
+    submitAnswer({ id, answer });
+  }
+
+  handleChange = (event) => {
+    this.setState({ [event.target.name]: event.target.value });
+  }
+
   render() {
-    const { question, fetching } = this.props;
+    const {
+      question, fetching, posting, answers,
+    } = this.props;
 
     return (
       <div className="bg-light pos-rel">
@@ -48,7 +64,7 @@ class QuestionPage extends Component {
                         </span>
                         <span className="text-success">
                           <i className="far fa-comments fa-fw" />
-                          {` ${question.answers.length}`}
+                          {` ${question.answers.length} `}
                           answers
                         </span>
                       </p>
@@ -63,13 +79,23 @@ class QuestionPage extends Component {
                         )
                       }
                       {
+                        !posting && answers
+                        && answers.map(answer => (
+                          <AnswerCard
+                            answer={answer}
+                            userId={question.user_id.toString()}
+                            key={answer.id}
+                          />
+                        ))
+                      }
+                      {
                         question.answers.length > 0
                         && question.answers
-                          .map(answer => (
+                          .map(ans => (
                             <AnswerCard
-                              answer={answer}
+                              answer={ans}
                               userId={question.user_id.toString()}
-                              key={answer.id}
+                              key={ans.id}
                             />
                           ))
                       }
@@ -79,19 +105,25 @@ class QuestionPage extends Component {
                       Your Answer
                     </h4>
                     <div className="">
-                      <form id="answer-form">
+                      <form
+                        onSubmit={this.submitAnswer}
+                        data-testid="answer-form"
+                      >
                         <textarea
-                          name=""
+                          name="answer"
+                          data-testid="answer-input"
                           cols="30"
                           className="form-input"
                           rows="3"
                           placeholder="enter your response"
+                          onChange={this.handleChange}
+                          minLength="6"
                           required
                         />
                         <Button
                           btnClassName="btn btn-success mt-1 w-20"
                           btnText="Submit"
-                          onLoading={fetching}
+                          onLoading={posting}
                           disabled={!isLoggedIn()}
                           type="submit"
                         />
@@ -129,10 +161,14 @@ const mapStateToProps = state => ({
   fetching: state.singleQuestion.fetching,
   question: state.singleQuestion.question,
   error: state.singleQuestion.error,
+  posting: state.postAnswer.posting,
+  answers: state.postAnswer.answers,
+  answerError: state.postAnswer.error,
 });
 
 const actions = {
   fetchQuestion: getQuestion,
+  submitAnswer: postAnswer,
 };
 
 QuestionPage.propTypes = {
@@ -140,10 +176,14 @@ QuestionPage.propTypes = {
   question: PropTypes.object,
   fetching: PropTypes.bool.isRequired,
   fetchQuestion: PropTypes.func.isRequired,
+  posting: PropTypes.bool.isRequired,
+  answers: PropTypes.array,
+  submitAnswer: PropTypes.func.isRequired,
 };
 
 QuestionPage.defaultProps = {
   question: {},
+  answers: [],
 };
 
 export default connect(mapStateToProps, actions)(QuestionPage);
