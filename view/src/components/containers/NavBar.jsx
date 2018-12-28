@@ -55,11 +55,11 @@ class NavBar extends Component {
     return (
       <nav className="bg-dark shadow fadeInDown">
         <div className="d-i-block">
-          <ul>
+          <ul className="pl-1">
             <li className="hidden nav-toggle">
               <button
                 type="button"
-                className="btn text-success"
+                className="text-success"
                 ref={this.showBtn}
                 data-testid="showBtn"
               >
@@ -78,33 +78,31 @@ class NavBar extends Component {
             </Link>
           </h1>
         </div>
-        <div>
-          <div
-            className="d-i-block collapse"
-            ref={this.nav}
-            data-testid="nav"
+        <div
+          className="d-i-block collapse"
+          ref={this.nav}
+          data-testid="nav"
+        >
+          <button
+            type="button"
+            className="btn close nav-toggle"
+            ref={this.hideBtn}
+            data-testid="hideBtn"
           >
-            <button
-              type="button"
-              className="btn close nav-toggle"
-              ref={this.hideBtn}
-              data-testid="hideBtn"
-            >
-              <span className="">&times;</span>
-            </button>
-            <ul className="nav-collapse">
-              {!isLoggedIn
-                ? (
-                  <li className="d-inline mr-3">
-                    <Link className="btn btn-success" to="/account/signup">
-                      Sign up
-                    </Link>
-                  </li>
-                )
-                : <UserNav />
-              }
-            </ul>
-          </div>
+            <span className="">&times;</span>
+          </button>
+          <ul className="nav-collapse">
+            {!isLoggedIn
+              ? (
+                <li className="d-inline mr-3">
+                  <Link className="btn btn-success" to="/account/signup">
+                    Sign up
+                  </Link>
+                </li>
+              )
+              : <UserNav />
+            }
+          </ul>
         </div>
       </nav>
     );

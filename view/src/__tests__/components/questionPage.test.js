@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup } from 'react-testing-library';
+import { render, cleanup, fireEvent } from 'react-testing-library';
 import { BrowserRouter as Router } from 'react-router-dom';
 import QuestionPage from '../../components/views/Question';
 import store from '../utilities/store';
@@ -28,10 +28,16 @@ describe('Question page', () => {
 
 describe('Question page', () => {
   it('should render without crashing when there are no answers', () => {
-    render(
+    const { getByTestId } = render(
       <Router>
         <QuestionPage store={questionStore2} match={match} />
       </Router>,
     );
+
+    const input = getByTestId('answer-input');
+    const form = getByTestId('answer-form');
+
+    fireEvent.change(input, { target: { value: 'An answer' } });
+    fireEvent.submit(form);
   });
 });

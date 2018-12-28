@@ -6,8 +6,8 @@ import { getItem } from '../../utilities/storage';
 
 const AnswerCard = ({ answer, userId }) => (
   <div className="box">
-    <p className="lead mb-0">{answer.answer}</p>
-    <h3 className="display-3 mb-0">
+    <p className="text-lg mb-0">{answer.answer}</p>
+    <p className="mb-0 text-md">
       <i className="far fa-user text-success" />
       {' '}
       <span className="mr-1">{answer.name}</span>
@@ -19,8 +19,8 @@ const AnswerCard = ({ answer, userId }) => (
           </a>
         </span>
       </span>
-    </h3>
-    <ul>
+    </p>
+    <ul className="text-md">
       <li>
         answered
         {` ${timeFormatter(answer.created_at)}`}

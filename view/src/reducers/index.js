@@ -4,6 +4,7 @@ import signupReducer from './signupReducer';
 import questionsReducer from './questionsReducer';
 import questionReducer from './singleQuestionReducer';
 import profileReducer from './profileReducer';
+import postAnswerReducer from './answerReducer';
 
 export default combineReducers({
   signUp: signupReducer,
@@ -11,4 +12,5 @@ export default combineReducers({
   getQuestions: questionsReducer,
   singleQuestion: questionReducer,
   userProfile: profileReducer,
+  postAnswer: postAnswerReducer,
 });
