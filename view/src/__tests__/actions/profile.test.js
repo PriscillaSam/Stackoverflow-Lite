@@ -26,3 +26,12 @@ describe('Get user profile failure', () => {
     });
   });
 });
+
+describe('Delete question', () => {
+  it('should return delete action', () => {
+    expect(actions.removeQuestion('1')).toEqual({
+      type: types.DELETE_QUESTION,
+      payload: '1',
+    });
+  });
+});

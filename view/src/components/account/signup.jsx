@@ -33,7 +33,7 @@ class Signup extends Component {
   render() {
     const { creating, message, error } = this.props;
     const detail = message || error;
-    const alertClasses = detail === message ? 'bg-success' : 'bg-danger';
+    const theme = detail === message ? 'bg-success' : 'bg-danger';
 
     const {
       name, email, password, confirmPassword,
@@ -51,7 +51,7 @@ class Signup extends Component {
             </h1>
           </header>
 
-          {detail && <AlertBox detail={detail} style={alertClasses} />}
+          {detail && <AlertBox detail={detail} theme={theme} />}
 
           <div id="signup" className="fadeIn">
             <div className="form-group">
@@ -97,7 +97,7 @@ class Signup extends Component {
                 />
                 <div>
                   <Button
-                    btnClassName="btn btn-success btn-block"
+                    btnClassName="btn btn-success btn-block p-1"
                     disabled={false}
                     btnText="Register"
                     type="submit"
@@ -110,9 +110,10 @@ class Signup extends Component {
           <div>
             <p className="text-center text-white text-lg">
               Already have an account?
+              {' '}
               <Link
                 to="/account/login"
-                className="btn btn-sm btn-success"
+                className="btn btn-sm btn-success p-1"
                 id="login-toggle"
               >
                 Login

@@ -6,6 +6,7 @@ import watchGetQuestions from './getQuestionsSaga';
 import watchGetQuestion from './getQuestionSaga';
 import watchProfile from './getProfileSaga';
 import watchPostAnswer from './postAnswerSaga';
+import watchPostQuestion from './postQuestionSaga';
 
 function* rootSaga() {
   yield all([
@@ -15,6 +16,7 @@ function* rootSaga() {
     watchGetQuestion(),
     watchProfile(),
     watchPostAnswer(),
+    watchPostQuestion(),
   ]);
 }
 

@@ -50,7 +50,7 @@ class NavBar extends Component {
   }
 
   render() {
-    const { isLoggedIn } = this.props;
+    const { isLoggedIn, displayModal, displayQuestionLink } = this.props;
 
     return (
       <nav className="bg-dark shadow fadeInDown">
@@ -85,7 +85,7 @@ class NavBar extends Component {
         >
           <button
             type="button"
-            className="btn close nav-toggle"
+            className="btn p-1 close nav-toggle nav-toggle-btn"
             ref={this.hideBtn}
             data-testid="hideBtn"
           >
@@ -95,12 +95,17 @@ class NavBar extends Component {
             {!isLoggedIn
               ? (
                 <li className="d-inline mr-3">
-                  <Link className="btn btn-success" to="/account/signup">
+                  <Link className="btn p-1 btn-success" to="/account/signup">
                     Sign up
                   </Link>
                 </li>
               )
-              : <UserNav />
+              : (
+                <UserNav
+                  displayModal={displayModal}
+                  displayQuestionLink={displayQuestionLink}
+                />
+              )
             }
           </ul>
         </div>
@@ -111,6 +116,8 @@ class NavBar extends Component {
 
 NavBar.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
+  displayModal: PropTypes.func,
+  displayQuestionLink: PropTypes.bool.isRequired,
 };
 
 export default NavBar;

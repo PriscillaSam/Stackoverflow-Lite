@@ -12,7 +12,7 @@ describe('Navbar', () => {
   it('should render without crashing', () => {
     const { getByTestId } = render(
       <Router>
-        <NavBar isLoggedIn />
+        <NavBar isLoggedIn displayQuestionLink />
       </Router>,
     );
 
@@ -27,26 +27,36 @@ describe('Navbar', () => {
   it('should render without crashing', () => {
     const { getByTestId } = render(
       <Router>
-        <NavBar isLoggedIn />
+        <NavBar isLoggedIn displayQuestionLink />
+      </Router>,
+    );
+
+    const showBtn = getByTestId('showBtn');
+
+    fireEvent.click(showBtn);
+  });
+
+  it('should render without crashing', () => {
+    const { getByTestId } = render(
+      <Router>
+        <NavBar isLoggedIn displayQuestionLink />
       </Router>,
     );
 
     const hideBtn = getByTestId('hideBtn');
-    const showBtn = getByTestId('showBtn');
-    const nav = getByTestId('nav');
-    nav.classList.remove('slideOutLeft');
-
     fireEvent.click(hideBtn);
-    fireEvent.click(showBtn);
   });
 });
 
 describe('User nav components', () => {
   it('should render without crashing', () => {
-    render(
+    const { getByTestId } = render(
       <Router>
-        <UserNav />
+        <UserNav displayQuestionLink />
       </Router>,
     );
+
+    const displayBtn = getByTestId('display-modal-btn');
+    fireEvent.click(displayBtn);
   });
 });

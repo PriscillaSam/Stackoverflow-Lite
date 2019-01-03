@@ -13,3 +13,8 @@ export const getProfileFailure = error => ({
   type: types.GET_PROFILE_FAILURE,
   payload: error,
 });
+
+export const removeQuestion = id => ({
+  type: types.DELETE_QUESTION,
+  payload: id,
+});
