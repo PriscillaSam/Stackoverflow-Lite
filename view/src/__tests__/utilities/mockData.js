@@ -159,6 +159,19 @@ export const userProfile = {
       ],
     },
   },
+  postQuestion: {
+    sending: false,
+    questions: [
+      {
+        answers: 0,
+        created_at: '2019-01-02T12:29:04.431Z',
+        id: 22,
+        question: 'A newer me and you and and and youuuuuuu',
+      },
+    ],
+    sent: true,
+    error: null,
+  },
 };
 
 export const userProfile2 = {
@@ -171,5 +184,25 @@ export const userProfile2 = {
       most_answered: [],
       recent: [],
     },
+  },
+  postQuestion: {
+    sending: true,
+    questions: [],
+    sent: true,
+    error: null,
+  },
+};
+
+export const postQuestion = {
+  postQuestion: {
+    sending: true,
+    sent: false,
+  },
+};
+
+export const postQuestion2 = {
+  postQuestion: {
+    sending: false,
+    sent: true,
   },
 };

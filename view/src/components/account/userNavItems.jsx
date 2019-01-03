@@ -1,21 +1,36 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { getItem } from '../../utilities/storage';
 
-const UserNav = () => (
+const UserNav = ({ displayModal, displayQuestionLink }) => (
   <div>
     <li className="d-inline mr-3">
-      <Link to={`/users/${getItem('name')}/profile`}>
+      <Link to={`/users/${getItem('name').split(' ').join('')}/profile`}>
         <i className="far fa-user mr-1" />
         Hi
         {` ${getItem('name').split(' ')[1]}`}
       </Link>
     </li>
-    <li className="d-inline mr-3">
-      <Link className="text-success p-large js-question" to="#/">
-        Ask a question
-      </Link>
-    </li>
+    {
+      displayQuestionLink
+      && (
+        <li className="d-inline mr-3">
+          <Link
+            className="text-success"
+            to="#/"
+            data-testid="display-modal-btn"
+            onClick={displayModal}
+          >
+            <span className="show-sm">
+              <i className="far fa-edit mr-1" />
+            </span>
+            Ask a question
+          </Link>
+        </li>
+      )
+    }
+
     <li className="d-inline logout-btn">
       <Link to="/logout" className="text-success">
         <i className="fa fa-power-off fa-lg mr-1" title="Log Out" />
@@ -24,5 +39,14 @@ const UserNav = () => (
     </li>
   </div>
 );
+
+UserNav.propTypes = {
+  displayModal: PropTypes.func,
+  displayQuestionLink: PropTypes.bool.isRequired,
+};
+
+UserNav.defaultProps = {
+  displayModal: () => {},
+};
 
 export default UserNav;

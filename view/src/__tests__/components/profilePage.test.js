@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, cleanup } from 'react-testing-library';
+import { render, cleanup, fireEvent } from 'react-testing-library';
 import { BrowserRouter as Router } from 'react-router-dom';
 import ProfilePage from '../../components/views/ProfilePage';
 import store from '../utilities/store';
@@ -21,15 +21,31 @@ describe('Profile page', () => {
   });
 });
 
-describe('Question page', () => {
+describe('Profile page', () => {
   localStorage.setItem('token', 'token');
   localStorage.setItem('name', 'Priscilla Sam-Iduh');
 
-  it('should render without crashing when there are no answers', () => {
+  it('should render without crashing if user is logged in', () => {
     render(
       <Router>
         <ProfilePage store={userStore2} />
       </Router>,
     );
+  });
+});
+
+describe('Profile page', () => {
+  it('should post a question', () => {
+    const { getByTestId } = render(
+      <Router>
+        <ProfilePage store={userStore2} />
+      </Router>,
+    );
+
+    const input = getByTestId('question-input');
+    const form = getByTestId('question-form');
+
+    fireEvent.change(input, { target: { value: 'A new Question' } });
+    fireEvent.submit(form);
   });
 });

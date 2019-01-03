@@ -4,26 +4,48 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { getQuestions } from '../../actions/getQuestionsActions';
 import QuestionCard from '../containers/QuestionCard';
+import QuestionModal from '../containers/QuestionModal';
 import NavBar from '../containers/NavBar';
 import Footer from '../containers/Footer';
 import isLoggedIn from '../../utilities/auth';
 
 
 class QuestionsPage extends Component {
-  state = {}
+  state = {
+    displayModal: false,
+  }
 
   componentWillMount() {
     const { fetchQuestions } = this.props;
     fetchQuestions();
   }
 
+  displayModal = (event) => {
+    event.preventDefault();
+    this.setState({ displayModal: true });
+  }
+
+  hideModal = (event) => {
+    event.preventDefault();
+    this.setState({ displayModal: false });
+  }
+
   render() {
     const { questions, fetching } = this.props;
+    const { displayModal } = this.state;
 
     return (
       <div className="bg-light pos-rel">
+        {
+          displayModal
+          && <QuestionModal hideModal={this.hideModal} />
+        }
         <div className="pos-rel" id="wrap">
-          <NavBar isLoggedIn={isLoggedIn()} />
+          <NavBar
+            isLoggedIn={isLoggedIn()}
+            displayModal={this.displayModal}
+            displayQuestionLink
+          />
           <div className="container">
             <div className="content-container mt-2">
               <section className="w-20 aside">

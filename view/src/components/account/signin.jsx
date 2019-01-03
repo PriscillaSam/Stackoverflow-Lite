@@ -46,7 +46,7 @@ export class Login extends Component {
 
     const { email, password } = this.state;
     const detail = message || error;
-    const alertClasses = detail === message ? 'bg-success' : 'bg-danger';
+    const theme = detail === message ? 'success' : 'danger';
 
     return (
       <div id="form-back">
@@ -60,7 +60,7 @@ export class Login extends Component {
             </h1>
           </header>
 
-          {detail && <AlertBox detail={detail} style={alertClasses} />}
+          {detail && <AlertBox detail={detail} theme={theme} />}
 
           <div id="login" className="fadeIn">
             <div className="form-group">

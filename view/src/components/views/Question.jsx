@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import NavBar from '../containers/NavBar';
 import Button from '../button';
 import Footer from '../containers/Footer';
+import QuestionModal from '../containers/QuestionModal';
 import AnswerCard from '../containers/AnswerCard';
 import isLoggedIn from '../../utilities/auth';
 import { getQuestion } from '../../actions/getQuestionActions';
@@ -14,6 +15,7 @@ import timeFormatter from '../../utilities/timeFormatter';
 class QuestionPage extends Component {
   state = {
     answer: '',
+    displayModal: false,
   }
 
   componentDidMount() {
@@ -32,15 +34,36 @@ class QuestionPage extends Component {
     this.setState({ [event.target.name]: event.target.value });
   }
 
+  displayModal = (event) => {
+    event.preventDefault();
+    this.setState({ displayModal: true });
+  }
+
+  hideModal = (event) => {
+    event.preventDefault();
+    this.setState({ displayModal: false });
+  }
+
   render() {
     const {
       question, fetching, posting, answers,
     } = this.props;
 
+    const { displayModal } = this.state;
+
     return (
       <div className="bg-light pos-rel">
+        {
+          displayModal
+          && <QuestionModal hideModal={this.hideModal} />
+        }
+
         <div className="pos-rel" id="wrap">
-          <NavBar isLoggedIn={isLoggedIn()} />
+          <NavBar
+            isLoggedIn={isLoggedIn()}
+            displayModal={this.displayModal}
+            displayQuestionLink
+          />
           <div className="container">
             <div className="content-container">
               {
@@ -117,7 +140,7 @@ class QuestionPage extends Component {
                           rows="3"
                           placeholder="enter your response"
                           onChange={this.handleChange}
-                          minLength="6"
+                          minLength="8"
                           required
                         />
                         <Button
