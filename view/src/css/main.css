@@ -366,7 +366,7 @@
 }
 
 @media(min-width:723px){
-    .close{
+    .nav-toggle-btn{
         display: none;
     }
 }

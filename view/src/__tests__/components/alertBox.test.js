@@ -6,7 +6,7 @@ import AlertBox from '../../components/alertBox';
 describe('Alert Box component', () => {
   it('should', () => {
     const props = {
-      style: 'bg-danger',
+      theme: 'danger',
       detail: 'Login successful',
     };
 

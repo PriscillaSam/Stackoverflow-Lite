@@ -110,7 +110,7 @@ class User {
                 const questions = userQuestions.rows;
                 details.asked = questions.length;
                 const recent = [...questions];
-                recent.sort((q1, q2) => q1.created_at < q2.created_at);
+                recent.sort((q1, q2) => q2.created_at - q1.created_at);
 
                 if (questions.length < 5) {
                   details.most_answered = questions

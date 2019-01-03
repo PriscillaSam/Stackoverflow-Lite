@@ -3,18 +3,33 @@ import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import NavBar from '../containers/NavBar';
-import Button from '../button';
 import Footer from '../containers/Footer';
+import AlertBox from '../alertBox';
 import QuestionCard from '../containers/QuestionCard';
 import isLoggedIn from '../../utilities/auth';
 import { getProfile } from '../../actions/profileActions';
+import { postQuestion } from '../../actions/postQuestionActions';
 
 class ProfilePage extends Component {
-  state = {}
+  state = {
+    question: '',
+  }
 
   componentDidMount() {
     const { getUserProfile } = this.props;
     getUserProfile();
+  }
+
+  handleInputChange = (event) => {
+    this.setState({ [event.target.name]: event.target.value });
+  }
+
+  submit = (event) => {
+    event.preventDefault();
+    const { question } = this.state;
+    const { sendQuestion } = this.props;
+
+    sendQuestion(question);
   }
 
   render() {
@@ -22,11 +37,15 @@ class ProfilePage extends Component {
     if (!loggedIn) {
       return <Redirect to="/" />;
     }
-    const { profile } = this.props;
+
+    const {
+      profile, sending, sent, questions,
+    } = this.props;
+
     return (
       <div className="bg-light pos-rel">
         <div className="pos-rel" id="wrap">
-          <NavBar isLoggedIn={loggedIn} />
+          <NavBar isLoggedIn={loggedIn} displayQuestionLink={false} />
           <div className="container" id="split">
             <div className="content-container ">
               <section className=" mt-2">
@@ -65,6 +84,15 @@ class ProfilePage extends Component {
                 <div className="mt-4">
                   <h3 className="display-3">Your Recent / Questions</h3>
                   <div id="recent">
+                    {
+                      questions && questions.length > 0
+                      && questions.map(question => (
+                        <QuestionCard
+                          question={question}
+                          key={question.id}
+                        />
+                      ))
+                    }
                     {
                       profile && profile.recent.length > 0
                         ? profile.recent.map(question => (
@@ -110,14 +138,26 @@ class ProfilePage extends Component {
                 </h4>
                 <h3 className="display-3 mt-0 ml-3">Ask a question</h3>
                 <div>
-                  <form id="question-form">
+                  <form data-testid="question-form" onSubmit={this.submit}>
+                    {/* {
+                      sent
+                      && (
+                        <AlertBox
+                          detail="You have posted your question."
+                          theme="success"
+                        />
+                      )
+                    } */}
                     <div className="input-area">
                       <textarea
-                        name=""
+                        name="question"
                         cols="30"
                         rows="10"
                         className="form-input"
                         placeholder="type your question here..."
+                        onChange={this.handleInputChange}
+                        data-testid="question-input"
+                        minLength="8"
                         required
                       />
                     </div>
@@ -127,12 +167,27 @@ class ProfilePage extends Component {
                         className="btn btn-success"
                         id="question-btn"
                       >
-                        <span className="hidden spinner">
-                          <i className="fas fa-spin fa-spinner fa-lg fa-fw" />
-                        </span>
+                        {
+                          sending
+                          && (
+                            <span className="spinner">
+                              <i
+                                className="fa fa-spin fa-spinner fa-lg fa-fw"
+                              />
+                            </span>
+                          )
+                        }
                         <span className="btnText">
-                          <i className="fas fa-share fa-fw" />
-                          Post Question
+                          {
+                            !sending
+                              ? (
+                                <span>
+                                  <i className="fa fa-share fa-fw" />
+                                  Post Question
+                                </span>
+                              )
+                              : <span>Sending</span>
+                          }
                         </span>
                       </button>
                     </div>
@@ -151,21 +206,30 @@ class ProfilePage extends Component {
 ProfilePage.propTypes = {
   getUserProfile: PropTypes.func.isRequired,
   profile: PropTypes.object,
+  sendQuestion: PropTypes.func.isRequired,
+  sending: PropTypes.bool.isRequired,
+  sent: PropTypes.bool.isRequired,
+  questions: PropTypes.array,
 };
 
 ProfilePage.defaultProps = {
   profile: {},
+  questions: [],
 };
 
 const mapStateToProps = state => (
   {
     fetching: state.userProfile.fetching,
     profile: state.userProfile.profile,
+    sending: state.postQuestion.sending,
+    questions: state.postQuestion.questions,
+    sent: state.postQuestion.sent,
   }
 );
 
 const actions = {
   getUserProfile: getProfile,
+  sendQuestion: postQuestion,
 };
 
 export default connect(mapStateToProps, actions)(ProfilePage);
