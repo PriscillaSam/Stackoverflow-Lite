@@ -97,7 +97,7 @@ class Signup extends Component {
                 />
                 <div>
                   <Button
-                    btnClassName="btn btn-success btn-block"
+                    btnClassName="btn btn-success btn-block p-1"
                     disabled={false}
                     btnText="Register"
                     type="submit"
@@ -110,9 +110,10 @@ class Signup extends Component {
           <div>
             <p className="text-center text-white text-lg">
               Already have an account?
+              {' '}
               <Link
                 to="/account/login"
-                className="btn btn-sm btn-success"
+                className="btn btn-sm btn-success p-1"
                 id="login-toggle"
               >
                 Login

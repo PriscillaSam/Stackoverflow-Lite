@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, cleanup, fireEvent } from 'react-testing-library';
 import { BrowserRouter as Router } from 'react-router-dom';
-import QuestionPage from '../../components/views/Questions';
+import QuestionsPage from '../../components/views/Questions';
 import store from '../utilities/store';
 import { questions } from '../utilities/mockData';
 
@@ -13,7 +13,7 @@ describe('Questions page', () => {
   it('should render without crashing', () => {
     render(
       <Router>
-        <QuestionPage store={questionsStore} />
+        <QuestionsPage store={questionsStore} />
       </Router>,
     );
   });

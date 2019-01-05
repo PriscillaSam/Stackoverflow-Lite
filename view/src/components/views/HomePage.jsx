@@ -18,71 +18,69 @@ class HomePage extends Component {
   render() {
     const { questions } = this.props;
     return (
-      <div className="bg-light pos-rel">
-        <div className="pos-rel" id="wrap">
-          <section className="banner fadeIn">
-            <div className="overlay">
-              <h1 className=" display-1 fadeInDown mt-0 mb-0">
-                <Link to="/">
-                  StackOverflow-
-                  <span className="brand-span">
-                    LITE
-                  </span>
-                </Link>
-              </h1>
-              <div className="mt-0">
-                <h2 className="display-2 text-success  highlight mb-0">
-                  Ask Questions.
-                </h2>
-                <h2 className="display-2 text-white  highlight mt-0">
-                  Give Answers.
-                </h2>
-              </div>
-              {
-                !isLoggedIn()
-                && (
-                  <Link
-                    className="btn btn-success p-large"
-                    to="/account/signup"
-                  >
+      <div className="bg-light" id="wrap">
+        <section className="banner fadeIn">
+          <div className="overlay">
+            <h1 className=" display-1 fadeInDown mt-0 mb-0">
+              <Link to="/">
+                StackOverflow-
+                <span className="brand-span">
+                  LITE
+                </span>
+              </Link>
+            </h1>
+            <div className="mt-0">
+              <h2 className="display-2 text-success  highlight mb-0">
+                Ask Questions.
+              </h2>
+              <h2 className="display-2 text-white  highlight mt-0">
+                Give Answers.
+              </h2>
+            </div>
+            {
+              !isLoggedIn()
+              && (
+                <Link
+                  className="btn btn-success p-large p-1"
+                  to="/account/signup"
+                >
                   Sign Up Here
-                  </Link>
-                )
-              }
+                </Link>
+              )
+            }
 
+          </div>
+        </section>
+        <section className=" mb-0">
+          <div className="container">
+            <div className="pt-2 mb-2">
+              <h2 className="display-3 mt-0 ">Recent / Questions</h2>
             </div>
-          </section>
-          <section className=" mb-0">
-            <div className="container">
-              <div className="pt-2 mb-2">
-                <h2 className="display-3 mt-0 ">Recent / Questions</h2>
-              </div>
-              <div className="questions w-70">
-                {
-                  questions
-                  && questions.length
-                  && questions.filter((_, index) => index < 5).map(question => (
-                    <QuestionCard question={question} key={question.id} />
-                  ))
-                }
-              </div>
-              <div>
-                <p className="d-i-block mr-1">
-                  <Link to="/questions" className="text-primary">
-                    View full list
-                    <i className="fa fa-fw fa-angle-double-right" />
-                  </Link>
-                </p>
-                <p className="d-i-block">
-                  <Link className="btn btn-default" to="/account/login">
-                    Ask a question
-                  </Link>
-                </p>
-              </div>
+            <div className="questions w-70">
+              {
+                questions
+                && questions.length
+                && questions.filter((_, index) => index < 5).map(question => (
+                  <QuestionCard question={question} key={question.id} />
+                ))
+              }
             </div>
-          </section>
-          <Footer />
-        </div>
+            <div>
+              <p className="d-i-block mr-1">
+                <Link to="/questions" className="text-primary">
+                  View full list
+                  <i className="fa fa-fw fa-angle-double-right" />
+                </Link>
+              </p>
+              <p className="d-i-block">
+                <Link className="btn btn-default p-1" to="/account/login">
+                  Ask a question
+                </Link>
+              </p>
+            </div>
+          </div>
+        </section>
+        <Footer />
       </div>
     );
   }

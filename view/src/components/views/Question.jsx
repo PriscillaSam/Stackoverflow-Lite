@@ -144,7 +144,7 @@ class QuestionPage extends Component {
                           required
                         />
                         <Button
-                          btnClassName="btn btn-success mt-1 w-20"
+                          btnClassName="btn btn-success mt-1 w-20 p-1"
                           btnText="Submit"
                           onLoading={posting}
                           disabled={!isLoggedIn()}

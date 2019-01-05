@@ -144,7 +144,7 @@ class QuestionsPage extends Component {
                       <div className="d-i-block w-90">
                         <input type="text" className="form-input" placeholder="search questions - enter keywords" id="search-input" />
                       </div>
-                      <button type="submit" className="btn btn-success" id="search-btn">
+                      <button type="submit" className="btn btn-success p-1" id="search-btn">
                         <span className="spinner hidden">
                           <i className="fa fa-spin fa-spinner fa-lg" />
                         </span>

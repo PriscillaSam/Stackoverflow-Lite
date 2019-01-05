@@ -12,16 +12,6 @@ const userStore2 = store(userProfile2);
 
 
 describe('Profile page', () => {
-  it('should render without crashing when there are answers', () => {
-    render(
-      <Router>
-        <ProfilePage store={userStore} />
-      </Router>,
-    );
-  });
-});
-
-describe('Profile page', () => {
   localStorage.setItem('token', 'token');
   localStorage.setItem('name', 'Priscilla Sam-Iduh');
 
@@ -47,5 +37,36 @@ describe('Profile page', () => {
 
     fireEvent.change(input, { target: { value: 'A new Question' } });
     fireEvent.submit(form);
+  });
+});
+
+describe('Profile page', () => {
+  it('should post a question', () => {
+    const { getByTestId } = render(
+      <Router>
+        <ProfilePage store={userStore} />
+      </Router>,
+    );
+
+    const btn1 = getByTestId('2');
+    fireEvent.click(btn1);
+
+    const confirmBtn = getByTestId('confirmBtn');
+    fireEvent.click(confirmBtn);
+
+    fireEvent.click(btn1);
+    const cancelBtn = getByTestId('cancelBtn');
+    fireEvent.click(cancelBtn);
+  });
+});
+
+describe('Profile page', () => {
+  it('should render without crashing', () => {
+    localStorage.clear();
+    render(
+      <Router>
+        <ProfilePage store={userStore} />
+      </Router>,
+    );
   });
 });

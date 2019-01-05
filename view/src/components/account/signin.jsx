@@ -90,7 +90,7 @@ export class Login extends Component {
                 />
                 <div>
                   <Button
-                    btnClassName="btn btn-success btn-block"
+                    btnClassName="btn btn-success btn-block p-1"
                     disabled={false}
                     btnText="Welcome"
                     type="submit"
@@ -103,7 +103,8 @@ export class Login extends Component {
           <div>
             <p className="text-center text-white text-lg">
               Dont have an account?
-              <Link to="/account/signup" className="btn btn-sm btn-success">
+              {' '}
+              <Link to="/account/signup" className="btn btn-sm btn-success p-1">
                 Register
               </Link>
             </p>

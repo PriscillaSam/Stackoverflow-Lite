@@ -9,16 +9,16 @@ const UserNav = ({ displayModal, displayQuestionLink }) => (
       <Link to={`/users/${getItem('name').split(' ').join('')}/profile`}>
         <i className="far fa-user mr-1" />
         Hi
-        {` ${getItem('name').split(' ')[1]}`}
+        {` ${getItem('name').split(' ')[0]}`}
       </Link>
     </li>
     {
       displayQuestionLink
       && (
         <li className="d-inline mr-3">
-          <Link
+          <a
             className="text-success"
-            to="#/"
+            href="#/"
             data-testid="display-modal-btn"
             onClick={displayModal}
           >
@@ -26,7 +26,7 @@ const UserNav = ({ displayModal, displayQuestionLink }) => (
               <i className="far fa-edit mr-1" />
             </span>
             Ask a question
-          </Link>
+          </a>
         </li>
       )
     }

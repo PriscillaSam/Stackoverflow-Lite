@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import timeFormatter from '../../utilities/timeFormatter';
 
-const QuestionCard = ({ question }) => (
+const QuestionCard = ({ question, displayModal }) => (
   <div className="box">
     <h3 className="mb-0 mt-0 display-3">
       <Link to={`/questions/${question.id}`} className="text-success">
@@ -26,10 +26,18 @@ const QuestionCard = ({ question }) => (
           )
           : (
             <li>
-              <i
-                className="far fa-trash-alt fa-fw"
-                style={{ color: '#FF4500' }}
-              />
+              <button
+                className="btn"
+                type="button"
+                onClick={displayModal}
+                data-testid={`${question.id}`}
+              >
+                <i
+                  id={question.id}
+                  className="far fa-trash-alt fa-fw"
+                  style={{ color: '#FF4500' }}
+                />
+              </button>
             </li>
           )
       }
@@ -39,6 +47,11 @@ const QuestionCard = ({ question }) => (
 
 QuestionCard.propTypes = {
   question: PropTypes.object.isRequired,
+  displayModal: PropTypes.func,
+};
+
+QuestionCard.defaultProps = {
+  displayModal: () => { },
 };
 
 export default QuestionCard;

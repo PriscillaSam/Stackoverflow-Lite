@@ -69,7 +69,7 @@ class QuestionModal extends Component {
               <div className="input-area right">
                 <button
                   type="submit"
-                  className="btn btn-success"
+                  className="btn btn-success p-1"
                   id="question-btn"
                 >
                   {
