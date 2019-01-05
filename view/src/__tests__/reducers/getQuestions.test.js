@@ -6,6 +6,7 @@ describe('Questions reducer', () => {
   const initialState = {
     fetching: false,
     questions: null,
+    searchedQuestions: null,
     error: null,
   };
 
@@ -29,6 +30,7 @@ describe('Questions reducer', () => {
     })).toEqual({
       ...initialState,
       questions: [],
+      searchedQuestions: [],
     });
   });
 
@@ -39,6 +41,30 @@ describe('Questions reducer', () => {
     })).toEqual({
       ...initialState,
       error: 'Bad Request',
+    });
+  });
+
+  it('should update searched questions', () => {
+    expect(reducer({
+      ...initialState,
+      questions: [
+        {
+          question: 'Test question',
+        },
+      ],
+    }, {
+      type: types.SEARCH_QUESTIONS,
+      payload: 'question',
+    })).toEqual({
+      ...initialState,
+      questions: [{
+        question: 'Test question',
+      },
+      ],
+      searchedQuestions: [{
+        question: 'Test question',
+      },
+      ],
     });
   });
 });

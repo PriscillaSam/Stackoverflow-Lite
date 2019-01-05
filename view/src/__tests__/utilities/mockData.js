@@ -35,15 +35,30 @@ export const logIn2 = {
 export const questions = {
   getQuestions: {
     fetching: false,
-    questions: [
+    searchedQuestions: [
       {
         id: 1,
         name: 'Garry Doe',
+        question: 'A new question',
       },
       {
         id: 2,
+        name: 'Garry Doe',
+        question: 'Another question',
       },
     ],
+    error: null,
+  },
+  postQuestion: {
+    sending: true,
+    sent: false,
+  },
+};
+
+export const questions2 = {
+  getQuestions: {
+    fetching: false,
+    searchedQuestions: [],
     error: null,
   },
 };
@@ -101,6 +116,10 @@ export const question = {
       },
     ],
   },
+  postQuestion: {
+    sending: true,
+    sent: false,
+  },
 };
 
 export const question2 = {
@@ -119,6 +138,10 @@ export const question2 = {
   postAnswer: {
     posting: false,
     answers: [],
+  },
+  postQuestion: {
+    sending: true,
+    sent: false,
   },
 };
 

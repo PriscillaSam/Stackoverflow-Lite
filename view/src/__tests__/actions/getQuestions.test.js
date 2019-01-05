@@ -26,3 +26,12 @@ describe('Get questions failure', () => {
     });
   });
 });
+
+describe('Search questions', () => {
+  it('should return search action', () => {
+    expect(actions.searchQuestions('A question')).toEqual({
+      type: types.SEARCH_QUESTIONS,
+      payload: 'A question',
+    });
+  });
+});
