@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { getQuestions } from '../../actions/getQuestionsActions';
+import {
+  getQuestions, searchQuestions,
+} from '../../actions/getQuestionsActions';
 import QuestionCard from '../containers/QuestionCard';
 import QuestionModal from '../containers/QuestionModal';
 import NavBar from '../containers/NavBar';
@@ -30,8 +32,13 @@ class QuestionsPage extends Component {
     this.setState({ displayModal: false });
   }
 
+  handleInputChange = (event) => {
+    const { search } = this.props;
+    search(event.target.value);
+  }
+
   render() {
-    const { questions, fetching } = this.props;
+    const { searchedQuestions } = this.props;
     const { displayModal } = this.state;
 
     return (
@@ -140,26 +147,35 @@ class QuestionsPage extends Component {
                 </h3>
                 <div className="w-70">
                   <div className="box">
-                    <form id="search-form">
+                    <form>
+                      <span>
+                        <i className="fa fa-search fa-lg text-success p-1" />
+                      </span>
                       <div className="d-i-block w-90">
-                        <input type="text" className="form-input" placeholder="search questions - enter keywords" id="search-input" />
+                        <input
+                          type="text"
+                          className="search-input text-success"
+                          placeholder="search questions"
+                          data-testid="search-input"
+                          onChange={this.handleInputChange}
+                        />
                       </div>
-                      <button type="submit" className="btn btn-success p-1" id="search-btn">
-                        <span className="spinner hidden">
-                          <i className="fa fa-spin fa-spinner fa-lg" />
-                        </span>
-                        <span className="btnText"><i className="fa fa-search fa-lg" /></span>
-                      </button>
                     </form>
                   </div>
-                  <div id="no-results" />
-                  <div id="questions">
+                  <div>
                     {
-                      questions
-                      && questions.length
-                      && questions.map(question => (
-                        <QuestionCard question={question} key={question.id} />
-                      ))
+                      searchedQuestions
+                        && searchedQuestions.length > 0
+                        ? searchedQuestions.map(question => (
+                          <QuestionCard question={question} key={question.id} />
+                        ))
+                        : (
+                          <div className="box fadeIn">
+                            <p className="text-success text-center">
+                              No results match your search
+                            </p>
+                          </div>
+                        )
                     }
                   </div>
                 </div>
@@ -175,21 +191,23 @@ class QuestionsPage extends Component {
 
 QuestionsPage.propTypes = {
   fetchQuestions: PropTypes.func.isRequired,
-  questions: PropTypes.array,
+  search: PropTypes.func.isRequired,
+  searchedQuestions: PropTypes.array,
 };
 
 QuestionsPage.defaultProps = {
-  questions: [],
+  searchedQuestions: [],
 };
 
 const mapStateToProps = state => ({
   fetching: state.getQuestions.fetching,
-  questions: state.getQuestions.questions,
+  searchedQuestions: state.getQuestions.searchedQuestions,
   error: state.getQuestions.error,
 });
 
 const actions = {
   fetchQuestions: getQuestions,
+  search: searchQuestions,
 };
 
 export default connect(mapStateToProps, actions)(QuestionsPage);

@@ -13,3 +13,8 @@ export const getQuestionsFailure = error => ({
   type: types.GET_QUESTIONS_FAILURE,
   payload: error,
 });
+
+export const searchQuestions = question => ({
+  type: types.SEARCH_QUESTIONS,
+  payload: question,
+});
