@@ -18,7 +18,7 @@ class HomePage extends Component {
   render() {
     const { questions } = this.props;
     return (
-      <div className="bg-light" id="wrap">
+      <div className="bg-light pos-rel" id="wrap">
         <section className="banner fadeIn">
           <div className="overlay">
             <h1 className=" display-1 fadeInDown mt-0 mb-0">

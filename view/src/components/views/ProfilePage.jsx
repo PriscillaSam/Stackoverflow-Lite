@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import NavBar from '../containers/NavBar';
 import Footer from '../containers/Footer';
@@ -10,7 +10,6 @@ import isLoggedIn from '../../utilities/auth';
 import { getProfile, removeQuestion } from '../../actions/profileActions';
 import { postQuestion } from '../../actions/postQuestionActions';
 import deleteQuestion from '../../utilities/functionCalls';
-
 
 class ProfilePage extends Component {
   state = {
@@ -64,7 +63,7 @@ class ProfilePage extends Component {
     }
 
     const {
-      profile, sending, sent, questions,
+      profile, posting,
     } = this.props;
 
     const { displayModal } = this.state;
@@ -111,17 +110,7 @@ class ProfilePage extends Component {
                 <h3 className="display-3">Your Recent / Questions</h3>
                 <div id="recent">
                   {
-                    questions && questions.length > 0
-                    && questions.map(question => (
-                      <QuestionCard
-                        question={question}
-                        key={question.id}
-                        displayModal={this.displayDeleteModal}
-                      />
-                    ))
-                  }
-                  {
-                    profile && profile.recent && profile.recent.length > 0
+                    profile && profile.recent.length > 0
                       ? profile.recent.map(question => (
                         <QuestionCard
                           question={question}
@@ -199,7 +188,7 @@ class ProfilePage extends Component {
                       id="question-btn"
                     >
                       {
-                        sending
+                        posting
                         && (
                           <span className="spinner">
                             <i
@@ -210,7 +199,7 @@ class ProfilePage extends Component {
                       }
                       <span className="btnText">
                         {
-                          !sending
+                          !posting
                             ? (
                               <span>
                                 <i className="fa fa-share fa-fw" />
@@ -275,25 +264,18 @@ ProfilePage.propTypes = {
   profile: PropTypes.object,
   sendQuestion: PropTypes.func.isRequired,
   hideQuestion: PropTypes.func.isRequired,
-  sending: PropTypes.bool.isRequired,
-  sent: PropTypes.bool.isRequired,
-  questions: PropTypes.array,
+  posting: PropTypes.bool.isRequired,
 };
 
 ProfilePage.defaultProps = {
   profile: {},
-  questions: [],
 };
 
-const mapStateToProps = state => (
-  {
-    fetching: state.userProfile.fetching,
-    profile: state.userProfile.profile,
-    sending: state.postQuestion.sending,
-    questions: state.postQuestion.questions,
-    sent: state.postQuestion.sent,
-  }
-);
+const mapStateToProps = state => ({
+  fetching: state.userProfile.fetching,
+  profile: state.userProfile.profile,
+  posting: state.userProfile.posting,
+});
 
 const actions = {
   getUserProfile: getProfile,

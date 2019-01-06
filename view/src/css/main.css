@@ -20,6 +20,8 @@
 }
 #wrap{
     min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 .pos-rel{
@@ -309,11 +311,11 @@
     color: #2E8B57
 }
 
-/* .foot{
+.foot{
    position:absolute;
    bottom:0;
    width: 100%;
-} */
+}
 
 /*Key-frames*/
 @keyframes fadeOut{
