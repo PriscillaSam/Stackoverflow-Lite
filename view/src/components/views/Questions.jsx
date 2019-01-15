@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
   getQuestions, searchQuestions,
@@ -47,7 +46,7 @@ class QuestionsPage extends Component {
           displayModal
           && <QuestionModal hideModal={this.hideModal} />
         }
-        <div className="pos-rel" id="wrap">
+        <div className="" id="wrap">
           <NavBar
             isLoggedIn={isLoggedIn()}
             displayModal={this.displayModal}

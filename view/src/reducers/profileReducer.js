@@ -1,7 +1,12 @@
 import * as types from '../actionTypes/profileActionTypes';
+import {
+  POST_QUESTION_REQUEST,
+  POST_QUESTION_SUCCESS,
+} from '../actionTypes/postQuestionActionTypes';
 
 const initialState = {
   fetching: false,
+  posting: false,
   profile: null,
   error: null,
 };
@@ -34,6 +39,21 @@ export default (state = initialState, action) => {
         ...state, profile,
       };
     }
+
+    case POST_QUESTION_REQUEST:
+      return {
+        ...state, posting: true, fetching: false, error: null,
+      };
+
+    case POST_QUESTION_SUCCESS: {
+      const { profile } = state;
+      const recent = [...profile.recent, action.payload];
+      profile.recent = recent;
+      return {
+        ...state, profile, posting: false,
+      };
+    }
+
     default:
       return state;
   }

@@ -8,14 +8,17 @@ import Footer from '../containers/Footer';
 import QuestionModal from '../containers/QuestionModal';
 import AnswerCard from '../containers/AnswerCard';
 import isLoggedIn from '../../utilities/auth';
-import { getQuestion } from '../../actions/getQuestionActions';
+import { getQuestion, acceptAnswer } from '../../actions/getQuestionActions';
 import { postAnswer } from '../../actions/postAnswerActions';
 import timeFormatter from '../../utilities/timeFormatter';
+import { favoriteAnswer } from '../../utilities/functionCalls';
 
 class QuestionPage extends Component {
   state = {
     answer: '',
+    acceptedAnswerId: '',
     displayModal: false,
+    confirmAnswer: false,
   }
 
   componentDidMount() {
@@ -42,6 +45,24 @@ class QuestionPage extends Component {
   hideModal = (event) => {
     event.preventDefault();
     this.setState({ displayModal: false });
+    this.setState({ confirmAnswer: false });
+  }
+
+  displayConfirmModal = (event) => {
+    event.preventDefault();
+    this.setState({ confirmAnswer: true, acceptedAnswerId: event.target.id });
+  }
+
+  acceptAnswer = (event) => {
+    event.preventDefault();
+    const { acceptedAnswerId } = this.state;
+    const { match: { params: { id } }, accept } = this.props;
+    favoriteAnswer(id, acceptedAnswerId);
+
+    this.setState({ confirmAnswer: false });
+    setTimeout(() => {
+      accept(acceptedAnswerId);
+    });
   }
 
   render() {
@@ -49,13 +70,58 @@ class QuestionPage extends Component {
       question, fetching, posting, answers,
     } = this.props;
 
-    const { displayModal } = this.state;
+    const { displayModal, confirmAnswer } = this.state;
 
     return (
       <div className="bg-light pos-rel">
         {
           displayModal
           && <QuestionModal hideModal={this.hideModal} />
+        }
+        {
+          confirmAnswer
+          && (
+            <div className="modal">
+              <div className="modal-body confirmBox slideInUp p-2">
+                <button
+                  type="button"
+                  className="btn close"
+                  onClick={this.hideModal}
+                  data-testid="hide-btn"
+                >
+                  <span>&times;</span>
+                </button>
+                <div className="modal-title">
+                  <h3 className="display-3">
+                    <i className="fa fa-edit mr-1" />
+                    Mark this answer as your accepted answer.
+                  </h3>
+                  <hr />
+                </div>
+                <div className="">
+                  <p className="d-i-block mr-1">
+                    <button
+                      className="btn btn-sm btn-success p-1"
+                      type="button"
+                      onClick={this.hideModal}
+                    >
+                      Cancel
+                    </button>
+                  </p>
+                  <p className="d-i-block">
+                    <button
+                      className="btn btn-danger btn-sm p-1"
+                      type="button"
+                      id="confirm"
+                      onClick={this.acceptAnswer}
+                    >
+                      Accept
+                    </button>
+                  </p>
+                </div>
+              </div>
+            </div>
+          )
         }
 
         <div className="pos-rel" id="wrap">
@@ -108,6 +174,7 @@ class QuestionPage extends Component {
                             answer={answer}
                             userId={question.user_id.toString()}
                             key={answer.id}
+                            displayModal={this.displayConfirmModal}
                           />
                         ))
                       }
@@ -119,6 +186,7 @@ class QuestionPage extends Component {
                               answer={ans}
                               userId={question.user_id.toString()}
                               key={ans.id}
+                              displayModal={this.displayConfirmModal}
                             />
                           ))
                       }
@@ -192,6 +260,7 @@ const mapStateToProps = state => ({
 const actions = {
   fetchQuestion: getQuestion,
   submitAnswer: postAnswer,
+  accept: acceptAnswer,
 };
 
 QuestionPage.propTypes = {
@@ -202,6 +271,7 @@ QuestionPage.propTypes = {
   posting: PropTypes.bool.isRequired,
   answers: PropTypes.array,
   submitAnswer: PropTypes.func.isRequired,
+  accept: PropTypes.func.isRequired,
 };
 
 QuestionPage.defaultProps = {

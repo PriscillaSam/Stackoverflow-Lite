@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import timeFormatter from '../../utilities/timeFormatter';
 import { getItem } from '../../utilities/storage';
 
-const AnswerCard = ({ answer, userId }) => (
+const AnswerCard = ({ answer, userId, displayModal }) => (
   <div className="box">
     <p className="text-lg mb-0">{answer.answer}</p>
     <p className="mb-0 text-md">
@@ -26,15 +25,15 @@ const AnswerCard = ({ answer, userId }) => (
         {` ${timeFormatter(answer.created_at)}`}
       </li>
       <li>
-        <a href="/m" title="downvote answer">
+        <button type="button" className="btn" title="downvote answer">
           <i className="far fa-thumbs-down fa-fw" />
-        </a>
+        </button>
         {answer.downvotes}
       </li>
       <li>
-        <a href="/m" title="upvote answer">
+        <button type="button" className="btn" title="upvote answer">
           <i className="far fa-thumbs-up fa-fw" />
-        </a>
+        </button>
         {answer.upvotes}
       </li>
       <li>
@@ -44,7 +43,11 @@ const AnswerCard = ({ answer, userId }) => (
         }
         {
           !answer.is_accepted && userId === getItem('user_id')
-          && <a href="/m"><i className="far fa-star fa-fw" /></a>
+          && (
+            <button type="button" onClick={displayModal} className="btn">
+              <i className="far fa-star fa-fw" id={answer.id} />
+            </button>
+          )
         }
       </li>
     </ul>
@@ -54,6 +57,11 @@ const AnswerCard = ({ answer, userId }) => (
 AnswerCard.propTypes = {
   answer: PropTypes.object.isRequired,
   userId: PropTypes.string.isRequired,
+  displayModal: PropTypes.func,
+};
+
+AnswerCard.defaultProps = {
+  displayModal: () => {},
 };
 
 export default AnswerCard;
