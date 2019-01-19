@@ -3,26 +3,17 @@ import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { getItem } from '../../utilities/storage';
-import '../../css/main.css';
-import '../../css/style.css';
 
 import Button from '../button';
-import AlertBox from '../alertBox';
 import Input from '../input';
 
 import { loginAction } from '../../actions/authActions';
+import { loading } from '../../actions/loaderActions';
 
 export class Login extends Component {
   state = {
     email: '',
     password: '',
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    const { token } = this.props;
-    if (token !== prevProps.token) {
-      localStorage.setItem('token', token);
-    }
   }
 
   handleInputChange = (event) => {
@@ -31,7 +22,8 @@ export class Login extends Component {
 
   submit = (event) => {
     event.preventDefault();
-    const { loginUserAction } = this.props;
+    const { loginUserAction, posting } = this.props;
+    posting();
     loginUserAction(this.state);
   }
 
@@ -41,12 +33,10 @@ export class Login extends Component {
     }
 
     const {
-      loggingIn, message, token, error,
+      requesting,
     } = this.props;
 
     const { email, password } = this.state;
-    const detail = message || error;
-    const theme = detail === message ? 'success' : 'danger';
 
     return (
       <div id="form-back">
@@ -59,8 +49,6 @@ export class Login extends Component {
               </Link>
             </h1>
           </header>
-
-          {detail && <AlertBox detail={detail} theme={theme} />}
 
           <div id="login" className="fadeIn">
             <div className="form-group">
@@ -94,7 +82,7 @@ export class Login extends Component {
                     disabled={false}
                     btnText="Welcome"
                     type="submit"
-                    onLoading={loggingIn}
+                    onLoading={requesting}
                   />
                 </div>
               </form>
@@ -116,22 +104,18 @@ export class Login extends Component {
 }
 
 Login.propTypes = {
-  loggingIn: PropTypes.bool.isRequired,
-  token: PropTypes.string.isRequired,
-  error: PropTypes.string.isRequired,
-  message: PropTypes.string.isRequired,
+  requesting: PropTypes.bool.isRequired,
   loginUserAction: PropTypes.func.isRequired,
+  posting: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
-  loggingIn: state.logIn.loggingIn,
-  token: state.logIn.token,
-  message: state.logIn.message,
-  error: state.logIn.error,
+  requesting: state.loader.requesting,
 });
 
 const actions = {
   loginUserAction: loginAction,
+  posting: loading,
 };
 
 export default connect(mapStateToProps, actions)(Login);

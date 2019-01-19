@@ -2,11 +2,11 @@ import { takeLatest, call, put } from 'redux-saga/effects';
 import { SIGNUP_REQUEST } from '../actionTypes/authActionTypes';
 import { signUpApi } from '../api/auth';
 import saveUserCredentials from '../utilities/storage';
-import {
-  signupSuccessAction,
-  signupFailureAction,
-} from '../actions/authActions';
 
+import { stopLoading } from '../actions/loaderActions';
+import {
+  successNotification, errorNotication,
+} from '../actions/notificationActions';
 
 export function* signupSaga(action) {
   try {
@@ -15,10 +15,19 @@ export function* signupSaga(action) {
     } = yield call(signUpApi, action.body);
 
     saveUserCredentials(userDetails);
-    yield put(signupSuccessAction(message));
+    yield put(successNotification(message));
   } catch (error) {
-    yield put(signupFailureAction(error.response.data.message));
+    let errorMessage;
+    if (error.response !== undefined) {
+      errorMessage = error.response.data.message !== undefined
+        ? error.response.data.message
+        : error.response.data.errorData.errorMessages;
+    } else {
+      errorMessage = 'Please check your internet connection';
+    }
+    yield put(errorNotication(errorMessage));
   }
+  yield put(stopLoading());
 }
 
 export default function* watchSignup() {

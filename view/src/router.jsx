@@ -9,12 +9,16 @@ import SingleQuestionPage from './components/views/Question';
 import ProfilePage from './components/views/ProfilePage';
 import AuthChecker from './utilities/redirectHandler';
 import Logout from './components/account/logout';
+import Notification from './components/containers/NotifyBox';
+import './css/main.css';
+import './css/style.css';
 
 const signupOrRedirect = () => AuthChecker(<SignupPage />);
 const loginOrRedirect = () => AuthChecker(<LoginPage />);
 
 export default (
   <div>
+    <Notification />
     <Switch>
       <Route exact path="/" component={HomePage} />
       <Route exact path="/account/signup" component={signupOrRedirect} />

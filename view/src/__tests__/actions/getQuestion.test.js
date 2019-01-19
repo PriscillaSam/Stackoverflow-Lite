@@ -27,3 +27,12 @@ describe('Get question failure', () => {
     });
   });
 });
+
+describe('Accept answer', () => {
+  it('should return action to accept an answer', () => {
+    expect(actions.acceptAnswer(1)).toEqual({
+      type: types.ACCEPT_ANSWER,
+      payload: 1,
+    });
+  });
+});

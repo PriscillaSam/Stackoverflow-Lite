@@ -2,21 +2,23 @@ import { takeLatest, call, put } from 'redux-saga/effects';
 import { LOGIN_REQUEST } from '../actionTypes/authActionTypes';
 import { logInApi } from '../api/auth';
 import saveUserCredentials from '../utilities/storage';
+import { stopLoading } from '../actions/loaderActions';
 import {
-  loginFailureAction,
-  loginSuccessAction,
-} from '../actions/authActions';
+  successNotification, errorNotication,
+} from '../actions/notificationActions';
 
 export function* loginSaga(action) {
   try {
     const { data } = yield call(logInApi, action.payload);
     const { status, message, ...userDetails } = data;
     saveUserCredentials(userDetails);
-
-    yield put(loginSuccessAction(data));
+    yield put(successNotification(message));
   } catch (error) {
-    yield put(loginFailureAction(error.response.data.message));
+    const errorMessage = error.response !== undefined
+      ? error.response.data.message : error.message;
+    yield put(errorNotication(errorMessage));
   }
+  yield put(stopLoading());
 }
 
 export default function* watchLogin() {

@@ -1,34 +1,24 @@
 export const signUp = {
-  signUp: {
-    creating: false,
-    message: 'message',
-    error: '',
+  loader: {
+    requesting: true,
   },
 };
 
 export const signUp2 = {
-  signUp: {
-    creating: false,
-    message: '',
-    error: 'error',
+  loader: {
+    requesting: true,
   },
 };
 
 export const logIn = {
-  logIn: {
-    loggingIn: false,
-    token: '',
-    message: '',
-    error: 'error',
+  loader: {
+    requesting: false,
   },
 };
 
 export const logIn2 = {
-  logIn: {
-    loggingIn: false,
-    token: 'token',
-    message: 'message',
-    error: '',
+  loader: {
+    requesting: true,
   },
 };
 
