@@ -18,11 +18,13 @@ const loginStore2 = store(logIn2);
 
 describe('Signup page', () => {
   it('should render without crashing', () => {
+    localStorage.setItem('token', 'token');
     render(
       <Router>
         <Signup store={signupStore2} />
       </Router>,
     );
+    localStorage.clear();
   });
 
   it('should handle input change events', () => {

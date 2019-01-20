@@ -4,9 +4,7 @@ import { signUpApi, logInApi } from '../../api/auth';
 import watchLogin, { loginSaga } from '../../sagas/loginSaga';
 import watchSignup, { signupSaga } from '../../sagas/signupSaga';
 import mockAxios from '../../../__mocks__/mockAxios';
-import {
-  signupFailureAction, loginFailureAction,
-} from '../../actions/authActions';
+import { errorNotication } from '../../actions/notificationActions';
 
 const error = {
   response: {
@@ -33,7 +31,7 @@ describe('Signup saga', () => {
 
     expect(actual).toEqual(expectedOutput);
     expect(iterator.throw(error).value)
-      .toEqual(put(signupFailureAction('Network Error')));
+      .toEqual(put(errorNotication('Network Error')));
   });
 });
 
@@ -62,7 +60,7 @@ describe('Login saga', () => {
 
     expect(actual).toEqual(expectedOutput);
     expect(iterator.throw(error).value)
-      .toEqual(put(loginFailureAction('Network Error')));
+      .toEqual(put(errorNotication('Network Error')));
   });
 });
 

@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import '../../css/main.css';
-import '../../css/style.css';
 import Button from '../button';
-import AlertBox from '../alertBox';
 import Input from '../input';
 
 import { signUpAction } from '../../actions/authActions';
-
+import { loading } from '../../actions/loaderActions';
+import { getItem } from '../../utilities/storage';
 
 class Signup extends Component {
   state = {
@@ -26,19 +24,21 @@ class Signup extends Component {
 
   submit = (event) => {
     event.preventDefault();
-    const { registerUserAction } = this.props;
+    const { registerUserAction, posting } = this.props;
+    posting();
     registerUserAction(this.state);
   }
 
   render() {
-    const { creating, message, error } = this.props;
-    const detail = message || error;
-    const theme = detail === message ? 'bg-success' : 'bg-danger';
+    const { requesting } = this.props;
 
     const {
       name, email, password, confirmPassword,
     } = this.state;
 
+    if (getItem('token')) {
+      return <Redirect to="/" />;
+    }
     return (
       <div id="form-back">
         <div className="center">
@@ -50,9 +50,6 @@ class Signup extends Component {
               </Link>
             </h1>
           </header>
-
-          {detail && <AlertBox detail={detail} theme={theme} />}
-
           <div id="signup" className="fadeIn">
             <div className="form-group">
               <h2 className="text-center text-primary mt-0 mb-0">REGISTER</h2>
@@ -101,7 +98,7 @@ class Signup extends Component {
                     disabled={false}
                     btnText="Register"
                     type="submit"
-                    onLoading={creating}
+                    onLoading={requesting}
                   />
                 </div>
               </form>
@@ -127,20 +124,18 @@ class Signup extends Component {
 }
 
 Signup.propTypes = {
-  creating: PropTypes.bool.isRequired,
-  message: PropTypes.string.isRequired,
-  error: PropTypes.string.isRequired,
+  requesting: PropTypes.bool.isRequired,
+  posting: PropTypes.func.isRequired,
   registerUserAction: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
-  creating: state.signUp.creating,
-  message: state.signUp.message,
-  error: state.signUp.error,
+  requesting: state.loader.requesting,
 });
 
 const actions = {
   registerUserAction: signUpAction,
+  posting: loading,
 };
 
 export default connect(mapStateToProps, actions)(Signup);
